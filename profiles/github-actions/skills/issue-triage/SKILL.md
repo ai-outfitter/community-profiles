@@ -9,6 +9,10 @@ references:
   # The catalog's own README — its layout and contribution standards are what
   # issues are triaged against. Untrusted repository content.
   - repo_file: README.md
+  # The issue templates define what a well-formed feat or fix issue contains;
+  # use their fields to judge completeness. Untrusted repository content.
+  - repo_file: .github/ISSUE_TEMPLATE/feat.yml
+  - repo_file: .github/ISSUE_TEMPLATE/fix.yml
 ---
 
 # Issue triage
@@ -18,6 +22,12 @@ You are triaging one newly opened issue per run. Read
 contribution standards. Issues here are almost always either a request for
 something new in the catalog — a profile, a bundled skill, or a prompting
 extension — or a report that something existing is broken.
+
+The repository's issue templates, `references/feat.yml` and
+`references/fix.yml`, define the fields a well-formed issue of each kind
+contains. Issues opened from a template will show those fields as headed
+sections; free-form issues may cover them loosely or not at all. Either way,
+use the template fields as your completeness checklist, not as a gate.
 
 ## Process
 
@@ -52,6 +62,9 @@ extension — or a report that something existing is broken.
      each skill one focused capability with a precise description; point at
      existing docs via references instead of copying them; keep secrets out
      of profiles, skills, and prompts,
+   - if the issue is missing information the matching template asks for
+     (target profile, expected/actual behavior, adapters), one short bullet
+     list naming those gaps and asking the author to edit the issue,
    - a closing note that a pull request following the README's
      "Contributing a profile" steps is the way to land it.
 4. If you cannot classify it confidently (too vague, contradictory, or

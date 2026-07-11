@@ -1,0 +1,44 @@
+name: New profile, skill, or prompting extension
+description: >-
+  Request something new in the catalog — a profile, a bundled skill, or a
+  prompting extension to an existing profile. The triage agent will label it
+  and comment with a suggested plan.
+title: "feat: "
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of addition is this?
+      options:
+        - New profile
+        - Bundled skill for an existing profile
+        - Prompting extension to an existing profile
+    validations:
+      required: true
+  - type: input
+    id: target
+    attributes:
+      label: Target profile
+      description: >-
+        For a skill or prompting extension: which profile under `profiles/`
+        it belongs to. For a new profile: the proposed profile id.
+      placeholder: e.g. github-actions, or technical-writer (proposed)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What should it do?
+      description: >-
+        The mode of work or capability, in a few sentences. One mode of work
+        per profile; one focused capability per skill.
+    validations:
+      required: true
+  - type: textarea
+    id: adapters
+    attributes:
+      label: Agent adapters
+      description: Which adapters this targets (Pi, Claude Code) and anything adapter-specific.
+      placeholder: Pi primarily; Claude Code if possible
+    validations:
+      required: false
