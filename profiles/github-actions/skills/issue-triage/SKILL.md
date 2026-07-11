@@ -21,7 +21,8 @@ extension — or a report that something existing is broken.
 
 ## Process
 
-1. Read the issue with `gh issue view`.
+1. Take `issue_number` and `issue_author` from the launch prompt's
+   trigger_context, then read the issue with `gh issue view`.
 2. Classify it as exactly one of:
    - `feat` — a request for a new profile, a bundled skill or DeepWork job
      inside a profile, or a prompting extension (system-prompt additions,
@@ -31,9 +32,10 @@ extension — or a report that something existing is broken.
 3. If the classification is clear, apply that one label with
    `gh issue edit --add-label`, then post one comment (see
    [Posting the comment](#posting-the-comment)) containing:
-   - the classification in a sentence and a short restatement of the work as
-     you understand it, in the catalog's terms (which profile directory,
-     file, or README convention it touches),
+   - a greeting @-mentioning `issue_author`, the classification in a
+     sentence, and a short restatement of the work as you understand it, in
+     the catalog's terms (which profile directory, file, or README
+     convention it touches),
    - a concrete plan as a short numbered list: for a `feat`, the files to
      add under `profiles/<id>/` (a new profile gets `profile.yml`; bundled
      skills live in the profile's `skills/` directory; other adapter assets
