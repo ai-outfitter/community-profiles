@@ -32,7 +32,7 @@ use the template fields as your completeness checklist, not as a gate.
 ## Process
 
 1. Take `issue_number` and `issue_author` from the launch prompt's
-   trigger_context, then read the issue with `gh issue view`.
+   trigger_context, then read the issue with `gh issue view <issue_number>`.
 2. Classify it as exactly one of:
    - `feat` — a request for a new profile, a bundled skill or DeepWork job
      inside a profile, or a prompting extension (system-prompt additions,
@@ -40,7 +40,8 @@ use the template fields as your completeness checklist, not as a gate.
    - `fix` — an existing profile, skill, or catalog file is broken, wrong,
      or out of date
 3. If the classification is clear, apply that one label with
-   `gh issue edit --add-label`, then post one comment (see
+   `gh issue edit <issue_number> --add-label <feat|fix>`, then post one
+   comment (see
    [Posting the comment](#posting-the-comment)) containing:
    - a greeting @-mentioning `issue_author`, the classification in a
      sentence, and a short restatement of the work as you understand it, in
