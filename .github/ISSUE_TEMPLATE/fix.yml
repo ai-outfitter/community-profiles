@@ -1,0 +1,29 @@
+name: Something is broken
+description: >-
+  An existing profile, skill, or catalog file is broken, wrong, or out of
+  date. The triage agent will label it and comment with a suggested plan.
+title: "fix: "
+body:
+  - type: input
+    id: target
+    attributes:
+      label: Affected profile or file
+      description: The profile id or path under `profiles/` that is broken.
+      placeholder: e.g. github-actions, or profiles/github-actions/skills/issue-triage/SKILL.md
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happens instead?
+      description: >-
+        Include the command you ran (e.g. `outfitter run --profile <id>`) and
+        any error output.
+    validations:
+      required: true
