@@ -1,0 +1,53 @@
+# Triage every newly opened issue with the catalog's own github-actions
+# profile (profiles/github-actions) and its bundled issue-triage skill. The
+# agent classifies the issue as feat or fix, applies that one label, and
+# comments with a plan and example pseudo-code following Outfitter best
+# practices.
+#
+# Inference runs on GitHub Models — no API keys. It is authenticated by the
+# workflow's own GITHUB_TOKEN via `models: read`; the provider config lives in
+# .github/models.json and is installed into pi's config dir before the action
+# runs.
+#
+# Setup: the `feat` and `fix` labels must already exist in the repository
+# (`gh label create feat`, `gh label create fix`) — the workflow token can add
+# existing labels to issues but the agent should not be creating labels.
+# Auth: workflow GITHUB_TOKEN — recommended for this shape (labels and
+# comments in one repo, nothing that must trigger CI).
+name: Issue triage
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+  models: read
+
+jobs:
+  triage:
+    # Never triage issues the automation itself opened.
+    if: github.event.issue.user.type != 'Bot'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure GitHub Models provider for pi
+        run: |
+          mkdir -p "$HOME/.pi/agent"
+          cp .github/models.json "$HOME/.pi/agent/models.json"
+
+      - uses: ai-outfitter/actions@v1
+        with:
+          # Named github-actions because on this workflow's default
+          # GITHUB_TOKEN that is who authors the triage comments and labels:
+          # the github-actions bot.
+          profile: github-actions
+          # The profile ships in this repository, so run the checked-out
+          # version — no remote catalog or ref pinning needed.
+          profile-source: profiles
+          # Pass the issue by number only; the profile fetches content with
+          # `gh` so untrusted issue text never enters workflow code.
+          prompt: >-
+            Issue #${{ github.event.issue.number }} was just opened in
+            ${{ github.repository }}. Triage it with your issue-triage skill.

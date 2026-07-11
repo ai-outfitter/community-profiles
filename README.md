@@ -27,6 +27,8 @@ Pin `ref` to a tag or commit — an unpinned source runs whatever the catalog pu
 3. Bundled skills, prompts, or DeepWork jobs live inside the profile directory (`profiles/<id>/cli_specific/...`).
 4. Open a pull request. The description should say what the profile is for and which agent adapters it targets (Pi, Claude Code).
 
+Prefer opening an issue first: newly opened issues are triaged automatically by the [`github-actions` profile](profiles/github-actions/profile.yml)'s bundled [issue-triage skill](profiles/github-actions/skills/issue-triage/SKILL.md) (running on this repo via [`ai-outfitter/actions`](https://github.com/ai-outfitter/actions), see [.github/workflows/issue-triage.yml](.github/workflows/issue-triage.yml)). The agent labels the issue `feat` (new profile, bundled skill, or prompting extension) or `fix`, and comments with a suggested plan and example sketches following Outfitter best practices.
+
 ## Layout
 
 ```text
