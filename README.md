@@ -5,9 +5,12 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 ## Agents
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
+- `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 
 ## Skills
 
+- `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
+- `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
 
 ## Using this catalog
