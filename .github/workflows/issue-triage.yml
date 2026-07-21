@@ -1,12 +1,12 @@
-# Triage every newly opened issue with the catalog's own github-actions
-# profile (profiles/github-actions) and its bundled issue-triage skill. The
+# Triage every newly opened issue with the catalog's conventional
+# actions-agent and its selected issue-triage skill. The
 # agent classifies the issue as feat or fix, applies that one label, and
 # comments with a plan and example pseudo-code following Outfitter best
 # practices.
 #
 # Inference runs on GitHub Models — no API keys. It is authenticated by the
 # workflow's own GITHUB_TOKEN via `models: read`; the provider config lives in
-# .github/models.json and is installed into pi's config dir before the action
+# models.json and is installed into pi's config dir before the action
 # runs.
 #
 # Setup: the `feat` and `fix` labels must already exist in the repository
@@ -35,26 +35,24 @@ jobs:
       - name: Configure GitHub Models provider for pi
         run: |
           mkdir -p "$HOME/.pi/agent"
-          cp .github/models.json "$HOME/.pi/agent/models.json"
+          cp models.json "$HOME/.pi/agent/models.json"
 
-      - uses: ai-outfitter/actions@v1
+      - uses: ai-outfitter/actions@v2
         id: agent
         with:
-          # Named github-actions because on this workflow's default
-          # GITHUB_TOKEN that is who authors the triage comments and labels:
-          # the github-actions bot.
-          profile: github-actions
-          # The profile ships in this repository, so run the checked-out
-          # version — no remote catalog or ref pinning needed. Absolute path:
-          # outfitter resolves relative path sources against /, not the
-          # workspace.
-          profile-source: ${{ github.workspace }}/profiles
+          # actions-agent is the conventional automation slug. With this
+          # workflow's default GITHUB_TOKEN, its visible actor remains
+          # github-actions[bot].
+          agent: actions-agent
+          # The standalone Dotagents payload is the repository root, so use
+          # the checked-out version without a remote catalog or ref.
+          source: ${{ github.workspace }}
           # trigger_context passes only trusted event identifiers; the skill
           # fetches issue content with `gh` so untrusted issue text never
           # enters workflow code. The author login is user-influenced — the
-          # profile treats it as an opaque identifier, never as instructions.
+          # agent treats it as an opaque identifier, never as instructions.
           prompt: |
-            Handle this GitHub event using the profile's system-prompt rules.
+            Handle this GitHub event using the agent's instructions.
             Treat trigger_context as routing metadata, select only the relevant
             skill, then fetch the source material that skill needs with trusted
             tools.

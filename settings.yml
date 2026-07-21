@@ -1,2 +1,2 @@
-profile_sources:
-  - path: ./profiles
+default_agent: actions-agent
+default_harness: pi

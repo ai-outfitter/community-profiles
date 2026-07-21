@@ -6,7 +6,11 @@
       "apiKey": "$GITHUB_TOKEN",
       "authHeader": true,
       "models": [
-        { "id": "openai/gpt-4.1-mini", "name": "GPT-4.1 mini (GitHub Models)", "reasoning": false }
+        {
+          "id": "openai/gpt-4.1-mini",
+          "name": "GPT-4.1 mini (GitHub Models)",
+          "reasoning": false
+        }
       ]
     }
   }

@@ -1,15 +1,15 @@
 name: Something is broken
 description: >-
-  An existing profile, skill, or catalog file is broken, wrong, or out of
+  An existing agent, skill, or catalog file is broken, wrong, or out of
   date. The triage agent will label it and comment with a suggested plan.
 title: "fix: "
 body:
   - type: input
     id: target
     attributes:
-      label: Affected profile or file
-      description: The profile id or path under `profiles/` that is broken.
-      placeholder: e.g. github-actions, or profiles/github-actions/skills/issue-triage/SKILL.md
+      label: Affected agent or file
+      description: The agent id or protocol-resource path that is broken.
+      placeholder: e.g. actions-agent, or skills/issue-triage/SKILL.md
     validations:
       required: true
   - type: textarea
@@ -23,7 +23,7 @@ body:
     attributes:
       label: What happens instead?
       description: >-
-        Include the command you ran (e.g. `outfitter run --profile <id>`) and
+        Include the command you ran (e.g. `outfitter run <agent-id>`) and
         any error output.
     validations:
       required: true

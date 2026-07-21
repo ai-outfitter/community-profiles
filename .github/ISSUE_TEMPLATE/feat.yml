@@ -1,7 +1,7 @@
-name: New profile, skill, or prompting extension
+name: New agent, skill, or prompting change
 description: >-
-  Request something new in the catalog — a profile, a bundled skill, or a
-  prompting extension to an existing profile. The triage agent will label it
+  Request something new in the catalog — an agent, a skill, or a prompting
+  change to an existing agent. The triage agent will label it
   and comment with a suggested plan.
 title: "feat: "
 body:
@@ -10,19 +10,19 @@ body:
     attributes:
       label: What kind of addition is this?
       options:
-        - New profile
-        - Bundled skill for an existing profile
-        - Prompting extension to an existing profile
+        - New agent
+        - Skill for an existing agent
+        - Prompting change to an existing agent
     validations:
       required: true
   - type: input
     id: target
     attributes:
-      label: Target profile
+      label: Target agent
       description: >-
-        For a skill or prompting extension: which profile under `profiles/`
-        it belongs to. For a new profile: the proposed profile id.
-      placeholder: e.g. github-actions, or technical-writer (proposed)
+        For a skill or prompting change: which agent under `agents/` selects
+        it. For a new agent: the proposed agent id.
+      placeholder: e.g. actions-agent, or technical-writer (proposed)
     validations:
       required: true
   - type: textarea
@@ -31,14 +31,14 @@ body:
       label: What should it do?
       description: >-
         The mode of work or capability, in a few sentences. One mode of work
-        per profile; one focused capability per skill.
+        per agent; one focused capability per skill.
     validations:
       required: true
   - type: textarea
-    id: adapters
+    id: harnesses
     attributes:
-      label: Agent adapters
-      description: Which adapters this targets (Pi, Claude Code) and anything adapter-specific.
+      label: Harnesses
+      description: Which harnesses this targets (Pi, Claude Code) and anything harness-specific.
       placeholder: Pi primarily; Claude Code if possible
     validations:
       required: false
