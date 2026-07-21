@@ -1,2 +1,2 @@
-default_agent: actions-agent
+default_agent: actions
 default_harness: pi
