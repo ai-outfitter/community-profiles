@@ -1,7 +1,7 @@
 ---
 name: issue-triage
 description: >-
-  Triage one newly opened issue on the community-profiles catalog: classify it
+  Triage one newly opened GitHub issue on the community-profiles catalog: classify it
   as feat (new agent, skill, or prompting change) or fix, apply
   that one label, and comment with a plan and example pseudo-code following
   Outfitter best practices.

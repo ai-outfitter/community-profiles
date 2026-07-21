@@ -1,12 +1,15 @@
 # Triage every newly opened issue with the catalog's conventional
-# actions-agent and its selected issue-triage skill. The
+# actions agent and its selected agent-local issue-triage skill. The
 # agent classifies the issue as feat or fix, applies that one label, and
 # comments with a plan and example pseudo-code following Outfitter best
 # practices.
 #
+# BLOCKED: ai-outfitter/outfitter#188 must land before Outfitter can resolve
+# this agent's colocated skills. Keep the corresponding profile PR in draft.
+#
 # Inference runs on GitHub Models — no API keys. It is authenticated by the
 # workflow's own GITHUB_TOKEN via `models: read`; the provider config lives in
-# models.json and is installed into pi's config dir before the action
+# .github/models.json and is installed into pi's config dir before the action
 # runs.
 #
 # Setup: the `feat` and `fix` labels must already exist in the repository
@@ -35,15 +38,15 @@ jobs:
       - name: Configure GitHub Models provider for pi
         run: |
           mkdir -p "$HOME/.pi/agent"
-          cp models.json "$HOME/.pi/agent/models.json"
+          cp .github/models.json "$HOME/.pi/agent/models.json"
 
       - uses: ai-outfitter/actions@v2
         id: agent
         with:
-          # actions-agent is the conventional automation slug. With this
+          # actions is the conventional automation slug. With this
           # workflow's default GITHUB_TOKEN, its visible actor remains
           # github-actions[bot].
-          agent: actions-agent
+          agent: actions
           # The standalone Dotagents payload is the repository root, so use
           # the checked-out version without a remote catalog or ref.
           source: ${{ github.workspace }}
