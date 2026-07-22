@@ -17,7 +17,7 @@ fixed review method and output shape and bundles starter persona documents
 tuned to Outfitter's own audience:
 
 ```text
-skills/persona-review/
+agents/reviewer/skills/persona-review/
   SKILL.md
   references/
     roles/
@@ -46,7 +46,7 @@ Each persona review runs as its own composed reviewer process with the persona
 appended — no Outfitter changes needed, because `outfitter run <agent> -- …`
 forwards pass-through args to the harness and appends them last. The skill
 bundles
-[`scripts/persona-review.sh`](../skills/persona-review/scripts/persona-review.sh),
+[`scripts/persona-review.sh`](../agents/reviewer/skills/persona-review/scripts/persona-review.sh),
 which resolves the persona document(s) and passes them through as
 `--append-system-prompt`. From the skill directory:
 
