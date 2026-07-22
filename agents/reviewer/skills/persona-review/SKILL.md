@@ -38,6 +38,31 @@ points at elsewhere:
   [references/individuals/dana-okafor.md](references/individuals/dana-okafor.md)
   (`roles: [founder-operator]`).
 
+## Create a persona
+
+To help someone author a **new** persona (rather than adopt an existing one),
+work from the templates in `assets/` and save the result under `references/`:
+
+1. **Pick the kind.** A **role** (`kind: role`) is a reusable customer segment
+   shared by many people; a **person** (`kind: individual`) is one named human
+   who inherits one or more roles and adds their own voice. Author the role
+   first if the person's segment has none yet.
+2. **Copy the template.** Roles: [assets/template.role.md](assets/template.role.md).
+   People: [assets/template.person.md](assets/template.person.md). Each lists
+   every required field.
+3. **Interview for the fields.** Fill each field from what the user tells you —
+   do not invent demographics, income, or research. For a role, capture the
+   segment's `goals`, `anxieties`, `buying_triggers`, and `feedback_focus`. For
+   a person, set `roles:` to existing role slug(s), then their demographics and
+   `tone`, and write one paragraph of background/voice.
+4. **Save it.** Roles go to `references/roles/<slug>.md`, people to
+   `references/individuals/<slug>.md`, where `<slug>` is the lowercase,
+   hyphen-separated name (`Dana Okafor` → `dana-okafor`). Replace the template's
+   comment header with the finished content.
+5. **Confirm it's adoptable.** Every required frontmatter key is present, and a
+   person's `roles:` each resolve to a `references/roles/<slug>.md`. Then adopt
+   it in a review exactly like the bundled personas — role first, person second.
+
 ## Review from that viewpoint
 
 Read or experience the provided artifact strictly as that persona would:
@@ -91,15 +116,17 @@ which resolves the persona document(s) you name and passes them through as
 bash scripts/persona-review.sh \
   --persona references/roles/platform-lead.md \
   --persona references/individuals/priya-nair.md \
-  -- --print "@docs/getting-started.md Return the standard persona-review shape."
+  -- --print "Return the standard persona-review shape. @docs/getting-started.md"
 ```
 
 That expands to
 `outfitter run reviewer -- --append-system-prompt <role> --append-system-prompt <individual> --print "…"`.
 Give the role first and the individual second so the individual refines the
-role; attach the artifact with pi's `@`-syntax. Because the child is a composed
-reviewer, it keeps the profile's model and skills — nothing to re-specify. Run
-the script once per persona and compare the fixed-shape outputs side by side.
+role; attach the artifact with pi's `@`-syntax. Put the `@path` **last** in the
+`--print` prompt — pi reads an `@` reference to the end of the string, so the
+instruction text must come before it. Because the child is a composed reviewer,
+it keeps the profile's model and skills — nothing to re-specify. Run the script
+once per persona and compare the fixed-shape outputs side by side.
 
 To do it ad hoc without the script — an agent can append any document on the
 fly:
@@ -107,7 +134,7 @@ fly:
 ```bash
 outfitter run reviewer -- \
   --append-system-prompt references/individuals/dana-okafor.md \
-  --print "@docs/getting-started.md Return the standard persona-review shape."
+  --print "Return the standard persona-review shape. @docs/getting-started.md"
 ```
 
 When you already are the review agent (this skill is loaded), you can instead
