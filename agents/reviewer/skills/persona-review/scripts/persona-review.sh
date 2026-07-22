@@ -18,13 +18,14 @@
 #                    resolved to absolute so they work from the child's cwd.
 #   after --         Passed straight to the harness. Include `--print` for a
 #                    non-interactive run and the review task; attach the
-#                    artifact with pi's @-syntax.
+#                    artifact with pi's @-syntax, placing the @path LAST in the
+#                    prompt (pi reads an @ reference to the end of the string).
 #
 # Example:
 #   bash persona-review.sh \
 #     --persona references/roles/platform-lead.md \
 #     --persona references/individuals/priya-nair.md \
-#     -- --print "@README.md Return the standard persona-review shape."
+#     -- --print "Return the standard persona-review shape. @README.md"
 set -euo pipefail
 
 outfitter_bin="${OUTFITTER_BIN:-outfitter}"
