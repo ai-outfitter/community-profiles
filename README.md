@@ -9,7 +9,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
   persona Markdown appended at launch.
-- `grafana-agent` - platform agent that configures Grafana and its cluster integrations, provisioning the Grafana MCP securely and declaratively.
+- `grafana-agent` - platform agent that configures Grafana and its cluster integrations, provisioning the Grafana MCP securely and declaratively. Ships an agent-local `grafana-mcp-setup` skill and a per-agent `mcp.json` merged into the composition.
 
 ## Skills
 
@@ -22,7 +22,6 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
-- `grafana-mcp-setup` - deploy the Grafana MCP server in-cluster securely: read-only credentials in Secrets, authenticated nginx front, NetworkPolicy scoping, declarative config.
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
