@@ -13,6 +13,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
 - `gmail` - Google Workspace mailbox channel: read INBOX over the Gmail API with `gam`, reply in-thread, and relabel handled mail to Processed.
+- `slack-responder` - Slack channel: read messages in the bot's channels, reply in-thread, and mark each handled with a reaction.
 
 ## Using this catalog
 
