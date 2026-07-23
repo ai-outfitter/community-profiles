@@ -6,11 +6,10 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
-- `grafana-alert-investigator` - headless agent woken by a firing alert to investigate it across Grafana signals and the Kubernetes API, then comment its diagnosis on the tracking issue. See [docs/grafana-alert-investigator.md](docs/grafana-alert-investigator.md).
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
   persona Markdown appended at launch.
-- `grafana-agent` - platform agent that configures Grafana and its cluster integrations, provisioning the Grafana MCP securely and declaratively. Ships an agent-local `grafana-mcp-setup` skill and a per-agent `mcp.json` merged into the composition.
+- `grafana-agent` - platform agent for Grafana on Kubernetes: provisions the Grafana MCP securely and declaratively, and investigates firing alerts with read-only, comment-only diagnosis. Ships agent-local skills (`grafana-mcp-setup`, `grafana-alert-investigate`, `alert-issue-triage`) and a per-agent `mcp.json` merged into the composition. See [docs/grafana-agent.md](docs/grafana-agent.md).
 
 ## Skills
 
@@ -19,8 +18,6 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
   live in portable Markdown.
 - `persona-review` - run one isolated shared reviewer with a canonical persona
   file and save a sourced report in the adopted voice.
-- `grafana-alert-investigate` - investigate one firing alert across Loki logs, Prometheus metrics, Tempo traces, Pyroscope profiles, and the read-only Kubernetes API, then classify it as expected/known-noisy or a real anomaly.
-- `alert-issue-triage` - find the existing tracking issue for a firing alert and comment the investigation finding and recommendation.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
