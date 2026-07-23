@@ -45,30 +45,32 @@ Repeat until INBOX is empty:
 
    ```bash
    gam user "$GMAIL_USER" print messages query "in:inbox" \
-     todrive false | tail -n +2 | cut -d, -f1
+     todrive false | tail -n +2 | cut -d, -f3
    ```
+
+   The default CSV columns are `User,threadId,id,...`, so the message id is the
+   third field.
 
    If no ids are returned, there is nothing to do — end the turn.
 
 2. **Read one message** to understand what is being asked:
 
    ```bash
-   gam user "$GMAIL_USER" show message <id> format metadata,full
+   gam user "$GMAIL_USER" show messages ids <id> showbody
    ```
 
 3. **Compose and send a genuine threaded reply.** Write a real, useful response
    (not a canned acknowledgement). Send it into the original thread using the
-   sender, subject, `Message-ID`, and `threadId` from step 2:
+   sender, subject, and `Message-ID` from step 2 — Gmail threads the reply from
+   the `In-Reply-To`/`References` headers:
 
    ```bash
    gam user "$GMAIL_USER" sendemail \
      to "<sender>" \
      subject "Re: <original subject>" \
-     replyto "$GMAIL_USER" \
-     threadid <threadId> \
      header "In-Reply-To" "<original Message-ID>" \
      header "References" "<original Message-ID>" \
-     message @/workspace/reply.txt
+     file /workspace/reply.txt
    ```
 
    Confirm the send succeeded (exit 0, no error line) before moving on. If it
@@ -77,7 +79,7 @@ Repeat until INBOX is empty:
 4. **Move the original out of INBOX** to mark it handled:
 
    ```bash
-   gam user "$GMAIL_USER" modify message <id> \
+   gam user "$GMAIL_USER" modify messages ids <id> \
      removelabel INBOX addlabel "$LINK_MAIL_PROCESSED"
    ```
 
