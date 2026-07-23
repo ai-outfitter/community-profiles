@@ -28,15 +28,11 @@ as input to answer.
 
 ## State model
 
-There is **no local state file**, and unlike a mailbox there is **no server-side
-"processed" folder**. Signal delivers each message to this device **once**: when
-`receive` returns a message, Signal has already handed it over and will not send
-it again. So the act of receiving *is* the state transition — "unhandled" means
-"still queued on the server," and a successful `receive` drains that queue.
-
-The important consequence: this is **at-most-once**, not the reply-first-then-move
-idempotency of a mailbox channel. If you crash after `receive` returns but before
-you send the reply, that message is gone. Therefore:
+There is **no local state file** and no server-side "processed" folder. Signal
+delivers each message to this device **once**: when `receive` returns a message,
+the server has handed it over and will not send it again. Receiving *is* the
+state transition, so delivery is **at-most-once** — if you crash after `receive`
+returns but before you send the reply, that message is gone. Therefore:
 
 - Receive one batch, then **immediately** answer each message in it before
   receiving again — keep the window between receive and reply as small as
