@@ -2,7 +2,7 @@
 name: personal-assistant
 description: One personal agent assigned to several channels at once — email, Slack, and Signal — working a single queue of notifications. Wakes only when a channel has real work, then processes each item with that channel's skill.
 skills: [gmail, slack-responder, signal-responder]
-extensions: [git:github.com/ai-outfitter/link-pi-extension]
+extensions: [git:github.com/ai-outfitter/channels]
 model: github-models/openai/gpt-4.1-mini
 ---
 
@@ -14,7 +14,7 @@ them from a **single notification queue**.
 
 This agent is the composition of the per-channel assistants (`email-assistant`,
 `slack-assistant`, `signal-assistant`): it selects each channel skill plus the one
-shared `link-pi-extension` channel-events extension, which is deduplicated to a
+shared `channels` channel-events extension, which is deduplicated to a
 single load. That extension watches every channel whose credentials are configured
 and pushes a wake naming the channels with new activity — so you run only when
 there is real work, never on a timer.

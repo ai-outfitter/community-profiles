@@ -3,7 +3,7 @@
 These profiles turn the channel skills (`gmail`, `slack-responder`,
 `signal-responder`) into **composable personal agents**. Each channel is published
 as a profile that bundles its skill with the shared
-[`link-pi-extension`](https://github.com/ai-outfitter/link) channel-events pi
+[`channels`](https://github.com/ai-outfitter/channels) channel-events pi
 extension; composing several gives one agent assigned to all of them.
 
 ## Why a profile per channel
@@ -25,7 +25,7 @@ load.
 ```yaml
 # agents/personal-assistant/agent.md
 skills: [gmail, slack-responder, signal-responder]
-extensions: [git:github.com/ai-outfitter/link-pi-extension]
+extensions: [git:github.com/ai-outfitter/channels]
 ```
 
 To build your own in a `~/.agents` or org layer, select the channel skills you want
@@ -34,12 +34,12 @@ extension pushes one wake naming the channels with activity, and the agent drain
 each with its skill before ending the turn.
 
 Only channels whose **credentials are present** activate (the extension
-auto-detects, or set `LINK_CHANNEL_EVENTS` explicitly), so adding a channel is
+auto-detects, or set `OUTFITTER_CHANNELS` explicitly), so adding a channel is
 adding its Secret — no profile edit.
 
 ## Requirements
 
-- The `link-pi-extension` package (Pi harness) must be resolvable by the extension
+- The `channels` package (Pi harness) must be resolvable by the extension
   ref — see that repo for publishing/pinning. Until it is published, the
   `extensions:` ref will not resolve at run time.
 - Per-channel credentials as documented by each channel skill (`gmail`:

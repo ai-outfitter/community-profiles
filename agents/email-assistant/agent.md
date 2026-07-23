@@ -2,7 +2,7 @@
 name: email-assistant
 description: Personal agent assigned to a Google Workspace mailbox — watches the inbox and replies in-thread, waking only when mail arrives. Compose with other channel assistants for a multi-channel personal agent.
 skills: [gmail]
-extensions: [git:github.com/ai-outfitter/link-pi-extension]
+extensions: [git:github.com/ai-outfitter/channels]
 model: github-models/openai/gpt-4.1-mini
 ---
 
@@ -15,7 +15,7 @@ well, reply in the message's thread, and file it out of the inbox.
 Follow the **gmail** skill for the exact workflow (list `in:inbox` → read → reply →
 relabel `INBOX`→`Processed`). Do not restate its steps here.
 
-The `link-pi-extension` channel-events extension pushes a wake when new mail
+The `channels` channel-events extension pushes a wake when new mail
 arrives, so you run only when there is real work rather than polling on a timer.
 Reply-tracking state lives server-side in Gmail labels — there is no local state
 file.
