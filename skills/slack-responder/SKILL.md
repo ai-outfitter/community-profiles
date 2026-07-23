@@ -40,6 +40,14 @@ replied to. (The reaction is the Slack analogue of moving mail out of `INBOX`.)
 
 ## Loop
 
+**Once at startup, learn your own bot user id** — you need it to recognize your
+own handled-reactions. `auth.test` needs no extra scope:
+
+```bash
+BOT_USER_ID=$(curl -sS -X POST "https://slack.com/api/auth.test" \
+  -H "Authorization: Bearer $SLACK_BOT_TOKEN" | jq -r '.user_id')
+```
+
 For each channel id in `$SLACK_CHANNEL_IDS`, repeat until no unhandled messages
 remain:
 
@@ -55,8 +63,9 @@ remain:
    The `.bot_id == null` filter drops every bot-authored message — including your
    own replies, which carry a `bot_id` — so you never answer yourself. Of the
    remaining messages, skip a `ts` that is already handled: it carries a
-   `.reactions[]?.name` equal to `$LINK_SLACK_DONE_EMOJI` **and** the bot's own
-   user id is in that reaction's `.users`.
+   `.reactions[]?.name` equal to `$LINK_SLACK_DONE_EMOJI` whose `.users` include
+   `$BOT_USER_ID` (checking the reaction is *yours* stops a human's ✅ from making
+   you skip a real request).
 
 2. **Read the message** (`text`, `user`, `thread_ts`) from the history payload to
    understand what is being asked.
