@@ -6,6 +6,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
+- `email-assistant` / `slack-assistant` / `signal-assistant` - single-channel personal agents (channel skill + the `link-pi-extension` push extension), composable together.
+- `personal-assistant` - one agent assigned to email, Slack, and Signal at once, working a single notification queue. See [docs/personal-assistant.md](docs/personal-assistant.md).
 
 ## Skills
 
