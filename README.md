@@ -6,6 +6,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
+- `wiki-maintainer` - maintains a persistent, compounding markdown wiki over immutable sources: ingest, query, lint. See [docs/wiki-maintainer.md](docs/wiki-maintainer.md).
 
 ## Skills
 
