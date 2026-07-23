@@ -12,6 +12,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
+- `gmail` - Google Workspace mailbox channel: read INBOX over the Gmail API with `gam`, reply in-thread, and relabel handled mail to Processed.
 
 ## Using this catalog
 
