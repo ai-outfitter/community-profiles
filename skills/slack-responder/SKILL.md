@@ -7,7 +7,7 @@ description: Respond to messages in the Slack channels the agent's bot is invite
 
 You handle inbound Slack messages by driving the **Slack Web API** directly with
 `curl` (JSON in, JSON out — always parse the JSON, never scrape). There is no
-bespoke Slack client; the token and channel list come from the environment.
+bespoke Slack client.
 
 Credentials and configuration come from the environment:
 
@@ -49,13 +49,14 @@ remain:
    curl -sS -G "https://slack.com/api/conversations.history" \
      -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
      --data-urlencode "channel=$CHANNEL" --data-urlencode "limit=50" \
-   | jq -r '.messages[] | select(.subtype == null) | .ts'
+   | jq -r '.messages[] | select(.subtype == null and .bot_id == null) | .ts'
    ```
 
-   Skip a `ts` when the bot has already reacted: the message is handled when a
-   `.reactions[]?.name` equals `$LINK_SLACK_DONE_EMOJI` **and** the bot's own user
-   id is in that reaction's `.users`. Skip bot/own messages (`.bot_id`, or `user`
-   == the bot's own id) so you never answer yourself.
+   The `.bot_id == null` filter drops every bot-authored message — including your
+   own replies, which carry a `bot_id` — so you never answer yourself. Of the
+   remaining messages, skip a `ts` that is already handled: it carries a
+   `.reactions[]?.name` equal to `$LINK_SLACK_DONE_EMOJI` **and** the bot's own
+   user id is in that reaction's `.users`.
 
 2. **Read the message** (`text`, `user`, `thread_ts`) from the history payload to
    understand what is being asked.
