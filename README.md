@@ -6,14 +6,13 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
-- `grafana-agent` - platform agent that configures Grafana and its cluster integrations, provisioning the Grafana MCP securely and declaratively.
+- `grafana-agent` - platform agent that configures Grafana and its cluster integrations, provisioning the Grafana MCP securely and declaratively. Ships an agent-local `grafana-mcp-setup` skill and a per-agent `mcp.json` merged into the composition.
 
 ## Skills
 
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
-- `grafana-mcp-setup` - deploy the Grafana MCP server in-cluster securely: read-only credentials in Secrets, authenticated nginx front, NetworkPolicy scoping, declarative config.
 
 ## Using this catalog
 

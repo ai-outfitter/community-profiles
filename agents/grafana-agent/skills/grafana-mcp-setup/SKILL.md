@@ -56,7 +56,7 @@ Commit every manifest — Deployment, Service, nginx config, NetworkPolicy, and 
 
 ## 6. Wire consumers and verify
 
-Point consuming agents' MCP configuration at the authenticated endpoint with credentials from their own Secret mounts. Then verify:
+Point consuming agents' MCP configuration at the authenticated endpoint with credentials from their own Secret mounts — this agent's own sibling `mcp.json` (endpoint and `Authorization` header from `GRAFANA_MCP_URL` / `GRAFANA_MCP_AUTH`) is the template. Then verify:
 
 1. A tools-list request through the proxy **with** credentials succeeds.
 2. The same request **without** credentials is rejected.
