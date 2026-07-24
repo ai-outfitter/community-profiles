@@ -1,99 +1,75 @@
-# Persona review
+# Persona documents and reviews
 
-The `reviewer` agent is a general base review agent that gathers structured
-feedback on a product, docs, onboarding flow, or UX from the point of view of
-an assigned user or customer persona. It names no customer type itself — it
-adopts whichever persona documents you feed it at run time, so one agent
-covers many viewpoints.
-
-It uses the [persona convention](https://github.com/ai-outfitter/outfitter/blob/main/docs/documentation/usecases/persona-reviews.md):
-one fixed base review agent plus interchangeable persona description
-documents, run once per document. There is no agent per customer type.
-
-## Bundled skill
-
-The agent selects a single Dotagents skill, `persona-review`, which holds the
-fixed review method and output shape and bundles starter persona documents
-tuned to Outfitter's own audience:
+Each persona is one ordinary Markdown file, useful inside or outside
+Outfitter. Authoring can compose many inputs, but the canonical artifact
+committed to the repository is self-contained. Outfitter provides one shared
+profile and appends the selected persona file only for the run:
 
 ```text
-agents/reviewer/skills/persona-review/
-  SKILL.md
-  references/
-    roles/
-      platform-lead.md
-      founder-operator.md
-    individuals/
-      priya-nair.md        # roles: [platform-lead]
-      dana-okafor.md       # roles: [founder-operator]
+normal user documentation
+  priya-nair.md
+          |
+          | bin/persona-review or the shipped skill script
+          v
+shared persona-reviewer agent
+  + persona-review skill
+          |
+          v
+sourced first-person report
 ```
 
-Personas come in two kinds of file you **mix and match**: a `kind: role`
-carries the priorities everyone in a customer segment shares, and a
-`kind: individual` is one named person who inherits one or more roles and
-adds their own demographics and voice.
+## Author portable persona documents
 
-## Output shape
+`persona-authoring` is a catalog-level skill that any normal agent can select.
+It creates one `kind: persona` Markdown file from user-supplied information.
+It does not require an `.agents` directory or create Outfitter agents.
 
-Because the shape is fixed in the skill and not in the persona document,
-feedback from every persona is directly comparable. Each review returns:
-persona, artifact reviewed, first impression, top blocker, strongest value
-signal, confusing language, suggested change, and confidence.
+Store the documents wherever they remain useful to the user:
 
-## Creating a persona
+```text
+docs/personas/
+  priya-nair.md
+  software-engineer.md
+```
 
-To add a new viewpoint, author a persona document from the templates in the
-skill's `assets/` directory and save it under `references/`:
+The same files can support product planning, research, writing, design review,
+or another tool. Outfitter is only one consumer.
 
-- **A role** (`kind: role`) — a reusable customer segment. Copy
-  `assets/template.role.md` to `references/roles/<slug>.md` and fill `title`,
-  `segment`, `goals`, `anxieties`, `buying_triggers`, and `feedback_focus`, plus
-  a paragraph describing the segment.
-- **A person** (`kind: individual`) — one named human who inherits roles. Copy
-  `assets/template.person.md` to `references/individuals/<slug>.md`, set `roles:`
-  to existing role slug(s), and fill `name`, `born`, `location`,
-  `household_income`, `education`, `employer`, `hobbies`, `skills`, and `tone`,
-  plus a paragraph of background and voice.
+## Use one shared Outfitter profile
 
-`<slug>` is the lowercase, hyphen-separated name (`Dana Okafor` → `dana-okafor`);
-author the role first if the person's segment has none. The `reviewer` agent can
-do this interactively — ask it to create a persona and it walks the template
-fields (see the skill's **Create a persona** section) — or copy the templates by
-hand. Once saved, adopt the new persona in a review exactly like the bundled ones.
+The catalog ships `persona-reviewer`, a normal agent whose stable loadout
+selects `persona-review`. It has no customer identity of its own. One
+self-contained persona document is appended at launch and exists only for that
+session.
 
-## Running a one-off review
-
-Each persona review runs as its own composed reviewer process with the persona
-appended — no Outfitter changes needed, because `outfitter run <agent> -- …`
-forwards pass-through args to the harness and appends them last. The skill
-bundles
-[`scripts/persona-review.sh`](../agents/reviewer/skills/persona-review/scripts/persona-review.sh),
-which resolves the persona document(s) and passes them through as
-`--append-system-prompt`. From the skill directory:
+The `persona-review` skill ships a reusable launcher:
 
 ```bash
-bash scripts/persona-review.sh \
-  --persona references/roles/platform-lead.md \
-  --persona references/individuals/priya-nair.md \
-  -- --print "Return the standard persona-review shape. \
-     @outfitter/docs/documentation/first-time-cli-agent-users.md"
+bash skills/persona-review/scripts/persona-review.sh \
+  --persona docs/personas/priya-nair.md \
+  -- --print "Review the supplied artifact and write the report. @README.md"
 ```
 
-That expands to `outfitter run reviewer -- --append-system-prompt <role>
---append-system-prompt <individual> --print "…"`. Give the role first and the
-individual second (the individual refines the role) and attach the artifact
-with pi's `@`-syntax — put the `@path` **last** in the prompt, since pi reads an
-`@` reference to the end of the string. Swap in `founder-operator` + `dana-okafor` to review the
-same artifact from another viewpoint; because the output shape is fixed, the
-runs line up side by side. Since the child is a composed reviewer, it keeps the
-profile's model and skills — nothing to re-specify.
+Projects can wrap the same pattern in a local `bin/persona-review` to provide
+named roles, review types, session export, or report destinations. Both paths
+ultimately run:
 
-You normally reach this through the `reviewer` agent — it invokes the script
-for you and relays the result — but any agent that loads the `persona-review`
-skill can call the script directly, or append a document ad hoc with
-`outfitter run reviewer -- --append-system-prompt <doc> --print "…"`.
+```bash
+outfitter run persona-reviewer -- \
+  --append-system-prompt <persona> \
+  <harness arguments>
+```
 
-`--persona` (and `--append-system-prompt`) accepts **any** document path, not
-just the bundled `references/` — so this is also the one-off path: point it at a
-persona you wrote anywhere on disk and review against it immediately, without
-saving it into the catalog.
+## Responsibility boundary
+
+- `persona-authoring` creates one portable, committed file per persona.
+- `persona-reviewer` is the single shared Outfitter agent profile.
+- `persona-review` provides review and report behavior plus the generic launch
+  script.
+- Project wrappers choose documents and handle project-specific concerns such
+  as session capture or publication.
+
+Adding a persona means adding exactly one document, not maintaining another
+Outfitter agent or a runtime chain of fragments. Reports stay inside the
+adopted identity and do not explain this framework; publishing systems own
+provenance metadata.

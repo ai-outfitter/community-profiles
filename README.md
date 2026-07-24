@@ -7,16 +7,22 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
-- `reviewer` - base persona-review agent that reviews an artifact from an assigned user/customer persona. Bundles its own `persona-review` skill under `agents/reviewer/skills/` (agent-local). See [docs/persona-review.md](docs/persona-review.md).
+- `persona-reviewer` - one shared review profile whose identity is supplied by
+  one canonical persona Markdown file appended at launch.
 
 ## Skills
 
 - `browser-mcp` - use Playwright or Chrome DevTools MCP for browser automation, UI debugging, screenshots, console/network inspection, and isolated browser sessions.
+- `persona-authoring` - create one self-contained, committed Markdown file per
+  persona without coupling it to Outfitter.
+- `persona-review` - append one canonical persona file to the shared reviewer
+  and write a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
 
-Agent-local skills (bundled under an agent, resolved only for that agent) are not listed here — e.g. `reviewer` carries `persona-review`.
+See [Persona documents and reviews](docs/persona-review.md) for the setup and
+runtime boundary.
 
 ## Using this catalog
 
