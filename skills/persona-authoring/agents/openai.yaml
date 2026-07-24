@@ -1,0 +1,4 @@
+interface:
+  display_name: "Persona Authoring"
+  short_description: "Create one canonical persona Markdown file"
+  default_prompt: "Use $persona-authoring to create or update one self-contained, committed Markdown file for this persona."
