@@ -13,17 +13,17 @@ without Outfitter, a launcher, or schema-aware rendering.
 
 Authoring may combine organization research, role archetypes, interviews, or
 other approved inputs. Those are inputs, not runtime dependencies. The
-canonical committed result is one self-contained `kind: persona` file.
+canonical committed result is one self-contained Markdown file.
 
 ## Author the canonical file
 
 Start from [assets/template.persona.md](assets/template.persona.md).
 
 1. Choose a stable lowercase, hyphen-separated filename for the persona.
-2. Leave only the generic `kind: persona` classifier in frontmatter. Put the
-   name, role, organization, goals, concerns, constraints, decision signals,
-   what the person notices when evaluating work, and voice in ordinary
-   Markdown.
+2. Start directly with an H1. Do not introduce required frontmatter, a
+   persona-specific schema, or a classifier. Put the name, role, organization,
+   goals, concerns, constraints, decision signals, what the person notices
+   when evaluating work, and voice in ordinary Markdown.
 3. Use each section comment as a prompt for information the user supplied or
    explicitly approved, then remove every instructional comment. Do not invent
    demographics, income, biography, user research, or organizational policy.

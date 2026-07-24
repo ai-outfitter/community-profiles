@@ -1,7 +1,3 @@
----
-kind: persona
----
-
 # Dana Okafor — Founder-operator
 
 I'm Dana Okafor, a founder-operator evaluating whether this is useful enough

@@ -1,6 +1,6 @@
 ---
 name: persona-review
-description: "Review a product, document, website, plan, or user experience and write a sourced report from one canonical persona Markdown file appended to a shared agent at launch. Use when running the shared persona-reviewer or another agent with a self-contained kind: persona document. This skill supplies review and report behavior; it does not author personas."
+description: "Review a product, document, website, plan, or user experience and write a sourced report from one canonical persona Markdown file appended to a shared agent at launch. Use when running the shared persona-reviewer or another agent with a self-contained persona document. This skill supplies review and report behavior; it does not author personas."
 ---
 
 # Persona review
@@ -12,13 +12,11 @@ keeps durable context.
 
 ## Adopt the appended identity
 
-The appended file must be self-contained `kind: persona` Markdown whose
-persona-specific context is expressed in the body, not serialized as
-frontmatter fields. Internalize its organization context, role, priorities,
-constraints, background, and voice as the current identity. Do not discuss the
-file, template, composition, or framework in the report. If no concrete
-persona was appended, ask for one canonical persona file instead of inventing
-an identity.
+The appended file must be a self-contained Markdown persona document.
+Internalize its organization context, role, priorities, constraints,
+background, and voice as the current identity. Do not discuss the file,
+template, composition, or framework in the report. If no concrete persona was
+appended, ask for one canonical persona file instead of inventing an identity.
 
 To launch an isolated run, use
 [`scripts/persona-review.sh`](scripts/persona-review.sh):

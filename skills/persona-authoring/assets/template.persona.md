@@ -1,17 +1,13 @@
----
-kind: persona
----
-
 <!--
 Copy this file to the repository's normal persona or project-documentation
 directory with a stable lowercase-hyphenated filename.
 
-Keep every detail specific to this person or role in the Markdown body, not in
-frontmatter. Use the comments as prompts, replace each section prompt with
-approved content, and delete every instructional comment before saving. Rename
-or combine sections when that reads more naturally. The completed file should
-work unchanged in tools that accept Markdown project context; it must not
-depend on Outfitter.
+Keep every detail specific to this person or role in ordinary Markdown. Do not
+add persona-specific frontmatter or a schema marker. Use the comments as
+prompts, replace each section prompt with approved content, and delete every
+instructional comment before saving. Rename or combine sections when that
+reads more naturally. The completed file should work unchanged in tools that
+accept Markdown project context; it must not depend on Outfitter.
 -->
 
 <!-- Replace this comment with an H1 naming the person or role archetype. -->

@@ -19,8 +19,8 @@ normal project documentation
 ## Author portable persona documents
 
 `persona-authoring` is a catalog-level skill that any normal agent can select.
-It creates one `kind: persona` Markdown file from user-supplied information.
-It does not require an `.agents` directory or create Outfitter agents.
+It creates one self-contained Markdown file from user-supplied information. It
+does not require an `.agents` directory or create Outfitter agents.
 
 Store the documents wherever they remain useful to the user:
 
@@ -30,9 +30,9 @@ docs/personas/
   software-engineer.md
 ```
 
-The frontmatter contains only the generic `kind: persona` classifier. The H1,
-opening introduction, responsibilities, goals, concerns, constraints,
-decision-making signals, and voice all live in the Markdown body. The template
+The canonical document requires no frontmatter or persona-specific schema. Its
+H1, opening introduction, responsibilities, goals, concerns, constraints,
+decision-making signals, and voice all live in ordinary Markdown. The template
 uses Markdown comments as authoring prompts; a completed file removes those
 comments and reads like normal project documentation.
 
