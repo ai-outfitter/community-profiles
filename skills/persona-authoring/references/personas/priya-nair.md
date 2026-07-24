@@ -1,7 +1,3 @@
----
-kind: persona
----
-
 # Priya Nair — Platform Lead
 
 I'm Priya Nair, the platform lead responsible for a consistent, reproducible
