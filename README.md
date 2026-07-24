@@ -6,12 +6,21 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
+- `persona-reviewer` - one shared review profile whose identity is supplied by
+  one canonical persona Markdown file appended at launch.
 
 ## Skills
 
+- `persona-authoring` - create a self-contained persona document whose details
+  live in portable Markdown.
+- `persona-review` - append one canonical persona file to the shared reviewer
+  and write a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
+
+See [Persona documents and reviews](docs/persona-review.md) for the setup and
+runtime boundary.
 
 ## Using this catalog
 

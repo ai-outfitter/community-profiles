@@ -1,0 +1,4 @@
+interface:
+  display_name: "Persona Authoring"
+  short_description: "Create portable Markdown persona context"
+  default_prompt: "Use $persona-authoring to create a portable, Markdown-first persona document for this project."

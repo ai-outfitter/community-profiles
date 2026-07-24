@@ -1,0 +1,4 @@
+interface:
+  display_name: "Persona Review"
+  short_description: "Write sourced reports from an agent identity"
+  default_prompt: "Use $persona-review with one canonical persona Markdown file to inspect this artifact and write a sourced report."
