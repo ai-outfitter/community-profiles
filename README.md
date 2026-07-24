@@ -13,8 +13,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 ## Skills
 
 - `browser-mcp` - use Playwright or Chrome DevTools MCP for browser automation, UI debugging, screenshots, console/network inspection, and isolated browser sessions.
-- `persona-authoring` - create one self-contained, committed Markdown file per
-  persona without coupling it to Outfitter.
+- `persona-authoring` - create a self-contained persona document whose details
+  live in portable Markdown.
 - `persona-review` - append one canonical persona file to the shared reviewer
   and write a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
