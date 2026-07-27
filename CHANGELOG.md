@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.0](https://github.com/ai-outfitter/community-profiles/compare/v1.0.0...v1.1.0) (2026-07-27)
+
+
+### Features
+
+* add canonical single-file persona convention ([34e4c81](https://github.com/ai-outfitter/community-profiles/commit/34e4c81a3c01321db938f799cbaedd44b7014131))
+* add platform browser MCP profile ([4767e95](https://github.com/ai-outfitter/community-profiles/commit/4767e957ad85a870bb3a0ee3074f8710bdfebdec))
+* add reviewer agent and persona-review skill ([5a80dda](https://github.com/ai-outfitter/community-profiles/commit/5a80dda44082661bf09e2efd4e1a8e54f35caf00))
+* **persona-review:** add create-persona flow, document both modes, add tests ([a16ac78](https://github.com/ai-outfitter/community-profiles/commit/a16ac78e4823896b99bc876dba32337211049384))
+
 ## 1.0.0 (2026-07-21)
 
 
