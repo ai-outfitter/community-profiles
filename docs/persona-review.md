@@ -5,6 +5,12 @@ Outfitter. Authoring can compose many inputs, but the canonical artifact
 committed to the repository is self-contained. Persona-specific information
 lives in readable Markdown rather than configuration fields.
 
+The file format is specified in Outfitter's
+[Personas](https://github.com/ai-outfitter/outfitter/blob/main/docs/documentation/personas.md)
+doc; the worked author-run-paste story lives in its
+[Persona reviews](https://github.com/ai-outfitter/outfitter/blob/main/docs/documentation/usecases/persona-reviews.md)
+use case. This page covers the catalog's setup and runtime boundary.
+
 ```text
 normal project documentation
   personas/priya-nair.md
@@ -36,8 +42,9 @@ decision-making signals, and voice all live in ordinary Markdown. The template
 uses Markdown comments as authoring prompts; a completed file removes those
 comments and reads like normal project documentation.
 
-To test portability, add the completed document unchanged to an agentic tool
-that accepts Markdown project context. For normal project work, tell the tool
+Take the file anywhere: paste or upload it unchanged into a web agent —
+claude.ai project knowledge, a ChatGPT project — or any agentic tool that
+accepts Markdown project context. For normal project work, tell the tool
 to treat it as stakeholder context rather than as its identity or as runtime
 instructions. The same file can steer product planning, research, writing,
 design review, or a review written from that person's point of view. Outfitter
