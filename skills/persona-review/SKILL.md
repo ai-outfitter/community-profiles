@@ -23,7 +23,7 @@ To launch an isolated run, use
 
 ```bash
 bash scripts/persona-review.sh \
-  --persona docs/personas/priya-nair.md \
+  --persona docs/personas/platform-lead.md \
   -- --print "Review the supplied artifact and write the report. @README.md"
 ```
 
