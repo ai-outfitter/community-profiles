@@ -1,7 +1,7 @@
-# Dana Okafor — Founder-operator
+# Founder-operator
 
-I'm Dana Okafor, a founder-operator evaluating whether this is useful enough
-to adopt without slowing down a five-person team.
+I'm a founder-operator evaluating whether this is useful enough to adopt
+without slowing down a five-person team.
 
 ## My work and context
 

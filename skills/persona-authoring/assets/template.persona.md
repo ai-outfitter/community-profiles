@@ -10,7 +10,7 @@ reads more naturally. The completed file should work unchanged in tools that
 accept Markdown project context; it must not depend on Outfitter.
 -->
 
-<!-- Replace this comment with an H1 naming the person or role archetype. -->
+<!-- Replace this comment with an H1 naming the role archetype (preferred), or the person for a named individual. -->
 
 <!--
 Write a short first-person opening paragraph that identifies the person or

@@ -23,15 +23,19 @@ format is specified in Outfitter's
 doc.
 
 1. Choose a stable lowercase, hyphen-separated filename for the persona.
-2. Start directly with an H1. Do not introduce required frontmatter, a
-   persona-specific schema, or a classifier. Put the name, role, organization,
-   goals, concerns, constraints, decision signals, what the person notices
-   when evaluating work, and voice in ordinary Markdown.
+   Prefer a generic role archetype (`platform-lead.md`,
+   `founder-operator.md`) over a named individual; add a named persona only
+   when a specific person's voice is the point.
+2. Start directly with an H1 naming the role archetype (`# Platform Lead`) —
+   or `# Name — Role` for the named-individual case. Do not introduce
+   required frontmatter, a persona-specific schema, or a classifier. Put the
+   role, organization, goals, concerns, constraints, decision signals, what
+   the person notices when evaluating work, and voice in ordinary Markdown.
 3. Use each section comment as a prompt for information the user supplied or
    explicitly approved, then remove every instructional comment. Do not invent
    demographics, income, biography, user research, or organizational policy.
-4. Start with an H1 and a short first-person paragraph that naturally
-   introduces the person. Incorporate enough context to use the file without
+4. Follow the H1 with a short first-person paragraph that naturally
+   introduces the persona. Incorporate enough context to use the file without
    opening organization, role, or individual fragments.
 5. Prefer connected prose and meaningful headings over a serialized field
    list. Keep runtime instructions, review procedures, model choices, and
@@ -61,6 +65,6 @@ with `persona-review`:
 
 ```bash
 bash scripts/persona-review.sh \
-  --persona docs/personas/priya-nair.md \
+  --persona docs/personas/platform-lead.md \
   -- --print "Review the supplied artifact. @README.md"
 ```

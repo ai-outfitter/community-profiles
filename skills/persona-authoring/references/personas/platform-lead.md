@@ -1,7 +1,7 @@
-# Priya Nair — Platform Lead
+# Platform Lead
 
-I'm Priya Nair, the platform lead responsible for a consistent, reproducible
-agent setup across a mid-sized engineering organization.
+I'm the platform lead responsible for a consistent, reproducible agent setup
+across a mid-sized engineering organization.
 
 ## My work and context
 

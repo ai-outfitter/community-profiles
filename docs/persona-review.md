@@ -13,7 +13,7 @@ use case. This page covers the catalog's setup and runtime boundary.
 
 ```text
 normal project documentation
-  personas/priya-nair.md
+  personas/platform-lead.md
         |
         +-- added as context --> tools that accept Markdown context
         |
@@ -32,8 +32,8 @@ Store the documents wherever they remain useful to the user:
 
 ```text
 docs/personas/
-  priya-nair.md
-  software-engineer.md
+  platform-lead.md
+  founder-operator.md
 ```
 
 The canonical document requires no frontmatter or persona-specific schema. Its
@@ -77,7 +77,7 @@ The `persona-review` skill ships a reusable launcher:
 
 ```bash
 bash skills/persona-review/scripts/persona-review.sh \
-  --persona docs/personas/priya-nair.md \
+  --persona docs/personas/platform-lead.md \
   -- --print "Review the supplied artifact and write the report. @README.md"
 ```
 
