@@ -14,15 +14,19 @@ EOF
 
 abspath() {
   local dir base
-  dir="$(cd "$(dirname "$1")" && pwd)"
-  base="$(basename "$1")"
-  printf '%s/%s\n' "$dir" "$base"
+  dir="$(cd -- "$(dirname -- "$1")" 2>/dev/null && pwd)" || return 1
+  [[ -n "$dir" ]] || return 1
+  base="${1##*/}"
+  printf '%s\n' "${dir%/}/$base"
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --agent)
-      [[ $# -ge 2 ]] || { usage >&2; exit 2; }
+      [[ $# -ge 2 && -n "$2" ]] || {
+        echo "persona-review: --agent requires a non-empty slug" >&2
+        exit 2
+      }
       agent="$2"
       shift 2
       ;;
@@ -32,11 +36,14 @@ while [[ $# -gt 0 ]]; do
         echo "persona-review: exactly one --persona <file> is allowed" >&2
         exit 2
       }
-      [[ -f "$2" ]] || {
-        echo "persona-review: persona document not found: $2" >&2
+      [[ -f "$2" && -r "$2" ]] || {
+        echo "persona-review: persona document is not a readable file: $2" >&2
         exit 1
       }
-      persona_file="$(abspath "$2")"
+      persona_file="$(abspath "$2")" || {
+        echo "persona-review: cannot resolve persona path: $2" >&2
+        exit 1
+      }
       shift 2
       ;;
     --)
