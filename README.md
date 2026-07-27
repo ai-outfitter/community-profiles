@@ -15,8 +15,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `browser-mcp` - use Playwright or Chrome DevTools MCP for browser automation, UI debugging, screenshots, console/network inspection, and isolated browser sessions.
 - `persona-authoring` - create a self-contained persona document whose details
   live in portable Markdown.
-- `persona-review` - append one canonical persona file to the shared reviewer
-  and write a sourced report in the adopted voice.
+- `persona-review` - run one isolated shared reviewer with a canonical persona
+  file and save a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
