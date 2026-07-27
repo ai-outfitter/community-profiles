@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/ai-outfitter/community-profiles/compare/v1.1.0...v1.1.1) (2026-07-27)
+
+
+### Bug Fixes
+
+* **persona-review:** harden launcher path resolution and validation ([3255926](https://github.com/ai-outfitter/community-profiles/commit/32559269104962be17681a3922ff88aad7384734))
+* **persona-review:** run isolated reviews through Outfitter ([#21](https://github.com/ai-outfitter/community-profiles/issues/21)) ([1fe1b9f](https://github.com/ai-outfitter/community-profiles/commit/1fe1b9f72abd51d21f80ce9b9f7f16702a71e243))
+
 ## [1.1.0](https://github.com/ai-outfitter/community-profiles/compare/v1.0.0...v1.1.0) (2026-07-27)
 
 
