@@ -17,7 +17,10 @@ canonical committed result is one self-contained Markdown file.
 
 ## Author the canonical file
 
-Start from [assets/template.persona.md](assets/template.persona.md).
+Start from [assets/template.persona.md](assets/template.persona.md). The
+format is specified in Outfitter's
+[Personas](https://github.com/ai-outfitter/outfitter/blob/main/docs/documentation/personas.md)
+doc.
 
 1. Choose a stable lowercase, hyphen-separated filename for the persona.
 2. Start directly with an H1. Do not introduce required frontmatter, a
