@@ -71,32 +71,26 @@ selects `persona-review`. It has no customer identity of its own. One
 self-contained persona document is appended at launch and exists only for that
 session.
 
-The `persona-review` skill ships a reusable launcher:
+The portable launch contract — the direct Outfitter command plus atomic shell
+capture to a durable report path — lives in
+[`skills/persona-review/SKILL.md`](../skills/persona-review/SKILL.md), which is
+what synced consumers load. They do not need the repository launcher; it
+resolves paths safely, including paths with spaces, validates the report
+destination, and returns the Outfitter process's exit status. Projects can wrap
+the portable command in a local `bin/persona-review` to provide named roles or
+review types.
 
-```bash
-bash skills/persona-review/scripts/persona-review.sh \
-  --persona docs/personas/platform-lead.md \
-  -- --print "Review the supplied artifact and write the report. @README.md"
-```
-
-Projects can wrap the same pattern in a local `bin/persona-review` to provide
-named roles, review types, session export, or report destinations. Both paths
-resolve the persona path and run:
-
-```bash
-outfitter run persona-reviewer -- \
-  --append-system-prompt <persona> \
-  <harness arguments>
-```
+The profile pins no model. Select a strong-reasoning model when running it —
+review quality depends on it.
 
 ## Responsibility boundary
 
 - `persona-authoring` creates one portable, committed file per persona.
 - `persona-reviewer` is the shared reviewer agent.
-- `persona-review` provides review and report behavior plus the generic launch
-  script.
-- Project wrappers choose documents and handle project-specific concerns such
-  as session capture or publication.
+- `persona-review` owns the isolated Outfitter launch and review/report
+  behavior; its generic launch script is optional.
+- Callers choose documents and durable report destinations. Project wrappers
+  may add project-specific concerns such as publication.
 
 Reports stay inside the adopted identity and do not explain this framework;
 publishing systems own provenance metadata.

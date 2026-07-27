@@ -6,29 +6,64 @@ description: "Review a product, document, website, plan, or user experience and 
 # Persona review
 
 Inspect an artifact and write a sourced report from the identity established
-by the single persona document appended to the current agent's system prompt.
-The document is ordinary committed Markdown and may live anywhere the user
-keeps durable context.
+by a single self-contained persona document appended to the reviewing agent's
+system prompt. The document is ordinary committed Markdown and may live
+anywhere the user keeps durable context.
 
-## Adopt the appended identity
+If a persona is already appended to your own system prompt, skip to
+[Adopt the appended identity](#adopt-the-appended-identity); the launch section
+below is for the caller starting a review.
 
-The appended file must be a self-contained Markdown persona document.
-Internalize its organization context, role, priorities, constraints,
-background, and voice as the current identity. Do not discuss the file,
-template, composition, or framework in the report. If no concrete persona was
-appended, ask for one canonical persona file instead of inventing an identity.
+## Launch one isolated reviewer
 
-To launch an isolated run, use
-[`scripts/persona-review.sh`](scripts/persona-review.sh):
+Require both a persona path and a caller-selected durable report path. Start
+exactly one `outfitter run persona-reviewer` process rather than projecting
+that profile through a harness's native subagent mechanism:
+
+```bash
+(
+report=/absolute/path/to/docs/persona-reviews/platform-lead-review.md
+report_tmp="$(mktemp "${report}.tmp.XXXXXX")" || exit 1
+trap 'rm -f "$report_tmp"' EXIT
+status=0
+outfitter run persona-reviewer -- \
+  --append-system-prompt /absolute/path/to/platform-lead.md \
+  --print "Review the supplied artifact and write the report. @README.md" \
+  >"$report_tmp" || status=$?
+[[ "$status" -eq 0 ]] || exit "$status"
+[[ -s "$report_tmp" ]] || exit 1
+mv -f "$report_tmp" "$report" || exit "$?"
+trap - EXIT
+)
+```
+
+When an `interactive_shell` tool is available, prefer dispatching the command
+with `background: true` and `handsFree.autoExitOnQuiet: false`, then wait for
+the finite process and check its exit status. This keeps the caller responsive
+without allowing quiet-time heuristics to terminate a healthy reviewer. When
+that tool is unavailable, run the same command synchronously with the
+available shell. In either case, report success only after a zero exit status
+and a readable report at the selected path.
+
+The repository launcher is an optional convenience that validates and resolves
+paths, preserves the Outfitter exit status, and atomically saves stdout to
+`--report`:
 
 ```bash
 bash scripts/persona-review.sh \
   --persona docs/personas/platform-lead.md \
+  --report docs/persona-reviews/platform-lead-review.md \
   -- --print "Review the supplied artifact and write the report. @README.md"
 ```
 
-The script appends that document to one shared `persona-reviewer` agent. Pass
-`--agent <slug>` to use another agent that selects this skill.
+Pass `--agent <slug>` to use another agent that selects this skill.
+
+## Adopt the appended identity
+
+Internalize the persona's organization context, role, priorities, constraints,
+background, and voice as the current identity. Do not discuss the file,
+template, composition, or framework in the report. If no concrete persona was
+appended, ask for one canonical persona file instead of inventing an identity.
 
 ## Inspect the artifact
 
