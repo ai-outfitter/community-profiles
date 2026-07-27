@@ -5,11 +5,12 @@ Outfitter. Authoring can compose many inputs, but the canonical artifact
 committed to the repository is self-contained. Persona-specific information
 lives in readable Markdown rather than configuration fields.
 
-The file format is specified in Outfitter's
+Outfitter's
 [Personas](https://github.com/ai-outfitter/outfitter/blob/main/docs/documentation/personas.md)
-doc; the worked author-run-paste story lives in its
+doc defines the file format, and its
 [Persona reviews](https://github.com/ai-outfitter/outfitter/blob/main/docs/documentation/usecases/persona-reviews.md)
-use case. This page covers the catalog's setup and runtime boundary.
+use case walks the author → run → paste-anywhere story. This page covers the
+catalog's setup and runtime boundary.
 
 ```text
 normal project documentation
@@ -28,7 +29,8 @@ normal project documentation
 It creates one self-contained Markdown file from user-supplied information. It
 does not require an `.agents` directory or create Outfitter agents.
 
-Store the documents wherever they remain useful to the user:
+Commit the documents beside the project's other durable context,
+`docs/personas/` by convention:
 
 ```text
 docs/personas/
@@ -42,13 +44,11 @@ decision-making signals, and voice all live in ordinary Markdown. The template
 uses Markdown comments as authoring prompts; a completed file removes those
 comments and reads like normal project documentation.
 
-Take the file anywhere: paste or upload it unchanged into a web agent —
-claude.ai project knowledge, a ChatGPT project — or any agentic tool that
-accepts Markdown project context. For normal project work, tell the tool
-to treat it as stakeholder context rather than as its identity or as runtime
-instructions. The same file can steer product planning, research, writing,
-design review, or a review written from that person's point of view. Outfitter
-is one optional consumer.
+Paste or upload the file unchanged into a web agent (claude.ai project
+knowledge, a ChatGPT project) or another agentic tool that accepts Markdown
+project context. For normal project work, tell the tool to treat it as
+stakeholder context, not as its own identity. The same file can steer product
+planning, research, or design review. Outfitter is one optional consumer.
 
 ## Keep the portable document separate from runtime packaging
 
@@ -59,14 +59,12 @@ knowledge harness-neutral, then add runtime adapters. Knowing who the user or
 stakeholder is can improve ordinary project decisions without modeling that
 person as an executable agent.
 
-An Outfitter-native representation is a separate integration use case. A
-future design could make a persona an `.agents/agents/<slug>/agent.md`
-resource, or allow a proposed `.agents/outfitter/settings.yml` layer to point
-at ordinary persona documents. Neither form is required or implemented by
-this convention. Document and validate that runtime-specific design
-separately rather than making the portable persona depend on it.
+An Outfitter-native representation is a separate, deferred design; the
+portable persona must never depend on it. See the Status section of the
+[Personas](https://github.com/ai-outfitter/outfitter/blob/main/docs/documentation/personas.md)
+spec.
 
-## Use one shared Outfitter profile
+## Use one shared reviewer agent
 
 The catalog ships `persona-reviewer`, a normal agent whose stable loadout
 selects `persona-review`. It has no customer identity of its own. One
@@ -83,7 +81,7 @@ bash skills/persona-review/scripts/persona-review.sh \
 
 Projects can wrap the same pattern in a local `bin/persona-review` to provide
 named roles, review types, session export, or report destinations. Both paths
-ultimately run:
+resolve the persona path and run:
 
 ```bash
 outfitter run persona-reviewer -- \
@@ -94,13 +92,11 @@ outfitter run persona-reviewer -- \
 ## Responsibility boundary
 
 - `persona-authoring` creates one portable, committed file per persona.
-- `persona-reviewer` is the single shared Outfitter agent profile.
+- `persona-reviewer` is the shared reviewer agent.
 - `persona-review` provides review and report behavior plus the generic launch
   script.
 - Project wrappers choose documents and handle project-specific concerns such
   as session capture or publication.
 
-Adding a persona means adding exactly one document, not maintaining another
-Outfitter agent or a runtime chain of fragments. Reports stay inside the
-adopted identity and do not explain this framework; publishing systems own
-provenance metadata.
+Reports stay inside the adopted identity and do not explain this framework;
+publishing systems own provenance metadata.

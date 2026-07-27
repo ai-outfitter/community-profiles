@@ -59,12 +59,6 @@ role, or individual fragments at runtime, and do not generate one Outfitter
 agent per persona.
 
 Using the document to steer ordinary project work and adopting its voice for a
-review are separate use cases. When a review is requested, the shared
-`persona-reviewer` agent can consume the same file through the launcher shipped
-with `persona-review`:
-
-```bash
-bash scripts/persona-review.sh \
-  --persona docs/personas/platform-lead.md \
-  -- --print "Review the supplied artifact. @README.md"
-```
+review are separate use cases. When a review is requested, hand the same file
+to the shared `persona-reviewer` agent through the launcher shipped with the
+`persona-review` skill.
