@@ -1,10 +1,12 @@
-# Environment base layers
+# System-prompt convention groups
 
-These source layers are reusable starters for an agent's machine environment.
-Each is one discrete `system-prompt.md` that establishes the shared
-repository-location convention and one explicit repository authentication
-strategy. HTTPS with a GitHub CLI-managed token is the default; SSH is an
-opt-in alternative.
+This directory collects reusable groups of system-prompt conventions. Each
+selectable group has a domain-prefixed directory name and contains one complete
+`system-prompt.md` payload.
+
+The environment groups establish the shared repository-location convention and
+one explicit repository authentication strategy. HTTPS with a GitHub
+CLI-managed token is the default; SSH is an opt-in alternative.
 
 This guidance belongs in the composed system prompt. It is intentionally not an
 addition to a project's `AGENTS.md`: the environment policy applies before and
@@ -22,7 +24,7 @@ sources:
     ref: <tag-or-commit>
   - github: ai-outfitter/community-profiles
     ref: <tag-or-commit>
-    path: environment/http-token
+    path: system-prompts/environment-http-token
 ```
 
 The environment source supplies the complete `system-prompt.md`.
@@ -34,7 +36,7 @@ Replace the environment source:
 ```yaml
   - github: ai-outfitter/community-profiles
     ref: <same-tag-or-commit>
-    path: environment/ssh
+    path: system-prompts/environment-ssh
 ```
 
 Do not mount both authentication layers.
@@ -42,9 +44,10 @@ Do not mount both authentication layers.
 ## Copy and modify
 
 Users who need a custom baseline can copy
-[`http-token/system-prompt.md`](http-token/system-prompt.md) or
-[`ssh/system-prompt.md`](ssh/system-prompt.md) into their own `.agents` payload,
-then edit the copy.
+[`environment-http-token/system-prompt.md`](environment-http-token/system-prompt.md)
+or
+[`environment-ssh/system-prompt.md`](environment-ssh/system-prompt.md) into
+their own `.agents` payload, then edit the copy.
 
 `system-prompt.md` is selected whole-file by layer precedence. A user or project
 with a higher-precedence `system-prompt.md` should copy the desired environment
