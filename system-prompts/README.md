@@ -1,53 +1,40 @@
 # System-prompt convention groups
 
-This directory collects reusable groups of system-prompt conventions. Each
-selectable group has a domain-prefixed directory name and contains one complete
-`system-prompt.md` payload.
+This flat directory collects reusable system-prompt convention groups. File
+names follow `<group>.<topic>.<variant>.md`, so related conventions sort
+together and remain individually composable.
 
-The environment groups establish the shared repository-location convention and
-one explicit repository authentication strategy. HTTPS with a GitHub
-CLI-managed token is the default; SSH is an opt-in alternative.
+The environment repository prompts establish the shared repository-location
+convention and one explicit authentication strategy. HTTPS with a GitHub
+CLI-managed token is the default; SSH is an alternative.
 
-This guidance belongs in the composed system prompt. It is intentionally not an
-addition to a project's `AGENTS.md`: the environment policy applies before and
-across projects, while `AGENTS.md` remains repository-owned, project-specific
-context.
+[`AGENTS.md`](AGENTS.md) defines the authoring contract for every prompt in this
+directory.
 
 ## Use the default HTTPS/token environment
 
-Mount the HTTP-token environment after the catalog that supplies the agents and
-skills:
+Copy the HTTP-token prompt to the system-prompt location in the layer that
+should own the convention:
 
-```yaml
-sources:
-  - github: ai-outfitter/community-profiles
-    ref: <tag-or-commit>
-  - github: ai-outfitter/community-profiles
-    ref: <tag-or-commit>
-    path: system-prompts/environment-http-token
+```sh
+cp system-prompts/environment.repo.http-token.md ~/.agents/system-prompt.md
 ```
 
-The environment source supplies the complete `system-prompt.md`.
+An agent profile or launch command MAY append the same file when the selected
+harness supports prompt-file composition.
 
 ## Use SSH instead
 
-Replace the environment source:
-
-```yaml
-  - github: ai-outfitter/community-profiles
-    ref: <same-tag-or-commit>
-    path: system-prompts/environment-ssh
+```sh
+cp system-prompts/environment.repo.ssh.md ~/.agents/system-prompt.md
 ```
-
-Do not mount both authentication layers.
 
 ## Copy and modify
 
 Users who need a custom baseline can copy
-[`environment-http-token/system-prompt.md`](environment-http-token/system-prompt.md)
-or
-[`environment-ssh/system-prompt.md`](environment-ssh/system-prompt.md) into
-their own `.agents` payload, then edit the copy.
+[`environment.repo.http-token.md`](environment.repo.http-token.md) or
+[`environment.repo.ssh.md`](environment.repo.ssh.md) into their own `.agents`
+payload, then edit the copy.
 
 `system-prompt.md` is selected whole-file by layer precedence. A user or project
 with a higher-precedence `system-prompt.md` should copy the desired environment

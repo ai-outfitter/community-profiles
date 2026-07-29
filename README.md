@@ -4,11 +4,11 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 
 ## System-prompt convention groups
 
-[`system-prompts/`](system-prompts/) publishes reusable, domain-prefixed
-system-prompt convention groups. The `environment-*` groups establish the
+[`system-prompts/`](system-prompts/) publishes reusable, flat, domain-prefixed
+system-prompt convention groups. The `environment.repo.*` groups establish the
 canonical `~/repos/<owner>/<repo-name>` project layout and explicit repository
 authentication. HTTPS with a GitHub CLI-managed token is the default; SSH is an
-opt-in alternative. Use a group as a catalog source or copy and modify it in
+opt-in alternative. Compose a group through a profile or copy and modify it in
 your own `.agents` payload.
 
 ## Agents
@@ -64,7 +64,7 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 
 ```text
 agents/         one directory per agent identity and loadout
-system-prompts/ domain-prefixed, composable system-prompt convention groups
+system-prompts/ flat, domain-prefixed system-prompt convention groups
 skills/         reusable Agent Skills packages
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
