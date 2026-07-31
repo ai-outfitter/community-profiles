@@ -5,9 +5,12 @@ description: "Create or revise one portable, Markdown-first persona document per
 
 # Persona authoring
 
-Create one portable Markdown file for each persona. Store it in the repository
-where the user keeps durable human-facing context, such as `docs/personas/`.
-Write it as project-steering context about **who** an agent is helping. A tool
+Create one portable Markdown file for each persona. Store a persona that only
+makes sense inside one project in that project's `docs/personas/`, and one
+whose reader exists independently of any single repository in
+`~/.agents/personas/`. Ask which tier applies when the answer is not obvious
+from the request. Write it as project-steering context about **who** an agent
+is helping. A tool
 that accepts Markdown project context must be able to use the completed file
 without Outfitter, a launcher, or schema-aware rendering.
 

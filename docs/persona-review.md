@@ -29,14 +29,22 @@ normal project documentation
 It creates one self-contained Markdown file from user-supplied information. It
 does not require an `.agents` directory or create Outfitter agents.
 
-Commit the documents beside the project's other durable context,
-`docs/personas/` by convention:
+Commit the documents in one of two tiers. A persona that only makes sense
+inside one project goes beside that project's other durable context, in
+`docs/personas/`. A persona whose reader exists independently of any single
+repository goes in `~/.agents/personas/`, where every working directory can
+reach it:
 
 ```text
-docs/personas/
+docs/personas/            # this project's readers
   platform-lead.md
+~/.agents/personas/       # readers who outlive any one repository
   founder-operator.md
 ```
+
+Both tiers are ordinary directories of Markdown, not resources Outfitter
+resolves. The launcher searches them in that order, so a project persona
+shadows a cross-project one of the same name.
 
 The canonical document requires no frontmatter or persona-specific schema. Its
 H1, opening introduction, responsibilities, goals, concerns, constraints,
