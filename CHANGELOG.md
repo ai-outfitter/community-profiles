@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/ai-outfitter/community-profiles/compare/v1.1.1...v1.2.0) (2026-08-03)
+
+
+### Features
+
+* **persona-review:** compose an identity from several documents ([#26](https://github.com/ai-outfitter/community-profiles/issues/26)) ([803b82c](https://github.com/ai-outfitter/community-profiles/commit/803b82c161a6df7c3c9acb661eb95f87ffd15059))
+* **persona-review:** resolve personas by name across both tiers ([#23](https://github.com/ai-outfitter/community-profiles/issues/23)) ([54a8b6f](https://github.com/ai-outfitter/community-profiles/commit/54a8b6f4f300d96819cfad64d4cb6dadf6b1f757))
+
 ## [1.1.1](https://github.com/ai-outfitter/community-profiles/compare/v1.1.0...v1.1.1) (2026-07-27)
 
 
