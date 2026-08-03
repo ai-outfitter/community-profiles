@@ -164,4 +164,67 @@ report_temps=("${report}.tmp."*)
   exit 1
 }
 
+# --persona <name> resolves project tiers before the global one.
+project_dir="$fixture_dir/project"
+global_home="$fixture_dir/agents-home"
+mkdir -p "$project_dir/docs/personas" "$project_dir/.agents/personas" \
+  "$global_home/personas"
+printf '%s\n' 'docs tier' >"$project_dir/docs/personas/platform-lead.md"
+printf '%s\n' 'project agents tier' >"$project_dir/.agents/personas/platform-lead.md"
+printf '%s\n' 'global tier' >"$global_home/personas/platform-lead.md"
+printf '%s\n' 'global only' >"$global_home/personas/founder-operator.md"
+name_report="$project_dir/report.md"
+
+# expect_named <expected-persona-path> <label> <persona argument>
+expect_named() {
+  local expected="$1" label="$2" name="$3" actual
+  rm -f "$name_report"
+  (
+    cd "$project_dir"
+    AGENTS_HOME="$global_home" OUTFITTER_BIN="$stub" bash "$script" \
+      --persona "$name" --report "$name_report" -- --print 'review this'
+  ) >/dev/null
+  actual="$(<"$name_report")"
+  [[ "$actual" == *"--append-system-prompt"$'\n'"$expected"* ]] || {
+    printf 'unexpected %s resolution:\n%s\n' "$label" "$actual" >&2
+    exit 1
+  }
+}
+
+expect_named "$project_dir/docs/personas/platform-lead.md" \
+  'docs tier wins' platform-lead
+expect_named "$global_home/personas/founder-operator.md" \
+  'global fallback' founder-operator
+expect_named "$global_home/personas/founder-operator.md" \
+  'named with .md suffix' founder-operator.md
+
+rm -f "$project_dir/docs/personas/platform-lead.md"
+expect_named "$project_dir/.agents/personas/platform-lead.md" \
+  'project .agents tier' platform-lead
+
+(
+  cd "$project_dir"
+  rc=0
+  AGENTS_HOME="$global_home" OUTFITTER_BIN="$stub" bash "$script" \
+    --persona unknown-role --report "$name_report" \
+    -- --print 'review this' >/dev/null 2>&1 || rc=$?
+  [[ "$rc" -eq 1 ]] || {
+    echo "unresolvable persona name expected exit 1, got $rc" >&2
+    exit 1
+  }
+)
+
+# A slash-bearing argument stays a path even when a same-named persona exists.
+(
+  cd "$project_dir"
+  rc=0
+  AGENTS_HOME="$global_home" OUTFITTER_BIN="$stub" bash "$script" \
+    --persona ./platform-lead --report "$name_report" \
+    -- --print 'review this' >/dev/null 2>&1 || rc=$?
+  [[ "$rc" -eq 1 ]] || {
+    echo "path-shaped persona argument expected exit 1, got $rc" >&2
+    exit 1
+  }
+)
+
 printf '%s\n' 'persona-review script checks passed'

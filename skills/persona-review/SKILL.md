@@ -8,7 +8,9 @@ description: "Review a product, document, website, plan, or user experience and 
 Inspect an artifact and write a sourced report from the identity established
 by a single self-contained persona document appended to the reviewing agent's
 system prompt. The document is ordinary committed Markdown and may live
-anywhere the user keeps durable context.
+anywhere the user keeps durable context. By convention it is one of two tiers:
+a project persona in that project's `docs/personas/`, or a cross-project
+persona in `~/.agents/personas/` that any working directory can reach.
 
 If a persona is already appended to your own system prompt, skip to
 [Adopt the appended identity](#adopt-the-appended-identity); the launch section
@@ -51,12 +53,16 @@ paths, preserves the Outfitter exit status, and atomically saves stdout to
 
 ```bash
 bash scripts/persona-review.sh \
-  --persona docs/personas/platform-lead.md \
+  --persona platform-lead \
   --report docs/persona-reviews/platform-lead-review.md \
   -- --print "Review the supplied artifact and write the report. @README.md"
 ```
 
-Pass `--agent <slug>` to use another agent that selects this skill.
+A bare `--persona` name resolves against `./docs/personas/`, then
+`./.agents/personas/`, then `~/.agents/personas/` — project personas shadow
+cross-project ones of the same name. Pass a path instead (any value containing
+a slash) to name a file directly. Pass `--agent <slug>` to use another agent
+that selects this skill.
 
 ## Adopt the appended identity
 

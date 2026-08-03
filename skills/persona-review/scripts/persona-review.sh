@@ -10,8 +10,35 @@ report_file=""
 
 usage() {
   cat <<'EOF'
-Usage: persona-review.sh [--agent <slug>] --persona <file> --report <file> -- <harness arguments...>
+Usage: persona-review.sh [--agent <slug>] --persona <name|file> --report <file> -- <harness arguments...>
+
+A --persona value containing a slash is used as a path. A bare name resolves
+against, in order:
+  ./docs/personas/<name>.md
+  ./.agents/personas/<name>.md
+  ${AGENTS_HOME:-$HOME/.agents}/personas/<name>.md
 EOF
+}
+
+# Directories searched for a bare --persona name, project tiers before global.
+persona_search_dirs() {
+  local agents_home="${AGENTS_HOME:-${HOME:-}/.agents}"
+  printf '%s\n' 'docs/personas' '.agents/personas'
+  [[ -n "${HOME:-}" || -n "${AGENTS_HOME:-}" ]] &&
+    printf '%s\n' "${agents_home%/}/personas"
+}
+
+# Resolve a bare persona name to a readable file, or report where it looked.
+resolve_persona_name() {
+  local name="${1%.md}" dir candidate
+  while IFS= read -r dir; do
+    candidate="$dir/$name.md"
+    if [[ -f "$candidate" && -r "$candidate" ]]; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done < <(persona_search_dirs)
+  return 1
 }
 
 # Resolve a path whose parent directory must already exist.
@@ -47,18 +74,28 @@ while [[ $# -gt 0 ]]; do
       ;;
     --persona)
       [[ $# -ge 2 && -n "$2" ]] || {
-        echo "persona-review: --persona requires a non-empty file path" >&2
+        echo "persona-review: --persona requires a non-empty name or file path" >&2
         exit 2
       }
       [[ -z "$persona_file" ]] || {
-        echo "persona-review: exactly one --persona <file> is allowed" >&2
+        echo "persona-review: exactly one --persona <name|file> is allowed" >&2
         exit 2
       }
-      [[ -f "$2" && -r "$2" ]] || {
+      persona_arg="$2"
+      if [[ "$persona_arg" != */* && ! -f "$persona_arg" ]]; then
+        persona_arg="$(resolve_persona_name "$persona_arg")" || {
+          {
+            echo "persona-review: no persona named '$2' in:"
+            persona_search_dirs | sed 's|^|  |;s|$|/'"${2%.md}"'.md|'
+          } >&2
+          exit 1
+        }
+      fi
+      [[ -f "$persona_arg" && -r "$persona_arg" ]] || {
         echo "persona-review: persona document is not a readable file: $2" >&2
         exit 1
       }
-      persona_file="$(abspath "$2")" || {
+      persona_file="$(abspath "$persona_arg")" || {
         echo "persona-review: cannot resolve persona path: $2" >&2
         exit 1
       }
