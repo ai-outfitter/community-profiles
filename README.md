@@ -8,7 +8,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
-  one canonical persona Markdown file appended at launch.
+  persona Markdown appended at launch.
 
 ## Skills
 

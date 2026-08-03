@@ -1,22 +1,31 @@
 #!/usr/bin/env bash
-# Launch one shared persona agent with one canonical persona file appended,
-# saving the finite process's stdout at the caller-selected report path.
+# Launch one shared persona agent with the persona documents appended, saving the
+# finite process's stdout at the caller-selected report path.
+#
+# Documents go to Outfitter as --append-prompt rather than a harness flag after
+# `--`: pi and Claude Code take append-prompt documents through incompatible
+# flags, and passthrough reaches the harness verbatim, so anything written here
+# would only work on whichever harness it was written for.
 set -euo pipefail
 
 outfitter_bin="${OUTFITTER_BIN:-outfitter}"
 agent="persona-reviewer"
-persona_file=""
+persona_files=()
 report_file=""
 
 usage() {
   cat <<'EOF'
-Usage: persona-review.sh [--agent <slug>] --persona <name|file> --report <file> -- <harness arguments...>
+Usage: persona-review.sh [--agent <slug>] --persona <name|file> [--persona <name|file> ...] --report <file> -- <harness arguments...>
 
 A --persona value containing a slash is used as a path. A bare name resolves
 against, in order:
   ./docs/personas/<name>.md
   ./.agents/personas/<name>.md
   ${AGENTS_HOME:-$HOME/.agents}/personas/<name>.md
+
+Repeat --persona to compose one identity from several documents. They are
+appended in the order given, so an organization comes before the role it
+qualifies. Prefer a single document until duplication forces a split.
 EOF
 }
 
@@ -77,10 +86,6 @@ while [[ $# -gt 0 ]]; do
         echo "persona-review: --persona requires a non-empty name or file path" >&2
         exit 2
       }
-      [[ -z "$persona_file" ]] || {
-        echo "persona-review: exactly one --persona <name|file> is allowed" >&2
-        exit 2
-      }
       persona_arg="$2"
       if [[ "$persona_arg" != */* && ! -f "$persona_arg" ]]; then
         persona_arg="$(resolve_persona_name "$persona_arg")" || {
@@ -95,10 +100,12 @@ while [[ $# -gt 0 ]]; do
         echo "persona-review: persona document is not a readable file: $2" >&2
         exit 1
       }
-      persona_file="$(abspath "$persona_arg")" || {
+      persona_resolved="$(abspath "$persona_arg")" || {
         echo "persona-review: cannot resolve persona path: $2" >&2
         exit 1
       }
+      # Quoted append: an unquoted one word-splits a path containing spaces.
+      persona_files+=("$persona_resolved")
       shift 2
       ;;
     --report)
@@ -149,8 +156,8 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ -n "$persona_file" ]] || {
-  echo "persona-review: --persona <file> is required" >&2
+[[ "${#persona_files[@]}" -gt 0 ]] || {
+  echo "persona-review: --persona <name|file> is required" >&2
   exit 2
 }
 [[ -n "$report_file" ]] || {
@@ -171,10 +178,12 @@ done
   echo "persona-review: finite Pi/Claude reviews require --print or -p" >&2
   exit 2
 }
-[[ "$report_file" != "$persona_file" ]] || {
-  echo "persona-review: report path must differ from persona path" >&2
-  exit 1
-}
+for persona_path in "${persona_files[@]}"; do
+  [[ "$report_file" != "$persona_path" ]] || {
+    echo "persona-review: report path must differ from persona path" >&2
+    exit 1
+  }
+done
 command -v "$outfitter_bin" >/dev/null 2>&1 || {
   echo "persona-review: '$outfitter_bin' is not on PATH" >&2
   exit 127
@@ -211,9 +220,13 @@ trap 'forward_signal HUP 129' HUP
 trap 'forward_signal INT 130' INT
 trap 'forward_signal TERM 143' TERM
 
+append_args=()
+for persona_path in "${persona_files[@]}"; do
+  append_args+=(--append-prompt "$persona_path")
+done
+
 status=0
-"$outfitter_bin" run "$agent" -- \
-  --append-system-prompt "$persona_file" "$@" <&0 >"$report_tmp" &
+"$outfitter_bin" run "$agent" "${append_args[@]}" -- "$@" <&0 >"$report_tmp" &
 reviewer_pid=$!
 wait "$reviewer_pid" || status=$?
 reviewer_pid=""

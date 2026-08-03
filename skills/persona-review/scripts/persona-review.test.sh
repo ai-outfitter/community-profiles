@@ -49,15 +49,15 @@ expect_rc() {
 bash -n "$script"
 
 expect_report "$(printf '%s\n' \
-  run persona-reviewer -- \
-  --append-system-prompt "$persona" \
+  run persona-reviewer \
+  --append-prompt "$persona" -- \
   --print 'review this')" \
   'saved' \
   --persona "$persona" --report "$report" -- --print 'review this'
 
 expect_report "$(printf '%s\n' \
-  run other-reviewer -- \
-  --append-system-prompt "$persona" \
+  run other-reviewer \
+  --append-prompt "$persona" -- \
   --print 'review this')" \
   '--agent saved' \
   --agent other-reviewer --persona "$persona" --report "$report" \
@@ -81,9 +81,46 @@ OUTFITTER_BIN="$stub" bash "$script" \
   exit 1
 }
 
-expect_rc 2 'duplicate --persona' \
-  --persona "$persona" --persona "$persona" --report "$report" \
+persona_b="$fixture_dir/with space/persona-b.md"
+persona_c="$fixture_dir/with space/persona-c.md"
+printf '%s\n' 'persona b' >"$persona_b"
+printf '%s\n' 'persona c' >"$persona_c"
+
+# Repeating --persona composes one identity; each document becomes its own
+# --append-prompt pair and Outfitter projects them per harness.
+expect_report "$(printf '%s\n' \
+  run persona-reviewer \
+  --append-prompt "$persona" \
+  --append-prompt "$persona_b" -- \
+  --print 'review this')" \
+  'two personas compose' \
+  --persona "$persona" --persona "$persona_b" --report "$report" \
   -- --print 'review this'
+
+# Argument order is preserved, not sorted: an organization must stay ahead of the
+# role it qualifies.
+expect_report "$(printf '%s\n' \
+  run persona-reviewer \
+  --append-prompt "$persona_c" \
+  --append-prompt "$persona_b" \
+  --append-prompt "$persona" -- \
+  --print 'review this')" \
+  'persona order preserved' \
+  --persona "$persona_c" --persona "$persona_b" --persona "$persona" \
+  --report "$report" -- --print 'review this'
+
+expect_rc 2 'missing --persona' \
+  --report "$report" -- --print 'review this'
+
+# The collision check covers every document, not just the first.
+persona_b_before="$(<"$persona_b")"
+expect_rc 1 'report path collides with a later persona' \
+  --persona "$persona" --persona "$persona_b" --report "$persona_b" \
+  -- --print 'review this'
+[[ "$(<"$persona_b")" == "$persona_b_before" ]] || {
+  echo "a later persona was overwritten by a colliding report path" >&2
+  exit 1
+}
 
 expect_rc 1 'missing persona file' \
   --persona "$fixture_dir/missing.md" --report "$report" \
@@ -121,8 +158,8 @@ expect_rc 2 'interactive harness arguments' \
   -- --model inherited
 
 expect_report "$(printf '%s\n' \
-  run persona-reviewer -- \
-  --append-system-prompt "$persona" \
+  run persona-reviewer \
+  --append-prompt "$persona" -- \
   -p 'review this')" \
   'short print flag' \
   --persona "$persona" --report "$report" -- -p 'review this'
@@ -185,7 +222,7 @@ expect_named() {
       --persona "$name" --report "$name_report" -- --print 'review this'
   ) >/dev/null
   actual="$(<"$name_report")"
-  [[ "$actual" == *"--append-system-prompt"$'\n'"$expected"* ]] || {
+  [[ "$actual" == *"--append-prompt"$'\n'"$expected"* ]] || {
     printf 'unexpected %s resolution:\n%s\n' "$label" "$actual" >&2
     exit 1
   }
@@ -225,6 +262,24 @@ expect_named "$project_dir/.agents/personas/platform-lead.md" \
     echo "path-shaped persona argument expected exit 1, got $rc" >&2
     exit 1
   }
+)
+
+# Each document in a composed identity resolves through the tiers on its own, so a
+# bare name and an explicit path can be mixed in one invocation.
+(
+  cd "$project_dir"
+  rm -f "$name_report"
+  AGENTS_HOME="$global_home" OUTFITTER_BIN="$stub" bash "$script" \
+    --persona platform-lead --persona founder-operator --report "$name_report" \
+    -- --print 'review this' >/dev/null
+  actual="$(<"$name_report")"
+  for expected in "$project_dir/.agents/personas/platform-lead.md" \
+    "$global_home/personas/founder-operator.md"; do
+    [[ "$actual" == *"--append-prompt"$'\n'"$expected"* ]] || {
+      printf 'composed identity missing %s:\n%s\n' "$expected" "$actual" >&2
+      exit 1
+    }
+  done
 )
 
 printf '%s\n' 'persona-review script checks passed'
