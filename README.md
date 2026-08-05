@@ -20,6 +20,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
+- `outfitter-skill-promotor` - promote one local Agent Skill into this catalog
+  through a reviewed draft pull request.
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
