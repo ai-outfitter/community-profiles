@@ -28,7 +28,7 @@ runtime boundary.
 
 The tree-root `mcp.json` declares adoptable MCP servers. An agent adopts a server when its loadout lists the server id in the `mcp` field.
 
-- `google-gmail`, `google-calendar`, `google-contacts` - official Google-hosted Workspace remote MCP servers (Developer Preview). Interactive sessions only; setup and security boundaries in [docs/google-workspace-mcp.md](docs/google-workspace-mcp.md). The [`agents/founder/config.json`](agents/founder/config.json) override adopts all three for the `founder` agent from the [default catalog](https://github.com/ai-outfitter/default-profiles) when this catalog is sourced at higher precedence.
+- `google-gmail`, `google-calendar`, `google-contacts` - official Google-hosted Workspace remote MCP servers (Developer Preview). Interactive sessions only; setup and security boundaries in [docs/google-workspace-mcp.md](docs/google-workspace-mcp.md).
 
 ## Using this catalog
 

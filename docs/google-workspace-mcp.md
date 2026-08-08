@@ -8,7 +8,7 @@ The tree-root [`mcp.json`](../mcp.json) declares the official Google-hosted remo
 | `google-calendar` | `https://calendarmcp.googleapis.com/mcp/v1` |
 | `google-contacts` | `https://people.googleapis.com/mcp/v1` |
 
-An agent adopts a server when its loadout lists the server id in the `mcp` field. The [`founder` override](../agents/founder/config.json) in this catalog adopts all three by default.
+An agent adopts a server when its loadout lists the server id in the `mcp` field of its `agent.md` frontmatter.
 
 ## Prerequisites
 
