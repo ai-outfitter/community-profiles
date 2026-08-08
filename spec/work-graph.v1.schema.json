@@ -76,7 +76,7 @@
         "from": { "$ref": "#/$defs/slug" },
         "to": { "$ref": "#/$defs/slug" },
         "type": {
-          "enum": ["contains", "depends-on", "answers", "touches", "tests", "verifies", "refutes", "relates-to", "supersedes"]
+          "enum": ["contains", "depends-on", "answers", "touches", "tests", "verifies", "refutes", "relates-to"]
         }
       }
     }
