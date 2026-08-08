@@ -72,6 +72,7 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 ```text
 agents/         one directory per agent identity and loadout
 skills/         reusable Agent Skills packages
+mcp.json        tree-root MCP server definitions; agents opt in via frontmatter `mcp:`
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
 ```
