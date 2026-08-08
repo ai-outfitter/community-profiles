@@ -19,8 +19,10 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 
 Canonical, adoptable configuration for an agentic software development
 lifecycle: the four `sdlc-*` agents above, two declarative
-`agent-workflow/v1` files under `workflows/`, and a `git-forge-governance/v1`
-policy under `governance/`. The agents are runnable today; the workflow and
+`agent-workflow/v1` files under `workflows/`, a `git-forge-governance/v1`
+policy under `governance/`, and copyable environment-layer templates under
+`environments/` that rebind the agents' MCP capabilities per place they run
+(GitHub Actions, a plain pod, a kube-API-aware pod). The agents are runnable today; the workflow and
 governance files are a versioned authoring surface validated in CI against
 the meta-schemas in `spec/` — the runtime that executes them arrives behind
 them. Status per resource, the adoption path, and what is deliberately
@@ -72,7 +74,8 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 ```text
 agents/         one directory per agent identity and loadout
 skills/         reusable Agent Skills packages
-mcp.json        tree-root MCP server definitions; agents opt in via frontmatter `mcp:`
+environments/   deployment-layer templates (copy, don't pin): per-place MCP rebindings
+mcp.json        default MCP server definitions; agents opt in via frontmatter `mcp:`, deployment layers rebind per id
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
 ```

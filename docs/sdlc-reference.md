@@ -40,6 +40,10 @@ that possible:
   select `github-read` — the official GitHub MCP server pinned to
   `GITHUB_READ_ONLY=true` with the `issues,pull_requests` toolsets — so they
   read issues, discussion, and pull-request diffs without `gh` or a shell.
+  The agents select the server id, not its implementation: the tree-root
+  `mcp.json` definition is the default (local) binding, and a deployment
+  layer rebinds the same id per environment (see
+  [Reference environments](#reference-environments)).
 - **Posting is the runtime's write, not the agent's.** A step's `posts-to:`
   tells the runtime where the step's output artifact lands. The agents
   return data; nothing in their loadout can write to the forge.
@@ -103,6 +107,33 @@ Node-id uniqueness and edge-endpoint resolution are linker checks, like
 route exclusivity. A validated example lifecycle snapshot lives at
 `spec/examples/feature-request.work-graph.json`.
 
+## Reference environments
+
+The same workflow step must run on a laptop, a CI runner, and a pod, and
+`agent: sdlc-planner` must mean the same agent in all three. What differs per
+place is bindings, not agents — and that difference is expressed with
+machinery outfitter already has, not a new resource kind. An environment is a
+deployment-owned catalog layer, listed last in that deployment's
+`settings.yml`: its `mcp.json` rebinds server ids per-id over the catalog
+default, its `models.json` routes to that place's provider, and its deny
+rules subtract tools (deny always wins, so an environment can restrict an
+agent but a wider allow cannot re-grant what the agent never had).
+
+`environments/` ships three templates to copy — never to pin directly:
+
+| Template | The binding difference |
+| --- | --- |
+| `github-actions` | `github-read` credential is the job's `GITHUB_TOKEN`, scoped by the workflow's `permissions:` block |
+| `kube` | no Docker daemon in a pod — `github-mcp-server` runs as a binary, token from a mounted Secret |
+| `kube-api` | `kube` plus `kube-read`: `kubernetes-mcp-server --read-only` on the agent-operator's RBAC-bounded ServiceAccount |
+
+Copies are flat and self-contained; there is no inheritance between
+environments. Template improvements reach a deployment by diffing the copy
+against the template — review, not resolution. The guard that matters:
+layer precedence lets a deployment layer shadow a catalog agent wholesale,
+so governance should pin which layer the `sdlc-*` agents resolve from, the
+same way a project layer must not weaken org policy.
+
 ## The governance policy
 
 `git-forge-governance/v1` declares what must be true of a repository for
@@ -125,8 +156,10 @@ them.
 
 ## Deliberately excluded
 
-- **Execution overlays** (placement, models, secrets, capture profiles) —
-  deployment state, never community-catalog content.
+- **Deployed environment layers** — the templates under `environments/`
+  are here to be copied; the copies (with their model routing, secret
+  names, placement, and capture profiles) are deployment state and live
+  with the deployment, never in a community catalog.
 - **Control resources** — obligation semantics belong to the Outfitter
   governance RFC and are not settled enough to freeze here.
 - **Baked graphs** — build artifacts, not authored resources.
