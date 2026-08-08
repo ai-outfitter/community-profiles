@@ -9,6 +9,21 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
   persona Markdown appended at launch.
+- `sdlc-explorer`, `sdlc-planner`, `sdlc-reviewer`, `sdlc-engineer` - the SDLC
+  reference collection's agents: a read-only scout subagent, a read-only
+  planner and adversarial reviewer that fan out explorers, and an
+  implementation agent. See [docs/sdlc-reference.md](docs/sdlc-reference.md).
+
+## SDLC reference collection
+
+Canonical, adoptable configuration for an agentic software development
+lifecycle: the four `sdlc-*` agents above, two declarative
+`agent-workflow/v1` files under `workflows/`, and a `git-forge-governance/v1`
+policy under `governance/`. The agents are runnable today; the workflow and
+governance files are a versioned authoring surface validated in CI against
+the meta-schemas in `spec/` — the runtime that executes them arrives behind
+them. Status per resource, the adoption path, and what is deliberately
+excluded: [docs/sdlc-reference.md](docs/sdlc-reference.md).
 
 ## Skills
 
