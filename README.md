@@ -11,8 +11,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
   persona Markdown appended at launch.
 - `sdlc-explorer`, `sdlc-planner`, `sdlc-reviewer`, `sdlc-engineer` - the SDLC
   reference collection's agents: a read-only scout subagent, a read-only
-  planner and adversarial reviewer that fan out explorers, and an
-  implementation agent. See [docs/sdlc-reference.md](docs/sdlc-reference.md).
+  planner and adversarial reviewer that fan out explorers and hand off shared
+  work-graph artifacts, and an implementation agent. See
+  [docs/sdlc-reference.md](docs/sdlc-reference.md).
 
 ## SDLC reference collection
 

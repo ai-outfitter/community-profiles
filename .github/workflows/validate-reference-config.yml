@@ -23,6 +23,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install check-jsonschema
         run: pipx install check-jsonschema
+      - name: Check meta-schemas
+        run: check-jsonschema --check-metaschema spec/*.schema.json workflows/schemas/*.schema.json
+      - name: Validate work-graph examples
+        run: check-jsonschema --schemafile spec/work-graph.v1.schema.json spec/examples/*.work-graph.json
       - name: Validate agent workflows
         run: check-jsonschema --schemafile spec/agent-workflow.v1.schema.json workflows/*.yaml
       - name: Validate governance policies

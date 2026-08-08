@@ -18,19 +18,38 @@ support matrix:
 
 ## The agents
 
-- **sdlc-explorer** — read-only scout subagent: one question in, conclusions
-  with `file:line` references out. Never edits, executes, or reaches the
-  network.
-- **sdlc-planner** — read-only planner that fans out explorers and posts an
-  implementation plan on a draft PR. The plan is its only artifact.
+- **sdlc-explorer** — read-only scout subagent: one question in, work-graph
+  evidence nodes with code anchors out. Never edits, executes, or reaches
+  the network.
+- **sdlc-planner** — read-only planner that fans out explorers and returns
+  an implementation plan as a work graph. The graph is its only artifact.
 - **sdlc-reviewer** — read-only adversarial reviewer that verifies a change
-  against its plan and posts findings. Never edits or merges.
+  against its plan graph and returns findings as work-graph nodes. Never
+  edits or merges.
 - **sdlc-engineer** — implements a planned change on a draft PR branch, tests
   before pushing, never merges.
 
 Permissions live on the agents, not in the workflows: a workflow step names
 an agent; the agent's loadout is what it may touch. Restricting a planning
 step to read-only is done by giving the step a read-only agent.
+
+Explorer, planner, and reviewer carry no bash at all. Two mechanisms make
+that possible:
+
+- **Forge reads go through a read-only MCP server.** Planner and reviewer
+  select `github-read` — the official GitHub MCP server pinned to
+  `GITHUB_READ_ONLY=true` with the `issues,pull_requests` toolsets — so they
+  read issues, discussion, and pull-request diffs without `gh` or a shell.
+- **Posting is the runtime's write, not the agent's.** A step's `posts-to:`
+  tells the runtime where the step's output artifact lands. The agents
+  return data; nothing in their loadout can write to the forge.
+
+One harness caveat, stated honestly: on Claude Code, `tools.allow` bounds
+the built-in tool set and selected MCP servers project beside it, so the
+read-only lockdown composes as written. On pi, the tool allowlist is a hard
+ceiling across all tool categories, which today also gates adapter-provided
+MCP tools — until that projection gap closes upstream, run these two agents
+on Claude Code or widen the allowlist deliberately.
 
 ## The workflows
 
@@ -53,6 +72,36 @@ The decision-step convention: `bin/rank-implementers` prints JSON conforming
 to the step's output schema. Because the contract is the schema, a shell
 script and an LLM one-shot are interchangeable behind it, and every routing
 decision is recorded output — evaluable later.
+
+Steps hand artifacts to each other through `with:` — named inputs bound by
+typed reference (`with: {plan: ${{ steps.plan.output }}}`). The handoff is
+contract, not prose: what the implementer receives is exactly what the
+planner's output schema promised.
+
+## The work graph
+
+`work-graph/v1` (`spec/work-graph.v1.schema.json`) is the one artifact
+schema every handoff shares. The observation behind it: a milestone, an
+issue, an exploration report, an implementation plan, and a review are all
+the same shape — typed work nodes anchored to code locations, with typed
+edges between them.
+
+The graph is accretive. Each stage receives it and returns it with its own
+nodes appended, so node ids stay stable across the pipeline:
+
+| Stage | Adds | Consumes |
+| --- | --- | --- |
+| explorer | `question` + `evidence` nodes, `answers` edges | the question it was spawned with |
+| planner | `feature`/`change` nodes ordered by `depends-on`, anchored with roles `edit`/`create`/`delete`/`test` | issue + merged evidence |
+| implementer | commits (outside the graph) | the `change` anchors as its worklist |
+| reviewer | `finding` nodes with `verifies`/`refutes` edges to the `change` nodes they judge | the plan graph + the diff |
+
+Routing decisions (`approved`/`changes-requested`, `affected`/`not-affected`)
+stay beside the graph at the step-output level — see
+`workflows/schemas/*.schema.json` — so `if:` routing remains enum equality.
+Node-id uniqueness and edge-endpoint resolution are linker checks, like
+route exclusivity. A validated example lifecycle snapshot lives at
+`spec/examples/feature-request.work-graph.json`.
 
 ## The governance policy
 

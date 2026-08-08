@@ -58,10 +58,10 @@
       "pattern": "^\\$\\{\\{\\s*[^}]+\\s*\\}\\}$"
     },
     "outputSchema": {
-      "description": "A closed JSON Schema for a step or workflow output, inline or as a relative file path. Inlined and digested identically at bake.",
+      "description": "A closed JSON Schema for a step or workflow output, inline or as a relative file path (which may point outside the workflows directory, e.g. ../spec/work-graph.v1.schema.json). Inlined and digested identically at bake.",
       "oneOf": [
         { "type": "object" },
-        { "type": "string", "pattern": "^\\./" }
+        { "type": "string", "pattern": "^\\.\\.?/" }
       ]
     },
     "emitValue": {
@@ -97,6 +97,12 @@
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*(/[a-z][a-z0-9-]*)*@sha256:[0-9a-f]{64}$"
         },
+        "with": {
+          "description": "Named inputs for the step: prior step outputs or trigger fields, passed by typed reference. The handoff is contract, not prose — an agent step receives these as its input artifacts.",
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/$defs/ref" }
+        },
         "if": {
           "description": "Enum equality over a declared prior output: steps.<id>.output.<pointer> == '<value>'. No other expression forms.",
           "type": "string",
@@ -113,7 +119,10 @@
           "description": "Execution backend: a literal, or a reference to a prior decision step's finite enum, which expands per enum value at bake.",
           "oneOf": [ { "$ref": "#/$defs/slug" }, { "$ref": "#/$defs/ref" } ]
         },
-        "posts-to": { "$ref": "#/$defs/ref" },
+        "posts-to": {
+          "description": "Forge location where the runtime posts this step's output artifact. Posting is the runtime's write, not the agent's — a read-only agent's output still lands on the pull request.",
+          "$ref": "#/$defs/ref"
+        },
         "reviewers": {
           "type": "array",
           "minItems": 1,
