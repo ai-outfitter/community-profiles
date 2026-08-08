@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "google-gmail": {
+      "type": "http",
+      "url": "https://gmailmcp.googleapis.com/mcp/v1"
+    },
+    "google-calendar": {
+      "type": "http",
+      "url": "https://calendarmcp.googleapis.com/mcp/v1"
+    },
+    "google-contacts": {
+      "type": "http",
+      "url": "https://people.googleapis.com/mcp/v1"
+    }
+  }
+}

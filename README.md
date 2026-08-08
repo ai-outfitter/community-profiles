@@ -24,6 +24,12 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
 
+## MCP servers
+
+The tree-root `mcp.json` declares adoptable MCP servers. An agent adopts a server when its loadout lists the server id in the `mcp` field.
+
+- `google-gmail`, `google-calendar`, `google-contacts` - official Google-hosted Workspace remote MCP servers (Developer Preview). Interactive sessions only; setup and security boundaries in [docs/google-workspace-mcp.md](docs/google-workspace-mcp.md). The [`agents/founder/config.json`](agents/founder/config.json) override adopts all three for the `founder` agent from the [default catalog](https://github.com/ai-outfitter/default-profiles) when this catalog is sourced at higher precedence.
+
 ## Using this catalog
 
 Add the standalone catalog as a source and sync:
@@ -56,6 +62,7 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 ```text
 agents/         one directory per agent identity and loadout
 skills/         reusable Agent Skills packages
+mcp.json        adoptable MCP server declarations
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
 ```
