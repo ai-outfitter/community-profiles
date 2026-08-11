@@ -2,7 +2,7 @@
 name: actions-agent
 description: Headless CI automation agent launched by repository events to comment and label as github-actions[bot].
 skills: [issue-triage]
-model: github-models/openai/gpt-4.1-mini
+model: openai/gpt-5.6-sol
 extensions: [npm:pi-subagents@0.28.0]
 ---
 
