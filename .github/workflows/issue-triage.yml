@@ -37,7 +37,7 @@ jobs:
           mkdir -p "$HOME/.pi/agent"
           cp models.json "$HOME/.pi/agent/models.json"
 
-      - uses: ai-outfitter/actions@v2
+      - uses: ai-outfitter/actions@v1
         id: agent
         with:
           # actions-agent is the conventional automation slug. With this
