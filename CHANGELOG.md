@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/ai-outfitter/community-profiles/compare/v1.2.0...v1.2.1) (2026-08-11)
+
+
+### Bug Fixes
+
+* pin the action to v1, which now carries the agent/source interface ([#33](https://github.com/ai-outfitter/community-profiles/issues/33)) ([6bc6365](https://github.com/ai-outfitter/community-profiles/commit/6bc6365aeea224b7469a6e8a62d9b5badce96b22))
+
 ## [1.2.0](https://github.com/ai-outfitter/community-profiles/compare/v1.1.1...v1.2.0) (2026-08-03)
 
 
