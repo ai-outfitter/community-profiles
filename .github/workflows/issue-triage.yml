@@ -32,10 +32,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure GitHub Models provider for pi
-        run: |
-          mkdir -p "$HOME/.pi/agent"
-          cp models.json "$HOME/.pi/agent/models.json"
 
       - uses: ai-outfitter/actions@v1
         id: agent
