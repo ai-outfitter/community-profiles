@@ -1,10 +1,10 @@
 ---
 name: issue-triage
 description: >-
-  Triage one newly opened issue on the community-profiles catalog: classify it
-  as feat (new agent, skill, or prompting change) or fix, apply
-  that one label, and comment with a plan and example pseudo-code following
-  Outfitter best practices.
+  Triage one newly opened issue: classify it into exactly one label from the
+  launch prompt's available_labels (feat or fix on the community-profiles
+  catalog itself), apply that one label, and comment with a plan and example
+  pseudo-code following Outfitter best practices.
 references:
   # The catalog's own README — its layout and contribution standards are what
   # issues are triaged against. Untrusted repository content.
@@ -33,13 +33,18 @@ use the template fields as your completeness checklist, not as a gate.
 
 1. Take `issue_number` and `issue_author` from the launch prompt's
    trigger_context, then read the issue with `gh issue view <issue_number>`.
-2. Classify it as exactly one of:
+2. Classify it into exactly one label from the launch prompt's
+   `available_labels`. When triggered on this catalog's own repository those
+   are:
    - `feat` — a request for a new agent, skill, DeepWork job, or prompting
      change (agent instructions or activation rules)
    - `fix` — an existing agent, skill, or catalog file is broken, wrong,
      or out of date
+   On another repository, `available_labels` carries that repository's own
+   vocabulary (for example `bug, enhancement, question, documentation`);
+   classify by each label's ordinary meaning.
 3. If the classification is clear, apply that one label with
-   `gh issue edit <issue_number> --add-label <feat|fix>`, then post one
+   `gh issue edit <issue_number> --add-label <label>`, then post one
    comment (see
    [Posting the comment](#posting-the-comment)) containing:
    - a greeting @-mentioning `issue_author`, the classification in a
@@ -82,5 +87,6 @@ answer instead of posting it.
 
 ## Hard limits
 
-Only ever apply the labels `feat` or `fix` — never any other label and never
-more than one. Exactly one comment per run.
+Only ever apply one label, and only from the launch prompt's
+`available_labels` — never any other label and never more than one. Exactly
+one comment per run.
