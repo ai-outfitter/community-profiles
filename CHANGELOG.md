@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/ai-outfitter/community-profiles/compare/v1.2.1...v1.2.2) (2026-08-13)
+
+
+### Bug Fixes
+
+* **issue-triage:** take the label vocabulary from available_labels ([69e8528](https://github.com/ai-outfitter/community-profiles/commit/69e85280b1ee3ba1048a3a214f22cdb5561be159))
+
 ## [1.2.1](https://github.com/ai-outfitter/community-profiles/compare/v1.2.0...v1.2.1) (2026-08-11)
 
 
