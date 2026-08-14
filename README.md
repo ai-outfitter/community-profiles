@@ -5,6 +5,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 ## Agents
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
+- `environment` - portable repository location and authentication baseline for inherited agents.
+- `repo-auth` - replaceable repository transport and forge authentication convention.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
@@ -25,6 +27,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
+
+See [Environment baseline](docs/environment.md) for the composable repository
+convention.
 
 ## Using this catalog
 
