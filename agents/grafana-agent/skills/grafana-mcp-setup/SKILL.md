@@ -25,7 +25,7 @@ Run `mcp-grafana` as a Deployment with a ClusterIP Service in a dedicated (or ob
 
 ## 3. Authentication in front
 
-The MCP server itself is unauthenticated — never expose it bare. Put an authenticating reverse proxy in front, as an nginx sidecar (or separate Deployment) that terminates auth before proxying to the MCP port:
+Pin the mcp-grafana image by digest, set `automountServiceAccountToken: false`, and run with a restrictive `securityContext` (runAsNonRoot, dropped capabilities, readOnlyRootFilesystem). The MCP server itself is unauthenticated — never expose it bare. Put an authenticating reverse proxy in front, as an nginx sidecar (or separate Deployment) that terminates auth before proxying to the MCP port:
 
 - **Basic auth** — an `htpasswd` Secret mounted into nginx (`auth_basic` + `auth_basic_user_file`); rotate alongside step 1.
 - **OIDC** — `oauth2-proxy` in place of basic auth when the org has an IdP.
