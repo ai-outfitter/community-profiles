@@ -9,6 +9,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
   persona Markdown appended at launch.
+- `grafana-agent` - platform agent for Grafana on Kubernetes: provisions the Grafana MCP securely and declaratively, and investigates firing alerts with read-only, comment-only diagnosis. Ships agent-local skills (`grafana-mcp-setup`, `grafana-alert-investigate`, `alert-issue-triage`) and a per-agent `mcp.json` merged into the composition. See [docs/grafana-agent.md](docs/grafana-agent.md).
 
 ## Skills
 
