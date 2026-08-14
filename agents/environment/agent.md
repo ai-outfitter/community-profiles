@@ -13,8 +13,9 @@ copying the environment profile.
 
 ## Project repositories
 
-- Project repositories and Git worktrees MUST use
-  `~/repos/<owner>/<repo-name>` as their canonical namespace.
+- Project checkouts MUST live at `~/repos/<owner>/<repo-name>`, with Git
+  worktrees at the sibling `~/repos/<owner>/<repo-name>.worktrees/<type>/<slug>/`;
+  both stay under the `~/repos/<owner>/` namespace.
 - The repository remote MUST determine `<owner>` and `<repo-name>` before an
   agent creates or locates a checkout.
 - An existing checkout or worktree in that namespace SHOULD be reused.
