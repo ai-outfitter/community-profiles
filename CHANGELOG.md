@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.3.0](https://github.com/ai-outfitter/community-profiles/compare/v1.2.2...v1.3.0) (2026-08-16)
+
+
+### Features
+
+* add grafana-alert-investigator agent and skills ([bc2bbee](https://github.com/ai-outfitter/community-profiles/commit/bc2bbee458bdd06698814c6d5fa689a5c5ceff96))
+* **agents:** add environment and five-role project families ([#41](https://github.com/ai-outfitter/community-profiles/issues/41)) ([a5f2204](https://github.com/ai-outfitter/community-profiles/commit/a5f22048646027efc935acba082bec7a3b164e24))
+* **agents:** add grafana-agent with grafana-mcp-setup skill ([e4babac](https://github.com/ai-outfitter/community-profiles/commit/e4babacfcbb4ca57d788680681d6da41b029a8b5))
+* **agents:** grafana-agent — secure MCP provisioning + alert investigation (supersedes [#8](https://github.com/ai-outfitter/community-profiles/issues/8)) ([c278c59](https://github.com/ai-outfitter/community-profiles/commit/c278c598592c067d49b2180b005bc660810bfded))
+* **environment:** add composable repository baseline ([fe09496](https://github.com/ai-outfitter/community-profiles/commit/fe0949643543fd3449cac804c182c4b35168c567))
+* **environment:** add composable repository baseline ([b6eba4b](https://github.com/ai-outfitter/community-profiles/commit/b6eba4b3252434f189ebc7b7b9503d56e6ecc85f))
+* **skills:** add mermaid skill (vendored from WH-2099/mermaid-skill) ([873fefa](https://github.com/ai-outfitter/community-profiles/commit/873fefa5f7f593031bce0a0b8f5374c6d92f5913))
+* **skills:** add mermaid skill vendored from WH-2099/mermaid-skill ([515eeaf](https://github.com/ai-outfitter/community-profiles/commit/515eeaf72556566b10ea402228a5ca4e1f710487))
+* **skills:** add project daily report contract ([#42](https://github.com/ai-outfitter/community-profiles/issues/42)) ([0a78330](https://github.com/ai-outfitter/community-profiles/commit/0a78330dd1bf324e09a6f94790572903a15a41ab))
+
+
+### Bug Fixes
+
+* **environment:** list repo-auth in catalog ([87e7ed4](https://github.com/ai-outfitter/community-profiles/commit/87e7ed4756b347d193dc6642eb2af49b07a87771))
+* **environment:** state the sibling worktree layout precisely ([9f8df2a](https://github.com/ai-outfitter/community-profiles/commit/9f8df2aaf5a95dc5dec019ae982ec7efcdb3fa11))
+* **grafana-agent:** treat all fetched content as data and harden the setup deployment ([38746ff](https://github.com/ai-outfitter/community-profiles/commit/38746ff783e6371b7f418ddafd4dbb74c95b7959))
+
 ## [1.2.2](https://github.com/ai-outfitter/community-profiles/compare/v1.2.1...v1.2.2) (2026-08-13)
 
 
