@@ -40,6 +40,37 @@ The baseline contains no credentials or consumer-specific values. Keep project
 instructions in the repository's `AGENTS.md`; do not copy this environment
 policy into that project-owned file.
 
+## Profile taxonomy
+
+A profile is either a **runnable agent** or an **abstract composable**.
+
+An abstract profile declares `abstract: true`. It exists to be inherited and
+MUST NOT be run directly or named as `default_agent`. The catalog's abstract
+profiles are the environments — `repo-auth`, `environment`,
+`agent-operator-pod`, `actions-runner`, `container-readonly` — and the
+`git-forge-delegator` practice. Everything else is runnable: `founder`,
+`planner`, `engineer`, `researcher`, `explorer`, `actions-agent`,
+`grafana-agent`, `media-editor`, `persona-reviewer`, and `platform`.
+
+Two kinds of abstract profile compose differently:
+
+- An **environment** describes where an agent runs and the tool policy that
+  runtime enforces. An agent takes one runtime environment.
+- A **practice** describes how an agent works, independent of where. An agent
+  MAY take several.
+
+`abstract: true` is metadata that older Outfitter releases ignore, because the
+agent schema accepts additional properties. Marking a profile abstract is
+therefore safe for every consumer today; enforcement — refusing an abstract
+slug as a run target or `default_agent` — arrives with the Outfitter release
+that reads the field.
+
+Whether abstract profiles should also carry a namespace prefix in their slug
+(`environment.repo-auth`) is deliberately deferred: dot-separated slugs need
+an Outfitter release that accepts the pattern
+([outfitter#302](https://github.com/ai-outfitter/outfitter/pull/302)), while
+`abstract: true` needs nothing.
+
 ## Role family
 
 The catalog provides five independent role profiles: `founder`, `planner`,

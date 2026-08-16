@@ -1,6 +1,7 @@
 ---
 name: repo-auth
 description: Repository authentication convention for agents working with Git remotes and forge APIs.
+abstract: true
 ---
 
 # Repository authentication

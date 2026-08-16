@@ -1,6 +1,7 @@
 ---
 name: environment
 description: Base environment profile for repository location and authentication.
+abstract: true
 inherits: [repo-auth, environment.repos]
 ---
 
