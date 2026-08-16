@@ -5,8 +5,17 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 ## Agents
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
+- `founder` - owns the mission, priorities, constraints, and final decisions.
+- `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
+- `engineer` - owns implementation and verification.
+- `researcher` - produces sourced external research in a read-only environment.
+- `explorer` - maps repositories or systems in a read-only environment.
 - `environment` - portable repository location and authentication baseline for inherited agents.
+- `agent-operator-pod` - runtime context for resident agents in Kubernetes pods.
+- `actions-runner` - runtime context for ephemeral CI agents.
+- `container-readonly` - tool boundary for read-only agents.
 - `repo-auth` - replaceable repository transport and forge authentication convention.
+- `git-forge-delegator` - creates and reviews delegated forge work.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
@@ -29,7 +38,7 @@ See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
 
 See [Environment baseline](docs/environment.md) for the composable repository
-convention.
+convention and the role-family boundaries.
 
 ## Using this catalog
 
