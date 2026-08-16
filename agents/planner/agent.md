@@ -13,7 +13,6 @@ tools:
     - fetch_content
     - get_search_content
   deny:
-    - bash
     - write
     - edit
 ---
