@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/ai-outfitter/community-profiles/compare/v1.3.0...v1.3.1) (2026-08-16)
+
+
+### Bug Fixes
+
+* **planner:** allow child shell composition ([#43](https://github.com/ai-outfitter/community-profiles/issues/43)) ([a8051b4](https://github.com/ai-outfitter/community-profiles/commit/a8051b4e5e9329916c6c2966940a963ecfa28642))
+
 ## [1.3.0](https://github.com/ai-outfitter/community-profiles/compare/v1.2.2...v1.3.0) (2026-08-16)
 
 
