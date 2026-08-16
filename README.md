@@ -86,7 +86,7 @@ Pin `ref` to a tag or commit — an unpinned source runs whatever the catalog pu
 2. Keep durable policy in the agent and reusable procedures in `skills/<id>/SKILL.md`; prefer adding a skill over a near-duplicate agent.
 3. A template profile (a capability bundle meant for composition, like `git-forge-delegator`) MUST NOT inherit other profiles; the runnable profile composes the full chain — see [Scaling by composition](docs/scaling-by-composition.md).
 4. Select resources by slug from agent frontmatter. Keep Pi-only extensions explicit and pinned when reproducibility matters.
-5. Run `outfitter validate --strict`, then open a pull request that names the intended harnesses (Pi or Claude Code).
+5. Run `outfitter validate --strict`, then open a pull request that names the intended harnesses (Pi, Claude Code, or Codex).
 
 Prefer opening an issue first: newly opened issues are triaged automatically by the conventional [`actions-agent`](agents/actions-agent/agent.md) and its selected [issue-triage skill](skills/issue-triage/SKILL.md) (running on this repo via [`ai-outfitter/actions`](https://github.com/ai-outfitter/actions), see [.github/workflows/issue-triage.yml](.github/workflows/issue-triage.yml)). The agent labels the issue `feat` (new agent, skill, or prompting change) or `fix`, and comments with a suggested plan and example sketches following Outfitter best practices. Issues it cannot classify confidently get no label — just a comment asking a maintainer to take a look.
 
@@ -96,6 +96,7 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 agents/         one directory per agent identity and loadout
 skills/         reusable Agent Skills packages
 prompts/        shared prompt fragments appended by agents
+mcp.json        harness-neutral MCP server catalog
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
 ```
