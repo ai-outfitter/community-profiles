@@ -1,7 +1,7 @@
 ---
-name: actions-runner
+name: environment.actions-runner
 description: Environment profile for ephemeral CI agents launched by ai-outfitter/actions on a GitHub or Forgejo runner.
-inherits: [repo-auth]
+inherits: [environment.repo-auth]
 ---
 
 # Environment: ephemeral actions runner

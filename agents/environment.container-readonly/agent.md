@@ -1,5 +1,5 @@
 ---
-name: container-readonly
+name: environment.container-readonly
 description: Environment profile for confined read-only research and planning subagents; denies mutating tools irrevocably.
 tools:
   deny: [bash, write, edit]

@@ -1,14 +1,14 @@
 ---
 name: environment
 description: Base environment profile for repository location and authentication.
-inherits: [repo-auth]
+inherits: [environment.repo-auth]
 ---
 
 # Environment
 
 Use this base agent when an environment needs a portable repository convention.
-It supplies repository location guidance and inherits the registered `repo-auth`
-convention. A project or local layer can replace `repo-auth` by ID without
+It supplies repository location guidance and inherits the registered `environment.repo-auth`
+convention. A project or local layer can replace `environment.repo-auth` by ID without
 copying the environment profile.
 
 ## Project repositories

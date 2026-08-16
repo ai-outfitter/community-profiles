@@ -1,7 +1,18 @@
 # Environment baseline
 
+## Naming: the `environment.` namespace
+
+Environment profiles group under the `environment.` slug prefix
+(`environment.repo-auth`, `environment.agent-operator-pod`,
+`environment.actions-runner`, `environment.container-readonly`). The dot is
+naming only — it carries no resolution semantics, no hierarchy, and no
+wildcard inheritance; `environment` itself stays the plain-slug baseline a
+consumer inherits. Dot-namespaced slugs require an outfitter release that
+accepts them (feat/namespaced-agent-slugs); older outfitters reject the
+pattern, which is why adopting this catalog revision requires that release.
+
 The `environment` agent is a base profile for agents that need a stable
-repository convention. It inherits the registered `repo-auth` agent, so a
+repository convention. It inherits the registered `environment.repo-auth` agent, so a
 consumer can inherit `environment` and receive both repository location and
 authentication guidance.
 
@@ -14,18 +25,18 @@ inherits: [environment]
 ```
 
 The effective resource set resolves each agent slug across layers. A higher
-precedence layer can replace `agents/repo-auth/agent.md` with the same `name:
+precedence layer can replace `agents/environment.repo-auth/agent.md` with the same `name:
 repo-auth` and select a different approved Git transport. This is the override
 point for a local, project, shared, or global environment; it avoids publishing
 separate authentication variants that consumers must choose between.
 
-The catalog's default `repo-auth` resource uses HTTPS and a GitHub CLI-managed
+The catalog's default `environment.repo-auth` resource uses HTTPS and a GitHub CLI-managed
 token. An environment that uses SSH can replace that resource with this compact
 shape, keeping the same slug:
 
 ```yaml
 ---
-name: repo-auth
+name: environment.repo-auth
 description: Repository authentication convention for SSH environments.
 ---
 
@@ -42,7 +53,7 @@ policy into that project-owned file.
 
 ## Kubernetes residents
 
-The `agent-operator-pod` agent extends the baseline for resident agents that
+The `environment.agent-operator-pod` agent extends the baseline for resident agents that
 agent-operator deploys into Kubernetes pods. It inherits `environment`, so a
 resident inherits one slug and receives repository conventions,
 authentication, and pod runtime context (namespace scope, persistent
@@ -52,22 +63,22 @@ and operator-provisioned credentials):
 ```yaml
 ---
 name: luce
-inherits: [agent-operator-pod]
+inherits: [environment.agent-operator-pod]
 ---
 ```
 
 Until the agent-operator Organization supports more than one catalog source,
-an org catalog that wants this chain vendors `agents/agent-operator-pod/`,
-`agents/environment/`, and `agents/repo-auth/` verbatim; the same-slug
-override rule still applies (an org replaces `repo-auth` to switch forge or
+an org catalog that wants this chain vendors `agents/environment.agent-operator-pod/`,
+`agents/environment/`, and `agents/environment.repo-auth/` verbatim; the same-slug
+override rule still applies (an org replaces `environment.repo-auth` to switch forge or
 transport). Delete the vendored copies once residents can layer this catalog
 directly.
 
 ## Ephemeral CI runners
 
-The `actions-runner` agent is the environment for agents that
+The `environment.actions-runner` agent is the environment for agents that
 ai-outfitter/actions launches on a GitHub or Forgejo runner. It inherits
-`repo-auth` but **not** `environment`: the repository is already checked out
+`environment.repo-auth` but **not** `environment`: the repository is already checked out
 at the working directory, so the workstation `~/repos` layout does not
 apply. It states the runner realities — ephemeral disk, hard timeout,
 invisible stdout, forge-posted results, label-based routing.
@@ -75,7 +86,7 @@ invisible stdout, forge-posted results, label-based routing.
 
 ## Confined read-only research
 
-The `container-readonly` agent is the environment for subagents doing
+The `environment.container-readonly` agent is the environment for subagents doing
 read-only research or planning in a locked-down container. It carries
 `tools.deny: [bash, write, edit]` — and because tool denies union across an
 inheritance chain, a child profile cannot restore what it denies. The
