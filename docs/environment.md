@@ -62,3 +62,32 @@ an org catalog that wants this chain vendors `agents/agent-operator-pod/`,
 override rule still applies (an org replaces `repo-auth` to switch forge or
 transport). Delete the vendored copies once residents can layer this catalog
 directly.
+
+## Ephemeral CI runners
+
+The `actions-runner` agent is the environment for agents that
+ai-outfitter/actions launches on a GitHub or Forgejo runner. It inherits
+`repo-auth` but **not** `environment`: the repository is already checked out
+at the working directory, so the workstation `~/repos` layout does not
+apply. It states the runner realities — ephemeral disk, hard timeout,
+invisible stdout, forge-posted results, label-based routing.
+`actions-agent` inherits it.
+
+## Confined read-only research
+
+The `container-readonly` agent is the environment for subagents doing
+read-only research or planning in a locked-down container. It carries
+`tools.deny: [bash, write, edit]` — and because tool denies union across an
+inheritance chain, a child profile cannot restore what it denies. The
+runtime this profile targets (a container with a read-only workspace mount,
+writable `/tmp` only, and no egress beyond what research requires) is
+documented intent; the image variant ships separately.
+
+The `planner` agent is the first profile built for that use: a read-only
+explorer with `thinking: high` whose only write authority exists to emit
+its plan artifact. It composes with delegation harnesses that name an
+output file, and works as a directly-run agent too. `git-forge-delegator`
+is its complement on mature projects: instead of planning local work, it
+turns intent into forge issues with mechanical acceptance criteria,
+dispatches them by `agent:<slug>` label or assignment, and reviews the
+returning pull requests — the forge is the delegation ledger.
