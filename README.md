@@ -33,6 +33,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `issue-triage` - classify and comment on new GitHub issues.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
+- `project-daily-report` - collect project and telemetry evidence, write a linked daily Markdown report, and publish one idempotent edition.
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
