@@ -97,8 +97,9 @@ The intended runtime has a read-only workspace, a writable `/tmp`, and only the
 network access that research requires. The image variant ships separately.
 
 The `researcher` and `explorer` profiles inherit `container-readonly`. The
-The `planner` profile does not inherit it. It denies shell and file-mutation
-tools, and it delegates bounded work to the engineer, researcher, or explorer.
+The `planner` profile does not inherit it. Its allowlist contains only read and
+research tools. It denies file-mutation tools, and it delegates bounded work to
+the engineer, researcher, or explorer.
 
 The `git-forge-delegator` complements the planner on mature projects. It turns
 approved intent into forge issues with mechanical acceptance criteria. It
