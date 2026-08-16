@@ -39,3 +39,26 @@ description: Repository authentication convention for SSH environments.
 The baseline contains no credentials or consumer-specific values. Keep project
 instructions in the repository's `AGENTS.md`; do not copy this environment
 policy into that project-owned file.
+
+## Kubernetes residents
+
+The `agent-operator-pod` agent extends the baseline for resident agents that
+agent-operator deploys into Kubernetes pods. It inherits `environment`, so a
+resident inherits one slug and receives repository conventions,
+authentication, and pod runtime context (namespace scope, persistent
+workspace, durable task re-offers, resource quota bounds, the Chrome sidecar,
+and operator-provisioned credentials):
+
+```yaml
+---
+name: luce
+inherits: [agent-operator-pod]
+---
+```
+
+Until the agent-operator Organization supports more than one catalog source,
+an org catalog that wants this chain vendors `agents/agent-operator-pod/`,
+`agents/environment/`, and `agents/repo-auth/` verbatim; the same-slug
+override rule still applies (an org replaces `repo-auth` to switch forge or
+transport). Delete the vendored copies once residents can layer this catalog
+directly.
