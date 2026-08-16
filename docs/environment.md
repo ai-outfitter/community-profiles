@@ -1,18 +1,7 @@
 # Environment baseline
 
-## Naming: the `environment.` namespace
-
-Environment profiles group under the `environment.` slug prefix
-(`environment.repo-auth`, `environment.agent-operator-pod`,
-`environment.actions-runner`, `environment.container-readonly`). The dot is
-naming only — it carries no resolution semantics, no hierarchy, and no
-wildcard inheritance; `environment` itself stays the plain-slug baseline a
-consumer inherits. Dot-namespaced slugs require an outfitter release that
-accepts them (feat/namespaced-agent-slugs); older outfitters reject the
-pattern, which is why adopting this catalog revision requires that release.
-
 The `environment` agent is a base profile for agents that need a stable
-repository convention. It inherits the registered `environment.repo-auth` agent, so a
+repository convention. It inherits the registered `repo-auth` agent, so a
 consumer can inherit `environment` and receive both repository location and
 authentication guidance.
 
@@ -25,18 +14,18 @@ inherits: [environment]
 ```
 
 The effective resource set resolves each agent slug across layers. A higher
-precedence layer can replace `agents/environment.repo-auth/agent.md` with the same `name:
+precedence layer can replace `agents/repo-auth/agent.md` with the same `name:
 repo-auth` and select a different approved Git transport. This is the override
 point for a local, project, shared, or global environment; it avoids publishing
 separate authentication variants that consumers must choose between.
 
-The catalog's default `environment.repo-auth` resource uses HTTPS and a GitHub CLI-managed
+The catalog's default `repo-auth` resource uses HTTPS and a GitHub CLI-managed
 token. An environment that uses SSH can replace that resource with this compact
 shape, keeping the same slug:
 
 ```yaml
 ---
-name: environment.repo-auth
+name: repo-auth
 description: Repository authentication convention for SSH environments.
 ---
 
@@ -51,54 +40,67 @@ The baseline contains no credentials or consumer-specific values. Keep project
 instructions in the repository's `AGENTS.md`; do not copy this environment
 policy into that project-owned file.
 
+## Role family
+
+The catalog provides five independent role profiles: `founder`, `planner`,
+`engineer`, `researcher`, and `explorer`. Their profile files define their
+responsibilities.
+
+A project MAY document that the planner reports to the founder. A project MAY
+also document that the engineer, researcher, and explorer report to the
+planner. These reporting lines are documentation only. They do not change
+profile resolution or runtime authority.
+
+Inheritance represents capability composition only. Inheritance MUST NOT
+represent an organization chart. The role profiles do not inherit other role
+profiles. The engineer inherits `environment` for repository conventions. The
+researcher and explorer inherit `container-readonly` for the
+read-only tool boundary.
+
 ## Kubernetes residents
 
-The `environment.agent-operator-pod` agent extends the baseline for resident agents that
-agent-operator deploys into Kubernetes pods. It inherits `environment`, so a
-resident inherits one slug and receives repository conventions,
-authentication, and pod runtime context (namespace scope, persistent
-workspace, durable task re-offers, resource quota bounds, the Chrome sidecar,
-and operator-provisioned credentials):
+The `agent-operator-pod` profile extends the baseline for Kubernetes residents.
+It inherits `environment`, which supplies the repository and authentication
+rules. The profile also supplies the pod runtime context: namespace scope,
+persistent workspace, durable task re-offers, resource limits, the Chrome
+sidecar, and operator-provisioned credentials:
 
 ```yaml
 ---
-name: luce
-inherits: [environment.agent-operator-pod]
+name: resident
+inherits: [agent-operator-pod]
 ---
 ```
 
-Until the agent-operator Organization supports more than one catalog source,
-an org catalog that wants this chain vendors `agents/environment.agent-operator-pod/`,
-`agents/environment/`, and `agents/environment.repo-auth/` verbatim; the same-slug
-override rule still applies (an org replaces `environment.repo-auth` to switch forge or
-transport). Delete the vendored copies once residents can layer this catalog
-directly.
+An organization catalog MAY vendor `agents/agent-operator-pod/`,
+`agents/environment/`, and `agents/repo-auth/` when its runtime cannot layer
+this catalog directly. The same-slug override rule still applies. An
+organization can replace `repo-auth` to select another forge or transport.
+Remove the vendored copies when the runtime supports direct catalog layers.
 
 ## Ephemeral CI runners
 
-The `environment.actions-runner` agent is the environment for agents that
-ai-outfitter/actions launches on a GitHub or Forgejo runner. It inherits
-`environment.repo-auth` but **not** `environment`: the repository is already checked out
-at the working directory, so the workstation `~/repos` layout does not
-apply. It states the runner realities — ephemeral disk, hard timeout,
-invisible stdout, forge-posted results, label-based routing.
-`actions-agent` inherits it.
+The `actions-runner` agent is the environment for agents that
+ai-outfitter/actions launches on a GitHub or Forgejo runner. It is forge-neutral
+and does **not** inherit `environment`: the repository is already checked out
+at the working directory, so the workstation `~/repos` layout does not apply.
+It states the runner realities: a temporary workspace, a hard timeout, an audit
+transcript, forge-posted user-facing results, and label-based routing.
+`actions-agent` inherits it. A GitHub-specific child MAY inherit `repo-auth`.
 
 ## Confined read-only research
 
-The `environment.container-readonly` agent is the environment for subagents doing
-read-only research or planning in a locked-down container. It carries
-`tools.deny: [bash, write, edit]` — and because tool denies union across an
-inheritance chain, a child profile cannot restore what it denies. The
-runtime this profile targets (a container with a read-only workspace mount,
-writable `/tmp` only, and no egress beyond what research requires) is
-documented intent; the image variant ships separately.
+The `container-readonly` agent is the environment for read-only research and
+exploration in a locked-down container. It denies `bash`, `write`, and `edit`.
+Inherited deny lists combine, so a child profile cannot restore these tools.
+The intended runtime has a read-only workspace, a writable `/tmp`, and only the
+network access that research requires. The image variant ships separately.
 
-The `planner` agent is the first profile built for that use: a read-only
-explorer with `thinking: high` whose only write authority exists to emit
-its plan artifact. It composes with delegation harnesses that name an
-output file, and works as a directly-run agent too. `git-forge-delegator`
-is its complement on mature projects: instead of planning local work, it
-turns intent into forge issues with mechanical acceptance criteria,
-dispatches them by `agent:<slug>` label or assignment, and reviews the
-returning pull requests — the forge is the delegation ledger.
+The `researcher` and `explorer` profiles inherit `container-readonly`. The
+The `planner` profile does not inherit it. It denies shell and file-mutation
+tools, and it delegates bounded work to the engineer, researcher, or explorer.
+
+The `git-forge-delegator` complements the planner on mature projects. It turns
+approved intent into forge issues with mechanical acceptance criteria. It
+dispatches work by `agent:<slug>` label or assignment. It reviews the pull
+requests that agents return. The forge is the delegation ledger.

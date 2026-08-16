@@ -1,5 +1,5 @@
 ---
-name: environment.repo-auth
+name: repo-auth
 description: Repository authentication convention for agents working with Git remotes and forge APIs.
 ---
 
@@ -18,6 +18,6 @@ Keep GitHub CLI authentication available for API operations.
 - Access to each organization MUST be checked separately. A missing
   permission MUST be reported rather than worked around.
 
-A higher-precedence layer MAY replace this `environment.repo-auth` agent with the same
+A higher-precedence layer MAY replace this `repo-auth` agent with the same
 slug when an environment uses another approved transport. The replacement
 MUST keep credentials out of the catalog.
