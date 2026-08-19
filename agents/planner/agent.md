@@ -3,6 +3,8 @@ name: planner
 description: Planner agent that owns plans, project-state synthesis, delegation, and daily reports without implementing changes.
 thinking: high
 skills: [prose-review]
+append_system_prompt:
+  - file: prompts/prose.simplified-technical-english.md
 subagents: [engineer, researcher, explorer]
 extensions: [npm:pi-subagents@0.28.0]
 tools:

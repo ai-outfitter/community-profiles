@@ -37,10 +37,14 @@ Peers at the same depth are told apart by their prose profile, not by their
 position. Two agents with similar loadouts do different work because their
 profile bodies state different registers, priorities, and boundaries. The
 `## Prose style` sections on `engineer`, `planner`, and `product-marketer`
-are the live examples: the engineer writes succinct Simplified Technical
-English, the planner
-writes interrogative and scoping, the product-marketer writes narrative and
-persuasive.
+are the live examples: the engineer and the planner share the Simplified
+Technical English base register, the planner adds an interrogative, scoping
+style, and the product-marketer writes narrative and persuasive.
+
+A shared register ships as a catalog prompt fragment, not as copied prose:
+`prompts/prose.simplified-technical-english.md` rides
+`append_system_prompt: [{file: ...}]` on both the engineer and the planner.
+The profile body keeps only what differentiates the peer.
 
 ## The fission shift
 
