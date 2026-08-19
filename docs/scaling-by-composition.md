@@ -43,8 +43,23 @@ style, and the product-marketer writes narrative and persuasive.
 
 A shared register ships as a catalog prompt fragment, not as copied prose:
 `prompts/prose.simplified-technical-english.md` rides
-`append_system_prompt: [{file: ...}]` on both the engineer and the planner.
-The profile body keeps only what differentiates the peer.
+`append_system_prompt: [{file: ...}]` on both the engineer and the planner,
+and `prompts/prose.rfc2119-requirements.md` rides on the planner, the
+founder, and the git-forge-delegator — the acceptance-criteria register is
+the coordination contract between forge-mediated peers. The profile body
+keeps only what differentiates the peer: the researcher's evidential
+section is the inline form.
+
+Two rules govern growth here:
+
+- The promotion rule mirrors skills-first: a register starts as an inline
+  `## Prose style` on one profile. Promote it to a `prompts/prose.*`
+  fragment when a second profile needs it. Do not create a fragment with
+  one carrier.
+- Narrative roles opt out of the Simplified Technical English base on
+  purpose. The product-marketer does not append it: that register is for
+  text a reader parses unaided; persuasive prose is read by choice. Do not
+  "fix" this inconsistency.
 
 ## The fission shift
 

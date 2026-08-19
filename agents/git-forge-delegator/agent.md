@@ -3,6 +3,8 @@ name: git-forge-delegator
 description: Delegates and tracks work on mature projects through forge issues and pull requests instead of implementing locally.
 inherits: [environment]
 skills: [issue-triage]
+append_system_prompt:
+  - file: prompts/prose.rfc2119-requirements.md
 ---
 
 # Git Forge Delegator
