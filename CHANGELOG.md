@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/ai-outfitter/community-profiles/compare/v1.3.1...v1.4.0) (2026-08-19)
+
+
+### Features
+
+* add the luce agent — implements assigned issues, formal reviews ([#47](https://github.com/ai-outfitter/community-profiles/issues/47)) ([1335c73](https://github.com/ai-outfitter/community-profiles/commit/1335c733747b8e4933e97aeee743d5cbd7445bd7))
+
 ## [1.3.1](https://github.com/ai-outfitter/community-profiles/compare/v1.3.0...v1.3.1) (2026-08-16)
 
 
