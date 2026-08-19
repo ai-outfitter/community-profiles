@@ -26,21 +26,28 @@ structural tests.
 5. Check facts you can verify from the repository or linked sources. Flag
    claims you cannot verify; do not silently trust them.
 6. Deliver exactly one verdict:
-   - **Approve** — thesis clear, structure sound, register correct.
    - **Request changes** — name each defect with its location and state what
      a fix looks like. Rank defects: thesis first, structure second,
      sentence-level last.
+   - **No blocking findings** — thesis clear, structure sound, register
+     correct.
 
-On a forge, deliver the verdict as a pull request review with `gh`, writing
-the body to a file and passing `--body-file`. Elsewhere, deliver it as a
-ranked list.
+Whether a clean verdict lets this carrier approve, and who merges, is
+organization policy composed from the org's practice fragments — never
+assumed from this skill. Without an explicit grant, deliver the clean verdict
+as a comment review and leave approval to a human.
+
+On a forge, deliver the verdict as a pull request review through whatever
+surface the loadout provides — `gh` with `--body-file`, the GitHub MCP review
+tools, or `github-mcp-server` driven over stdio; the `code-review` skill's
+Transports section is the reference. Elsewhere, deliver it as a ranked list.
 
 ## Read-only carriers
 
-If your tool surface lacks `bash` (or denies it), you cannot run `gh`. Judge
-the artifact and deliver the full verdict in-session — the ranked findings
-and the verdict word — so a `bash`-capable peer or a human posts it to the
-forge. Do not claim the review is posted when you could not post it.
+If no surface in your loadout can reach the forge, judge the artifact and
+deliver the full verdict in-session — the ranked findings and the verdict
+word — so a forge-capable peer or a human posts it. Do not claim the review
+is posted when you could not post it.
 
 ## Hard limits
 
