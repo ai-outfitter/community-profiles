@@ -38,7 +38,7 @@ body:
     id: harnesses
     attributes:
       label: Harnesses
-      description: Which harnesses this targets (Pi, Claude Code) and anything harness-specific.
-      placeholder: Pi primarily; Claude Code if possible
+      description: Which harnesses this targets (Pi, Claude Code, Codex) and anything harness-specific.
+      placeholder: Pi, Claude Code, or Codex
     validations:
       required: false

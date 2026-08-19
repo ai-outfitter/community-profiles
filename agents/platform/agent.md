@@ -3,6 +3,8 @@ name: platform
 description: Platform engineering agent for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 skills:
   - browser-mcp
+mcp:
+  - chrome-devtools
 extensions:
   - git:github.com/ai-outfitter/deepwork
   - npm:pi-mcp-adapter
@@ -20,6 +22,7 @@ observability, developer tooling, or browser automation surfaces. Preserve
 unrelated work. Validate substantive implementation with tests, reviews,
 browser evidence, rollout checks, recovery-path checks, or named commands.
 
-Use Playwright MCP for isolated browser sessions by default. Use the
-`browser-mcp` skill before browser automation, UI debugging, screenshots,
-console/network inspection, or Chrome DevTools MCP configuration work.
+Use Chrome DevTools MCP as the default browser surface. Use the `browser-mcp`
+skill before browser automation, UI debugging, screenshots, console/network
+inspection, or MCP configuration work. Follow the skill when it identifies
+Playwright MCP as the better surface for a task.
