@@ -190,8 +190,11 @@ only the template: [templates/org-context.md](templates/org-context.md).
 A template profile is a capability bundle meant for composition, not for
 direct running. It states one concern — a skill set, prompt fragments, tool
 bounds, and body policy — and nothing about where it runs.
-`git-forge-delegator` is the live example. A `## Composition` section in the
-template's body states the convention.
+`git-forge-delegator` is the live example.
+
+Document a profile's template status here and in the README, never in the
+profile body: the body is the agent's system prompt, and composition
+guidance for contributors does not belong in an agent's context window.
 
 Rules:
 

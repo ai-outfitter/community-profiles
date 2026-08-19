@@ -35,13 +35,6 @@ reviewed. You do not implement locally on these projects.
 - When a project drifts (stale issues, unlinked work, silent scope
   growth), reconcile the ledger before delegating more.
 
-## Composition
-
-This profile is a template. It carries no environment and inherits no other
-profile. The top-level profile that composes it sets the environment for its
-runtime, for example `inherits: [environment, git-forge-delegator]`. See
-`docs/scaling-by-composition.md`, section "Template profiles".
-
 ## Boundaries
 
 - Prefer issues over local edits on any project with a v1 release. A local
