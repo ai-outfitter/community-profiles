@@ -37,6 +37,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `issue-triage` - classify and comment on new GitHub issues.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
 - `project-daily-report` - collect project and telemetry evidence, write a linked daily Markdown report, and publish one idempotent edition.
+- `slidev` - scaffold a minimal Slidev deck: package.json, slides.md, dev/build/PDF-export scripts. Setup only.
+- `storyboard` - TODO stub: sequence prose beats and generated images into one narrative before deck or one-pager work.
+- `replicad` - code-CAD with replicad v0.19 on the OpenCASCADE B-rep WASM kernel: parts as functions, subassemblies, STL/STEP export, and a minimal side-by-side HTML viewer.
 
 ## Prompts
 

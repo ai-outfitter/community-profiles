@@ -31,6 +31,15 @@ prefer adding a skill to an existing agent over adding a near-duplicate
 agent. A skill costs one file and no coordination. A new agent costs an
 identity, a review matrix entry, and a routing decision.
 
+The narrative-to-geometry pipeline is the live example. The
+`product-marketer` grows by gaining `storyboard` and `slidev`: it sequences
+the story and renders it as a deck, a one-pager, or a pre-release with
+prose and generated imagery. The `engineer` grows by gaining `replicad`: it
+turns that narrative's subject into parts, subassemblies, and assemblies,
+and views the exported geometry next to the marketing reference. Both roles
+grew; neither split. When one of them exhausts its context, the fission
+shift below partitions these same skills between two peers.
+
 ## The prose distinction
 
 Peers at the same depth are told apart by their prose profile, not by their
