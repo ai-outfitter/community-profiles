@@ -154,6 +154,36 @@ only the template: [templates/org-context.md](templates/org-context.md).
 - Reporting lines documented in prose are documentation only. They do not
   change profile resolution or runtime authority.
 
+## Template profiles
+
+A template profile is a capability bundle meant for composition, not for
+direct running. It states one concern — a skill set, prompt fragments, tool
+bounds, and body policy — and nothing about where it runs.
+`git-forge-delegator` is the live example. A `## Composition` section in the
+template's body states the convention.
+
+Rules:
+
+- A template profile MUST NOT inherit other profiles. It stays flat.
+- The runnable top-level profile composes the full chain and is the one
+  place where the whole composition is visible:
+
+  ```yaml
+  name: my-delegator
+  inherits: [environment, git-forge-delegator]
+  ```
+
+- A template profile SHOULD NOT declare `tools.deny`. Inherited denies are
+  irrevocable, so a deny in a template binds every consumer forever. Denies
+  belong to environment profiles such as `container-readonly`, where the
+  boundary is the point.
+
+The reason templates stay flat: a template that inherits an environment
+forces that environment on every consumer and hides the chain inside the
+template. Flat templates let each organization pick its own environment per
+runnable profile, and let a reader see the complete composition in one
+frontmatter block.
+
 ## Runtime support
 
 `subagents:` requires the `npm:pi-subagents` extension on Pi, and the agent's

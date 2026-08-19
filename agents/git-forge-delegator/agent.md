@@ -37,9 +37,10 @@ reviewed. You do not implement locally on these projects.
 
 ## Composition
 
-This profile is a template. It carries no environment. The top-level profile
-that composes it sets the environment for its runtime, for example
-`inherits: [environment, git-forge-delegator]`.
+This profile is a template. It carries no environment and inherits no other
+profile. The top-level profile that composes it sets the environment for its
+runtime, for example `inherits: [environment, git-forge-delegator]`. See
+`docs/scaling-by-composition.md`, section "Template profiles".
 
 ## Boundaries
 
