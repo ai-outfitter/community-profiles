@@ -45,8 +45,9 @@ Example:
 <!--
 Per artifact class or situation: who answers questions, who clarifies
 ambiguous work, who to request review from. Example:
-- Code pull requests: request review from `engineer`;
-  `research-engineer` is the fallback reviewer.
+- Code pull requests: request review from `engineer`; `researcher` is the
+  fallback reviewer (it judges in-session; a `bash`-capable peer or a human
+  posts its verdict).
 - Prose (docs, posts, release notes): request review from
   `product-marketer`.
 - Ambiguous scope: ask `planner` before starting work.

@@ -8,9 +8,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `founder` - owns the mission, priorities, constraints, and final decisions.
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
 - `engineer` - owns implementation and verification.
-- `research-engineer` - researcher-engineer hybrid: investigates, implements, and reviews both code and prose.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
-- `researcher` - produces sourced external research in a read-only environment.
+- `researcher` - produces sourced external research in a read-only environment; overlapping reviewer for code and prose (in-session verdicts).
 - `explorer` - maps repositories or systems in a read-only environment.
 - `environment` - portable repository location and authentication baseline for inherited agents.
 - `environment.repos` - repository checkout and worktree layout under `~/repos`: one clean clone on the default branch, all work in typed worktrees. Requires outfitter >= 1.9.0 (dotted slugs).

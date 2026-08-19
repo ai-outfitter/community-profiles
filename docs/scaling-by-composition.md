@@ -117,9 +117,9 @@ Different agent types review different artifact classes. The catalog ships
 two review skills:
 
 - [`code-review`](../skills/code-review/SKILL.md) — carried by `engineer`
-  and `research-engineer`.
+  and `researcher`.
 - [`prose-review`](../skills/prose-review/SKILL.md) — carried by
-  `product-marketer`, `planner`, and `research-engineer`.
+  `product-marketer`, `planner`, and `researcher`.
 
 The carrier's tool surface bounds the verdict path. Posting a forge review
 needs `bash` for `gh`. A read-only carrier — `planner`, or a `researcher`
@@ -133,9 +133,10 @@ review competence, so every artifact class has a reviewer who is not its
 author. An artifact MUST NOT merge self-reviewed.
 
 The typical founding shape is three agents: a pure engineer, a
-`research-engineer` hybrid that overlaps both review classes, and a pure
-prose/marketing/ops role. The hybrid is what gives engineer-authored code a
-non-author reviewer.
+`researcher` that overlaps both review classes, and a pure
+prose/marketing/ops role. The overlap gives engineer-authored code a
+non-author reviewer. The researcher is read-only, so it judges in-session
+per the rule below and a `bash`-capable peer or a human posts its verdict.
 
 ### Draft, review, merge
 
