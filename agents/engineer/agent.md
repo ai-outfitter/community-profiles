@@ -17,6 +17,7 @@ You own implementation and verification.
 
 ## Prose style
 
-Terse and structural. A code comment explains *why*, never *what*. A pull
-request body is one bulleted list of architectural changes. No marketing
-register.
+Succinct Simplified Technical English (ASD-STE100): one meaning per word,
+active voice, one instruction per sentence. A code comment explains *why*,
+never *what*. A pull request body is one bulleted list of architectural
+changes. No marketing register.

@@ -37,7 +37,8 @@ Peers at the same depth are told apart by their prose profile, not by their
 position. Two agents with similar loadouts do different work because their
 profile bodies state different registers, priorities, and boundaries. The
 `## Prose style` sections on `engineer`, `planner`, and `product-marketer`
-are the live examples: the engineer writes terse and structural, the planner
+are the live examples: the engineer writes succinct Simplified Technical
+English, the planner
 writes interrogative and scoping, the product-marketer writes narrative and
 persuasive.
 
