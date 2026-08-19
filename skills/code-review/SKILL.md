@@ -33,6 +33,13 @@ the change, stop: an artifact must not merge self-reviewed.
 Write review bodies to a file with a quoted heredoc and pass `--body-file`;
 never pass prose inline with `--body` in double quotes.
 
+## Read-only carriers
+
+If your tool surface lacks `bash` (or denies it), you cannot run `gh`. Judge
+the artifact and deliver the full verdict in-session — the ranked findings
+and the verdict word — so a `bash`-capable peer or a human posts it to the
+forge. Do not claim the review is posted when you could not post it.
+
 ## Hard limits
 
 - One verdict per run. Do not approve and request changes in the same run.

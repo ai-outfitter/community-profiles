@@ -35,6 +35,13 @@ On a forge, deliver the verdict as a pull request review with `gh`, writing
 the body to a file and passing `--body-file`. Elsewhere, deliver it as a
 ranked list.
 
+## Read-only carriers
+
+If your tool surface lacks `bash` (or denies it), you cannot run `gh`. Judge
+the artifact and deliver the full verdict in-session — the ranked findings
+and the verdict word — so a `bash`-capable peer or a human posts it to the
+forge. Do not claim the review is posted when you could not post it.
+
 ## Hard limits
 
 - One verdict per run.

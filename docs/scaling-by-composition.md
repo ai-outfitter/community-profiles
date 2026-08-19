@@ -81,10 +81,16 @@ dedicated reviewer role.
 Different agent types review different artifact classes. The catalog ships
 two review skills:
 
-- [`code-review`](../skills/code-review/SKILL.md) — carried by `engineer`; a
-  `researcher` MAY carry it too.
+- [`code-review`](../skills/code-review/SKILL.md) — carried by `engineer`.
 - [`prose-review`](../skills/prose-review/SKILL.md) — carried by
-  `product-marketer` and suitable for `planner` and `researcher`.
+  `product-marketer` and `planner`.
+
+The carrier's tool surface bounds the verdict path. Posting a forge review
+needs `bash` for `gh`. A read-only carrier — `planner`, or a `researcher`
+that carries a review skill — can judge the artifact but cannot post: it
+MUST deliver its verdict in-session, and a `bash`-capable peer or a human
+posts it to the forge. Do not document a review capability the carrier's
+tools cannot execute.
 
 Rule: an organization MUST keep a minimum of three agents with overlapping
 review competence, so every artifact class has a reviewer who is not its
