@@ -40,8 +40,9 @@ as a comment review and leave approval to a human.
 On a forge, deliver the verdict as a pull request review through whatever
 surface the loadout provides:
 
-- **`gh`** — `gh pr review <n> --request-changes|--comment --body-file <file>`;
-  write the body to a file, never inline in double quotes.
+- **`gh`** — `gh pr review <n> --request-changes --body-file <file>` for a
+  blocking verdict, or `gh pr review <n> --comment --body-file <file>` for a
+  clean one; write the body to a file, never inline in double quotes.
 - **GitHub MCP tools** — `pull_request_review_write` with `method: create`,
   then `method: submit_pending` with `event: REQUEST_CHANGES` or
   `event: COMMENT`.
