@@ -49,7 +49,9 @@ responsibilities.
 A project MAY document that the planner reports to the founder. A project MAY
 also document that the engineer, researcher, and explorer report to the
 planner. These reporting lines are documentation only. They do not change
-profile resolution or runtime authority.
+profile resolution or runtime authority. See
+[Scaling by composition](scaling-by-composition.md) for the delegation model
+and the growth path.
 
 Inheritance represents capability composition only. Inheritance MUST NOT
 represent an organization chart. The role profiles do not inherit other role
