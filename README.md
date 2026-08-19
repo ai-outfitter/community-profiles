@@ -12,6 +12,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `researcher` - produces sourced external research in a read-only environment.
 - `explorer` - maps repositories or systems in a read-only environment.
 - `environment` - portable repository location and authentication baseline for inherited agents.
+- `environment.repos` - repository checkout and worktree layout under `~/repos`: one clean clone on the default branch, all work in typed worktrees. Requires outfitter >= 1.9.0 (dotted slugs).
 - `agent-operator-pod` - runtime context for resident agents in Kubernetes pods.
 - `actions-runner` - runtime context for ephemeral CI agents.
 - `container-readonly` - tool boundary for read-only agents.
