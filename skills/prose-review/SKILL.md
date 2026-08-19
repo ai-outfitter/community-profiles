@@ -38,9 +38,18 @@ assumed from this skill. Without an explicit grant, deliver the clean verdict
 as a comment review and leave approval to a human.
 
 On a forge, deliver the verdict as a pull request review through whatever
-surface the loadout provides — `gh` with `--body-file`, the GitHub MCP review
-tools, or `github-mcp-server` driven over stdio; the `code-review` skill's
-Transports section is the reference. Elsewhere, deliver it as a ranked list.
+surface the loadout provides:
+
+- **`gh`** — `gh pr review <n> --request-changes|--comment --body-file <file>`;
+  write the body to a file, never inline in double quotes.
+- **GitHub MCP tools** — `pull_request_review_write` with `method: create`,
+  then `method: submit_pending` with `event: REQUEST_CHANGES` or
+  `event: COMMENT`.
+- **`github-mcp-server` binary, no MCP projection** — drive those same tools
+  over stdio JSON-RPC from `bash`, keeping create and submit in one spawned
+  process.
+
+Elsewhere, deliver it as a ranked list.
 
 ## Read-only carriers
 
