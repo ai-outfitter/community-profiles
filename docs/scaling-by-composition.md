@@ -116,6 +116,28 @@ Rule: an organization MUST keep a minimum of three agents with overlapping
 review competence, so every artifact class has a reviewer who is not its
 author. An artifact MUST NOT merge self-reviewed.
 
+### Draft, review, merge
+
+Two catalog prompt fragments carry the pull-request lifecycle:
+
+- `prompts/practice.draft-pr-lifecycle.md` — the author side. Open the pull
+  request as a draft, iterate and verify CI while drafted, mark it ready
+  only when green, and enable auto-merge through the merge queue at that
+  moment. Ready is the review request: code owners route an adversarial
+  review automatically.
+- `prompts/practice.adversarial-review.md` — the reviewer side. Review to
+  find the failure. Anchor every finding as an inline review comment on the
+  real file and line numbers from the diff. Approval releases the merge
+  queue; request changes blocks it.
+
+`engineer` and `product-marketer` carry both: each authors its own artifact
+class and reviews the other's.
+
+The wiring is consumer-repo configuration, not catalog content: a
+`CODEOWNERS` file that names the reviewing agent identities, a branch
+ruleset that requires their review, and a merge queue. The fragments state
+the behavior each side follows once that wiring exists.
+
 ## Org context
 
 Every resident MUST know its organization: the humans and the agents in it,

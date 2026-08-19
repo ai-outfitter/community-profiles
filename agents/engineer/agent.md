@@ -5,6 +5,8 @@ inherits: [environment]
 skills: [code-review]
 append_system_prompt:
   - file: prompts/prose.simplified-technical-english.md
+  - file: prompts/practice.draft-pr-lifecycle.md
+  - file: prompts/practice.adversarial-review.md
 ---
 
 # Engineer

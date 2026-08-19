@@ -38,6 +38,16 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
 - `project-daily-report` - collect project and telemetry evidence, write a linked daily Markdown report, and publish one idempotent edition.
 
+## Prompts
+
+Shared prompt fragments in `prompts/`, appended by agents via
+`append_system_prompt: [{file: ...}]`:
+
+- `prose.simplified-technical-english` - the succinct ASD-STE100 base register (engineer, planner).
+- `prose.rfc2119-requirements` - requirements and acceptance criteria with RFC 2119 keywords (planner, founder, git-forge-delegator).
+- `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue (engineer, product-marketer).
+- `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (engineer, product-marketer).
+
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
 
@@ -81,6 +91,7 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 ```text
 agents/         one directory per agent identity and loadout
 skills/         reusable Agent Skills packages
+prompts/        shared prompt fragments appended by agents
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
 ```
