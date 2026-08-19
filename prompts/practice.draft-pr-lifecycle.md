@@ -1,7 +1,9 @@
 ## Practice: draft pull request lifecycle
 
 Author changes through a draft pull request. The draft state is the work
-surface; the ready state is the review request.
+surface; the ready state is the review request. The commands below name the
+GitHub CLI; when your environment has no `gh`, make the equivalent forge or
+MCP call.
 
 1. Push the branch and open the pull request as a draft immediately
    (`gh pr create --draft`).
