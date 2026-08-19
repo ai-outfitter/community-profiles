@@ -84,9 +84,15 @@ skills: [a, b, c, d]
 ```
 
 ```yaml
-# after — two peer residents
-name: engineer-app        # skills: [a, b]
-name: engineer-platform   # skills: [c, d]
+# after — agents/engineer-app/agent.md
+name: engineer-app
+skills: [a, b]
+```
+
+```yaml
+# after — agents/engineer-platform/agent.md
+name: engineer-platform
+skills: [c, d]
 ```
 
 The organization chart stays flat. Only the loadout partitions. The new peers
@@ -110,9 +116,10 @@ dedicated reviewer role.
 Different agent types review different artifact classes. The catalog ships
 two review skills:
 
-- [`code-review`](../skills/code-review/SKILL.md) — carried by `engineer`.
+- [`code-review`](../skills/code-review/SKILL.md) — carried by `engineer`
+  and `research-engineer`.
 - [`prose-review`](../skills/prose-review/SKILL.md) — carried by
-  `product-marketer` and `planner`.
+  `product-marketer`, `planner`, and `research-engineer`.
 
 The carrier's tool surface bounds the verdict path. Posting a forge review
 needs `bash` for `gh`. A read-only carrier — `planner`, or a `researcher`
@@ -124,6 +131,11 @@ tools cannot execute.
 Rule: an organization MUST keep a minimum of three agents with overlapping
 review competence, so every artifact class has a reviewer who is not its
 author. An artifact MUST NOT merge self-reviewed.
+
+The typical founding shape is three agents: a pure engineer, a
+`research-engineer` hybrid that overlaps both review classes, and a pure
+prose/marketing/ops role. The hybrid is what gives engineer-authored code a
+non-author reviewer.
 
 ### Draft, review, merge
 
@@ -190,7 +202,11 @@ only the template: [templates/org-context.md](templates/org-context.md).
 A template profile is a capability bundle meant for composition, not for
 direct running. It states one concern — a skill set, prompt fragments, tool
 bounds, and body policy — and nothing about where it runs.
-`git-forge-delegator` is the live example.
+`git-forge-delegator` is the live example. Migration: a consumer that ran
+`git-forge-delegator` directly before this release inherited `environment`
+through it; that consumer MUST now compose its own runnable profile with
+`inherits: [environment, git-forge-delegator]`, or it silently loses the
+repository and auth policies.
 
 Document a profile's template status here and in the README, never in the
 profile body: the body is the agent's system prompt, and composition

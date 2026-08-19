@@ -13,8 +13,12 @@ surface; the ready state is the review request.
    are green and the acceptance criteria are met. Ready is the signal that
    requests review: code owners then route an adversarial review
    automatically.
-5. Enable auto-merge through the merge queue when you mark it ready
+5. Verify the repository's protections before you enable auto-merge: a
+   rule that requires review and a merge queue must both exist on the
+   target branch. When either is absent, do not enable auto-merge — leave
+   the pull request ready and request review explicitly.
+6. Enable auto-merge through the merge queue when the protections exist
    (`gh pr merge <number> --auto`). The queue merges when the required
    reviews and checks pass.
-6. Answer each review comment with a fix or a stated reason, then re-request
+7. Answer each review comment with a fix or a stated reason, then re-request
    review. Do not dismiss a review.

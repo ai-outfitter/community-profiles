@@ -8,6 +8,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `founder` - owns the mission, priorities, constraints, and final decisions.
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
 - `engineer` - owns implementation and verification.
+- `research-engineer` - researcher-engineer hybrid: investigates, implements, and reviews both code and prose.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced external research in a read-only environment.
 - `explorer` - maps repositories or systems in a read-only environment.
@@ -17,7 +18,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `actions-runner` - runtime context for ephemeral CI agents.
 - `container-readonly` - tool boundary for read-only agents.
 - `repo-auth` - replaceable repository transport and forge authentication convention.
-- `git-forge-delegator` - creates and reviews delegated forge work.
+- `git-forge-delegator` - creates and reviews delegated forge work. Template profile: compose it (`inherits: [environment, git-forge-delegator]`), do not run it directly — it no longer carries the repository and auth environment itself.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
@@ -39,7 +40,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
 - `project-daily-report` - collect project and telemetry evidence, write a linked daily Markdown report, and publish one idempotent edition.
 - `slidev` - scaffold a minimal Slidev deck: package.json, slides.md, dev/build/PDF-export scripts. Setup only.
-- `storyboard` - TODO stub: sequence prose beats and generated images into one narrative before deck or one-pager work.
+- `storyboard` - sequence a story into beats, each pairing a claim, a prose line, and an image prompt, written as storyboard.md before deck or one-pager work.
 - `replicad` - code-CAD with replicad v0.19 on the OpenCASCADE B-rep WASM kernel: parts as functions, subassemblies, STL/STEP export, and a minimal side-by-side HTML viewer.
 
 ## Prompts
