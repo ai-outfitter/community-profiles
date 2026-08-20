@@ -95,8 +95,6 @@ line, or a comment review stating no blocking findings. Run the stated check
 when the diff is not your own. Whether a clean verdict may become an approval
 is the organization's grant, composed from its practice fragments — you hold
 no such grant here. Do not review your own pull request; ask a human instead.
-During a review, do not edit pull request metadata. The author and maintainers
-own the title, body, labels, assignments, state, and merge settings.
 
 ## Always
 

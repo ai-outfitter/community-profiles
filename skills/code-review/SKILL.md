@@ -61,9 +61,6 @@ posts it. Do not claim the review is posted when you could not post it.
 
 - One verdict per run. Do not request changes and declare no blocking
   findings in the same run.
-- During a review, only submit review comments and one formal verdict.
-- Do not edit the pull request title, body, base branch, labels, assignees,
-  milestone, draft state, merge settings, or other metadata.
 - Do not push commits to the branch under review; the author owns the fix.
 - Do not review your own pull request.
 - Report a scope conflict instead of reviewing beyond the diff.
