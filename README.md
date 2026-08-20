@@ -2,6 +2,10 @@
 
 Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-outfitter/outfitter). Agents and skills here are reviewed for structure but are not curated like the [default catalog](https://github.com/ai-outfitter/default-profiles) — read an agent and its selected resources before you run it.
 
+This catalog is experimental. It does not preserve compatibility for
+unreleased profile slugs. Dotted environment slugs require Outfitter 1.9.0 or
+later.
+
 ## Agents
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
@@ -9,14 +13,14 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
 - `engineer` - owns implementation and verification.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
-- `researcher` - produces sourced external research and can author or review personas. It does not select a runtime environment.
+- `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
-- `environment` - portable repository location and authentication baseline for inherited agents.
-- `environment.repos` - repository checkout and worktree layout under `~/repos`: one clean clone on the default branch, all work in typed worktrees. Requires outfitter >= 1.9.0 (dotted slugs).
-- `environment.agent-operator-pod` - runtime context for resident agents in Kubernetes pods.
-- `environment.actions-runner` - runtime context for ephemeral CI agents.
-- `environment.container-readonly` - tool boundary for read-only agents.
-- `environment.repo-auth` - replaceable repository transport and forge authentication convention.
+- `environment` - abstract repository location and authentication baseline for inherited agents.
+- `environment.repos` - abstract repository checkout and worktree layout under `~/repos`: one clean clone on the default branch, all work in typed worktrees.
+- `environment.agent-operator-pod` - abstract runtime context for resident agents in Kubernetes pods.
+- `environment.actions-runner` - abstract runtime context for ephemeral CI agents.
+- `environment.container-readonly` - abstract tool boundary for read-only agents.
+- `environment.repo-auth` - abstract, replaceable repository transport and forge authentication convention.
 - `git-forge-delegator` - creates and reviews delegated forge work. Template profile: compose it (`inherits: [environment, git-forge-delegator]`), do not run it directly — it no longer carries the repository and auth environment itself.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).

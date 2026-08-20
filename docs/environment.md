@@ -63,7 +63,9 @@ the field to reject an abstract run target or `default_agent`.
 
 Environment-specific profiles use the `environment.*` namespace. Outfitter
 1.9.0 or later accepts dotted slugs. The base composition profile keeps the
-short `environment` slug.
+short `environment` slug. This experimental catalog does not provide aliases
+for the former flat slugs. Consumers MUST update Outfitter before they adopt
+this catalog revision.
 
 ## Role family
 
@@ -116,7 +118,7 @@ workstation `~/repos` layout does not apply. The profile states the runner
 limits and result channels. The `actions-agent` profile inherits it. A
 GitHub-specific child MAY inherit `environment.repo-auth`.
 
-## Confined read-only research
+## Confined read-only exploration
 
 The `environment.container-readonly` profile is for work in a locked-down
 container. It denies `bash`, `write`, and `edit`. Inherited deny lists combine,
@@ -124,10 +126,9 @@ so a child profile cannot restore these tools. The intended runtime has a
 read-only workspace, a writable `/tmp`, and only the required network access.
 
 The `explorer` profile inherits `environment.container-readonly`. The
-`researcher` profile does not inherit it because a role profile MUST NOT select
-its deployment environment. Its tool allowlist remains read-only. The caller
-can compose `environment.container-readonly` when the runtime provides that
-boundary.
+`researcher` profile does not inherit it and does not define a read-only tool
+allow list. A researcher can write durable research notes, persona documents,
+and review reports. Use the explorer when a task MUST only inspect data.
 
 The `git-forge-delegator` complements the planner on mature projects. It turns
 approved intent into forge issues with mechanical acceptance criteria. It
