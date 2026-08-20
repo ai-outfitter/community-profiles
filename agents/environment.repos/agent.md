@@ -1,6 +1,7 @@
 ---
 name: environment.repos
 description: Repository checkout and worktree layout convention under ~/repos.
+abstract: true
 ---
 
 # Repository layout

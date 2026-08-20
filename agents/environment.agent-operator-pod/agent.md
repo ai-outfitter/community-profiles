@@ -1,6 +1,7 @@
 ---
-name: agent-operator-pod
+name: environment.agent-operator-pod
 description: Environment profile for agent-operator Kubernetes residents; composes the environment baseline with pod runtime context.
+abstract: true
 inherits: [environment]
 skills:
   - browser-mcp

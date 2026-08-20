@@ -1,7 +1,7 @@
 ---
 name: explorer
 description: Read-only explorer that maps repositories or systems without mutation.
-inherits: [container-readonly]
+inherits: [environment.container-readonly]
 thinking: high
 tools:
   allow:
