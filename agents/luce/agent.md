@@ -5,9 +5,11 @@ skills:
   - prose-review
 label: Luce
 description: "The ai-outfitter organization's resident agent — triages a report into a scoped issue, and works an issue assigned to it into a pull request."
-# Verified in the deployed runtime image: it has sh, bash, git, and
-# github-mcp-server, but no gh, curl, or wget. GitHub is therefore reachable
-# only through MCP, and git only over HTTPS.
+# GitHub is reached through GitHub's hosted MCP endpoint
+# (api.githubcopilot.com), authorized by the deployment's fine-grained PAT —
+# no github-mcp-server binary in the image, so the stock public Outfitter
+# image suffices. The runtime image has sh, bash, and git, but no gh, curl,
+# or wget; git works only over HTTPS.
 #
 # The github channel source delivers no message body and no adapter, so
 # channel_read throws for a GitHub wake. An agent allowed only the channel
