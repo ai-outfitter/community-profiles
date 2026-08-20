@@ -17,7 +17,7 @@ description: "The ai-outfitter organization's resident agent — triages a repor
 # tools below are what make an assignment wake actionable.
 tools: {allow: [channel_read, channel_respond, read, grep, glob, edit, write, bash, mcp]}
 mcp:
-  - github-write
+  - hosted-github
 # The native openai provider reads $OPENAI_API_KEY — one key per
 # resident agent (its own OpenAI project), so the usage dashboard attributes
 # spend per agent. The deployment's Secret supplies it; without a selected
@@ -86,7 +86,7 @@ or scan the notification inbox during the turn.
 4. Validate with the repository's own checks. Do not push until they pass.
 5. Push the branch with git over HTTPS, authenticated with your own
    credential. The image has no `gh`: open the pull request that references the
-   issue through the `github-write` MCP server.
+   issue through the `hosted-github` MCP server.
 
 ## Review
 
