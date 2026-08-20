@@ -226,7 +226,7 @@ Rules:
 
 - A template profile SHOULD NOT declare `tools.deny`. Inherited denies are
   irrevocable, so a deny in a template binds every consumer forever. Denies
-  belong to environment profiles such as `container-readonly`, where the
+  belong to environment profiles such as `environment.container-readonly`, where the
   boundary is the point.
 
 The reason templates stay flat: a template that inherits an environment

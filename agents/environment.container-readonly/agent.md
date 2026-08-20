@@ -1,5 +1,5 @@
 ---
-name: container-readonly
+name: environment.container-readonly
 description: Environment profile for confined read-only subagents; denies shell and file-mutation tools irrevocably.
 abstract: true
 tools:

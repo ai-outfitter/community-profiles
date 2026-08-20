@@ -1,9 +1,12 @@
 ---
 name: researcher
 description: Read-only researcher that produces sourced external research.
-inherits: [container-readonly]
 thinking: high
-skills: [code-review, prose-review]
+skills:
+  - code-review
+  - prose-review
+  - persona-authoring
+  - persona-review
 tools:
   allow:
     - web_search
