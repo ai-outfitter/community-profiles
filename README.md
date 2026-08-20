@@ -2,10 +2,6 @@
 
 Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-outfitter/outfitter). Agents and skills here are reviewed for structure but are not curated like the [default catalog](https://github.com/ai-outfitter/default-profiles) — read an agent and its selected resources before you run it.
 
-This catalog is experimental. It does not preserve compatibility for
-unreleased profile slugs. Dotted environment slugs require Outfitter 1.9.0 or
-later.
-
 ## Agents
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.

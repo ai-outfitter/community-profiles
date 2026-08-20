@@ -61,11 +61,8 @@ Two kinds of abstract profile compose differently:
 agent schema accepts additional properties. A future Outfitter release can use
 the field to reject an abstract run target or `default_agent`.
 
-Environment-specific profiles use the `environment.*` namespace. Outfitter
-1.9.0 or later accepts dotted slugs. The base composition profile keeps the
-short `environment` slug. This experimental catalog does not provide aliases
-for the former flat slugs. Consumers MUST update Outfitter before they adopt
-this catalog revision.
+Environment-specific profiles use the `environment.*` namespace. The base
+composition profile keeps the short `environment` slug.
 
 ## Role family
 
