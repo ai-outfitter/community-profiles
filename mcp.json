@@ -1,0 +1,19 @@
+{
+  "settings": {
+    "directTools": false,
+    "elicitation": false,
+    "outputGuard": true,
+    "sampling": false
+  },
+  "mcpServers": {
+    "hosted-github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}",
+        "X-MCP-Toolsets": "context,issues,pull_requests,repos"
+      },
+      "lifecycle": "keep-alive",
+      "requestTimeoutMs": 30000
+    }
+  }
+}
