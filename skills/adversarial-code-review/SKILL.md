@@ -25,10 +25,12 @@ bash skills/adversarial-code-review/scripts/adversarial-code-review.sh \
 
 The launcher resolves immutable base and head SHAs, captures the repository,
 changed files, and exact diff, and supplies the complete packet to one fresh
-`outfitter run code-reviewer` process. The reviewer receives the full working
-repository as its working directory and the pinned diff in its prompt, so it
-needs no shell. The launcher removes common forge credentials from the child
-environment.
+`outfitter run code-reviewer --isolated` process. The reviewer receives the
+full working repository as its working directory and the pinned diff in its
+prompt, so it needs no shell. Isolated harness configuration prevents Claude
+Code from inheriting user MCP servers. The launcher removes common forge
+credentials from the child environment and points GitHub CLI configuration at
+an empty temporary directory.
 
 After the process exits, the launcher validates the JSON shape, pinned head
 SHA, verdict/comment relationship, comment format, and every `RIGHT`-side

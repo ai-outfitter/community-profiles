@@ -40,9 +40,12 @@ cat >"$tmp/bin/outfitter" <<'STUB'
 set -euo pipefail
 : "${REVIEW_COUNT:?}"
 [[ -z ${GITHUB_TOKEN-} && -z ${GH_TOKEN-} && -z ${GITHUB_PERSONAL_ACCESS_TOKEN-} && -z ${GITHUB_NOTIFY_TOKEN-} ]]
+[[ -z ${GITHUB_WRITE_TOKEN-} && -z ${GH_ENTERPRISE_TOKEN-} && -z ${GITHUB_ENTERPRISE_TOKEN-} ]]
+[[ -z ${GIT_ASKPASS-} && -z ${SSH_ASKPASS-} ]]
+[[ -n ${GH_CONFIG_DIR-} && -d $GH_CONFIG_DIR ]]
 printf 'x\n' >>"$REVIEW_COUNT"
-[[ $1 == run && $2 == code-reviewer && $3 == --append-prompt ]]
-packet=$4
+[[ $1 == run && $2 == code-reviewer && $3 == --isolated && $4 == --append-prompt ]]
+packet=$5
 head=$(grep '^Head commit:' "$packet" | grep -o '[0-9a-f]\{40\}')
 printf '{"commit_id":"%s","body":"No blocking findings in the pinned change.","event":"APPROVE","comments":[]}\n' "$head"
 STUB
@@ -51,7 +54,8 @@ chmod +x "$tmp/bin/outfitter"
 (
   cd "$tmp/repo"
   PATH="$tmp/bin:$PATH" REVIEW_COUNT="$tmp/count" GITHUB_TOKEN=secret GH_TOKEN=secret \
-    GITHUB_PERSONAL_ACCESS_TOKEN=secret GITHUB_NOTIFY_TOKEN=secret \
+    GITHUB_PERSONAL_ACCESS_TOKEN=secret GITHUB_NOTIFY_TOKEN=secret GITHUB_WRITE_TOKEN=secret \
+    GH_ENTERPRISE_TOKEN=secret GITHUB_ENTERPRISE_TOKEN=secret GIT_ASKPASS=secret SSH_ASKPASS=secret \
     bash "$launcher" --base "$base" --head "$head" \
       --instructions-file "$tmp/instructions" --requirements-file "$tmp/requirements" \
       --output "$tmp/review.json" >/dev/null

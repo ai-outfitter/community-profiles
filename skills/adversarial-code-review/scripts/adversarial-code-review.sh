@@ -33,6 +33,8 @@ diff=$work/pinned.diff
 packet=$work/review-packet.md
 result=$work/review.json
 changed=$work/changed-files.txt
+gh_config=$work/gh-config
+mkdir "$gh_config"
 
 git -C "$root" diff --no-ext-diff --no-color --unified=3 "$base_sha...$head_sha" >"$diff"
 git -C "$root" diff --name-only "$base_sha...$head_sha" >"$changed"
@@ -64,8 +66,10 @@ git -C "$root" diff --name-only "$base_sha...$head_sha" >"$changed"
 (
   cd "$root"
   env -u GITHUB_TOKEN -u GH_TOKEN -u GITHUB_PERSONAL_ACCESS_TOKEN \
-    -u GITHUB_NOTIFY_TOKEN -u GITLAB_TOKEN -u GITLAB_ACCESS_TOKEN \
-    outfitter run "$agent" --append-prompt "$packet" -- \
+    -u GITHUB_NOTIFY_TOKEN -u GITHUB_WRITE_TOKEN -u GH_ENTERPRISE_TOKEN \
+    -u GITHUB_ENTERPRISE_TOKEN -u GITLAB_TOKEN -u GITLAB_ACCESS_TOKEN \
+    -u GIT_ASKPASS -u SSH_ASKPASS GH_CONFIG_DIR="$gh_config" \
+    outfitter run "$agent" --isolated --append-prompt "$packet" -- \
       --print 'Review the pinned packet. Return only the JSON create-review request.'
 ) >"$result"
 
