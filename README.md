@@ -29,7 +29,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
   file and save a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
-- `code-review` - review a pull request diff against its issue's acceptance criteria; approve, request changes, or merge when green.
+- `code-review` - review a pull request diff against its issue's acceptance criteria and deliver one formal verdict.
+- `assigned-issue-implementation` - implement one assigned change issue as a tested draft pull request for independent review.
 - `prose-review` - review prose artifacts for thesis, structure, and register before they publish or merge.
 - `issue-triage` - classify and comment on new GitHub issues.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
@@ -47,14 +48,17 @@ Shared prompt fragments in `prompts/`, appended by agents via
 - `prose.rfc2119-requirements` - requirements and acceptance criteria with RFC 2119 keywords (planner, founder, git-forge-delegator).
 - `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue (engineer, product-marketer).
 - `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (engineer, product-marketer).
-- `environment.forge` - define the organization-scoped forge identity, token boundaries, wake routing, and untrusted-data rules (agent-operator-resident).
-- `environment.agent-operator-pod` - describe the namespace, workspace, task plane, resources, browser, and credentials of a Kubernetes resident (luce).
-- `environment.actions-runner` - describe the checkout, lifetime, visibility, identity, and routing of an ephemeral CI runner (actions-agent).
-- `environment.container-readonly` - describe a locked-down container and its read-only workspace (explorer).
+- `environment.forge` - define organization-scoped forge access and issue, milestone, and pull-request tracking (agent-operator-resident).
+- `environment.agent-operator-pod` - describe the namespace, persistent workspace, task delivery, and limits of a Kubernetes resident (luce).
+- `environment.actions-runner` - describe the checkout and lifetime of an ephemeral CI runner (actions-agent).
 - `environment.repos` - define the workstation repository and worktree layout (engineer, product-marketer).
-- `environment.repo-auth` - define the GitHub CLI and HTTPS repository authentication convention (engineer, product-marketer).
-- `practice.review` - require one machine-readable formal review without agent approval or self-review (agent-operator-resident).
-- `practice.implement` - work an explicitly assigned issue into a tested draft pull request without self-review or self-merge (agent-operator-resident).
+- `environment.repo-auth` - define the HTTPS repository authentication boundary (engineer, product-marketer).
+
+## Workspace hook
+
+`.agents/hooks/catalog-authoring` reminds an Outfitter-launched agent about
+catalog boundaries after it edits an agent profile or prompt fragment. Direct
+Claude, Codex, and Pi launches do not run this workspace hook.
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
@@ -100,6 +104,7 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 agents/         one directory per agent identity and loadout
 skills/         reusable Agent Skills packages
 prompts/        shared prompt fragments appended by agents
+.agents/hooks/  repository-only hooks projected by Outfitter
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
 ```

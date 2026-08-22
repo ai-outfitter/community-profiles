@@ -2,8 +2,6 @@
 name: explorer
 description: Read-only explorer that maps repositories or systems without mutation.
 thinking: high
-append_system_prompt:
-  - file: prompts/environment.container-readonly.md
 tools:
   allow:
     - read

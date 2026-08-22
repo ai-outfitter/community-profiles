@@ -43,6 +43,12 @@ extensions, and models. Fragments carry all shareable prose. A persona must
 fit on one screen: frontmatter says what it can do, the append list says what
 it knows, and the body says who it is.
 
+Keep catalog-authoring rules in this file. Do not put rules about abstract
+profiles, fragment placement, or harness behavior in a runtime prompt. Keep
+each `environment.*` or `practice.*` fragment to one short paragraph. Do not
+repeat repository-instruction discovery, credential plumbing, or tool
+implementation details that the harness already controls.
+
 Every fragment answers one question according to its filename prefix:
 
 | Prefix | Question |

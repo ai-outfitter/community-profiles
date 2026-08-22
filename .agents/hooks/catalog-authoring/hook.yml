@@ -1,0 +1,8 @@
+version: 1
+name: catalog-authoring
+description: Remind agents about catalog authoring boundaries.
+events:
+  stop:
+    command: ./scripts/remind.py
+    args: []
+    timeout_seconds: 30

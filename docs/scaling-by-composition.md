@@ -125,8 +125,8 @@ dedicated reviewer role.
 Different agent types review different artifact classes. The catalog ships
 two review skills:
 
-- [`code-review`](../skills/code-review/SKILL.md) — carried by `engineer`
-  and `researcher`.
+- [`code-review`](../skills/code-review/SKILL.md) — carried by `engineer`,
+  `researcher`, and the `agent-operator-resident` base.
 - [`prose-review`](../skills/prose-review/SKILL.md) — carried by
   `product-marketer`, `planner`, and `researcher`.
 

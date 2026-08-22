@@ -20,10 +20,10 @@ path when its runtime cannot layer this catalog directly. The organization
 MUST keep a vendored fragment byte-identical or replace it as an explicit
 organization policy.
 
-The catalog's `environment.repo-auth` fragment uses HTTPS and a GitHub
-CLI-managed token. An organization that uses SSH SHOULD provide a different
-fragment and update each consumer's append list. The organization MUST keep
-credentials out of the catalog.
+The catalog's `environment.repo-auth` fragment uses HTTPS and the credential
+that the harness supplies. An organization that uses SSH SHOULD provide a
+different fragment and update each consumer's append list. The organization
+MUST keep credentials out of the catalog.
 
 Environment fragments contain no credentials or consumer-specific values.
 Keep project instructions in the repository's `AGENTS.md`. Do not copy an
@@ -63,14 +63,10 @@ caller MAY append suitable environment text when it launches the researcher.
 
 ## Kubernetes residents
 
-The `environment.agent-operator-pod` fragment describes a Kubernetes resident.
-It covers namespace scope, persistent storage, task delivery, resource limits,
-the Chrome sidecar, and operator-provided credentials.
-
-The `luce` profile appends this fragment. It also selects the `browser-mcp`
-skill because the prompt mentions the browser sidecar. Another Kubernetes
-resident SHOULD append the same fragment and select only the capabilities that
-its runtime provides.
+The `environment.agent-operator-pod` fragment describes namespace scope,
+persistent storage, task delivery, and resource limits. The `luce` profile
+appends this fragment. Another Kubernetes resident SHOULD append the same
+fragment and select only the capabilities that its runtime provides.
 
 An organization catalog MAY vendor
 `prompts/environment.agent-operator-pod.md`. Remove the vendored copy when the
@@ -89,10 +85,8 @@ GitHub CLI and Git transport policy.
 
 ## Confined read-only exploration
 
-The `environment.container-readonly` fragment describes a locked-down
-container. The `explorer` profile appends the fragment and denies `bash`,
-`write`, and `edit`. The deny list is an enforceable capability boundary.
-Prompt text alone cannot enforce that boundary.
+The `explorer` profile denies `bash`, `write`, and `edit`. This frontmatter is
+the enforceable capability boundary. Prompt text cannot enforce that boundary.
 
 The explorer's deny list cannot be restored through inheritance. The intended
 runtime has a read-only workspace, a writable `/tmp` directory, and only the
