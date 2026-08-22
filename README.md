@@ -11,13 +11,13 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
-- `environment` - abstract repository location and authentication baseline for inherited agents.
-- `environment.repos` - abstract repository checkout and worktree layout under `~/repos`: one clean clone on the default branch, all work in typed worktrees.
-- `environment.agent-operator-pod` - abstract runtime context for resident agents in Kubernetes pods.
-- `environment.actions-runner` - abstract runtime context for ephemeral CI agents.
+- `environment` - abstract loadout shell that composes the repository-location and authentication environment profiles.
+- `environment.repos` - abstract shell that appends the repository checkout and worktree layout fragment.
+- `environment.agent-operator-pod` - abstract shell that appends the Kubernetes resident runtime fragment.
+- `environment.actions-runner` - abstract shell that appends the ephemeral CI runner fragment.
 - `environment.container-readonly` - abstract tool boundary for read-only agents.
-- `environment.repo-auth` - abstract, replaceable repository transport and forge authentication convention.
-- `agent-operator-resident` - abstract standard base for a resident agent operator deployed once per organization: the shared identity boundary, when to act, the formal review protocol, trust rules, and write boundaries. Organization personas inherit it and keep only what is theirs.
+- `environment.repo-auth` - abstract, replaceable shell that appends the repository transport and forge authentication fragment.
+- `agent-operator-resident` - abstract resident loadout shell that composes the organization-scoped forge, formal-review, and assigned-issue implementation fragments.
 - `git-forge-delegator` - creates and reviews delegated forge work. Template profile: compose it (`inherits: [environment, git-forge-delegator]`), do not run it directly — it no longer carries the repository and auth environment itself.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
@@ -52,7 +52,13 @@ Shared prompt fragments in `prompts/`, appended by agents via
 - `prose.rfc2119-requirements` - requirements and acceptance criteria with RFC 2119 keywords (planner, founder, git-forge-delegator).
 - `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue (engineer, product-marketer).
 - `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (engineer, product-marketer).
-- `practice.implementor` - work an issue explicitly assigned to you into a draft PR: repo instructions first, smallest slice, semantic branch, tests stated, reviewer requested; never self-review or self-merge (resident org agents, e.g. vega).
+- `environment.forge` - define the organization-scoped forge identity, token boundaries, wake routing, and untrusted-data rules (agent-operator-resident).
+- `environment.agent-operator-pod` - describe the namespace, workspace, task plane, resources, browser, and credentials of a Kubernetes resident (environment.agent-operator-pod).
+- `environment.actions-runner` - describe the checkout, lifetime, visibility, identity, and routing of an ephemeral CI runner (environment.actions-runner).
+- `environment.repos` - define the workstation repository and worktree layout (environment.repos, through environment).
+- `environment.repo-auth` - define the GitHub CLI and HTTPS repository authentication convention (environment.repo-auth, through environment).
+- `practice.review` - require one machine-readable formal review without agent approval or self-review (agent-operator-resident).
+- `practice.implement` - work an explicitly assigned issue into a tested draft pull request without self-review or self-merge (agent-operator-resident).
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.

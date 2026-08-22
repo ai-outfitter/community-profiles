@@ -26,9 +26,36 @@ never reach the prompt. The split is:
 | Surface | Audience | Voice |
 | --- | --- | --- |
 | Markdown body | The running agent | Direct address: "you" |
+| `prompts/*.md` | The running agent | Direct address: "you" |
 | Frontmatter comments | Catalog maintainers | Anything |
 | `description:` | Humans browsing the catalog | Third person, one line |
 | README entry | Humans browsing the catalog | Third person, one line |
+
+## Fragments carry prose; profiles carry capability
+
+Keep prose inline in a profile body when only that profile carries it. Move
+prose to a fragment when two or more profiles carry it, or when it is a
+cross-catalog contract that offline organization catalogs vendor. A vendored
+copy counts as a carrier. Use a skill when the content is an on-demand
+procedure rather than an always-on prompt.
+
+Profiles carry capability in frontmatter: tools, MCP servers, skills,
+extensions, and models. Fragments carry all shareable prose. A persona must
+fit on one screen: frontmatter says what it can do, the append list says what
+it knows, and the body says who it is.
+
+Every fragment answers one question according to its filename prefix:
+
+| Prefix | Question |
+| --- | --- |
+| `environment.*` | Where am I running? |
+| `practice.*` | How do I work? |
+| `prose.*` | How do I write? |
+
+There is no `deployment.*` prefix. Fragments have no frontmatter and no
+in-file provenance marker because any comment would compose into the running
+agent's prompt. Vendor fragments as byte-identical whole files. Put provenance
+in a frontmatter comment on the vendoring profile.
 
 ## Everything else
 

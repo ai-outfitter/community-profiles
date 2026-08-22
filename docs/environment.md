@@ -39,6 +39,13 @@ The baseline contains no credentials or consumer-specific values. Keep project
 instructions in the repository's `AGENTS.md`; do not copy this environment
 policy into that project-owned file.
 
+Environment profiles are loadout shells. Their frontmatter declares
+capability, inheritance, and `append_system_prompt`; their reusable prose lives
+in same-named `prompts/environment.*.md` fragments. Appended fragments compose
+before profile bodies, in inherited-then-child order. A same-slug override can
+replace a shell's capability or append list without copying unrelated profiles;
+when it keeps the canonical append path, it continues to use that fragment.
+
 ## Profile taxonomy
 
 A profile is either a **runnable agent** or an **abstract composable**.
@@ -48,7 +55,8 @@ MUST NOT be run directly or named as `default_agent`. The abstract environment
 profiles are `environment`, `environment.repos`, `environment.repo-auth`,
 `environment.agent-operator-pod`, `environment.actions-runner`, and
 `environment.container-readonly`. The `git-forge-delegator` profile is an
-abstract practice. All other profiles are runnable.
+abstract practice, and `agent-operator-resident` is the abstract resident
+contract. All other profiles are runnable.
 
 Two kinds of abstract profile compose differently:
 
@@ -88,7 +96,8 @@ the researcher at deployment time.
 
 The `environment.agent-operator-pod` profile extends the baseline for
 Kubernetes residents. It inherits `environment`, which supplies the repository
-and authentication rules. The profile also supplies the pod runtime context:
+and authentication rules. Its shell appends the fragment that supplies the pod
+runtime context:
 namespace scope, persistent workspace, durable task re-offers, resource limits,
 the Chrome sidecar, and operator-provisioned credentials:
 

@@ -64,11 +64,19 @@ Two rules govern growth here:
 - The promotion rule mirrors skills-first: a register starts as an inline
   `## Prose style` on one profile. Promote it to a `prompts/prose.*`
   fragment when a second profile needs it. Do not create a fragment with
-  one carrier.
+  one carrier unless an offline organization catalog vendors a byte-identical
+  copy; the vendored copy counts as another carrier.
 - Narrative roles opt out of the Simplified Technical English base on
   purpose. The product-marketer does not append it: that register is for
   text a reader parses unaided; persuasive prose is read by choice. Do not
   "fix" this inconsistency.
+
+### Fragment percolation
+
+The community catalog is canonical. Base profiles glue fragments into a
+composition with `append_system_prompt`. Offline organization catalogs vendor
+each fragment byte-identically at the same relative path. A `diff` between the
+canonical and vendored whole files is the sync gate.
 
 ## The fission shift
 
