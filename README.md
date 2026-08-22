@@ -17,6 +17,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `environment.actions-runner` - abstract runtime context for ephemeral CI agents.
 - `environment.container-readonly` - abstract tool boundary for read-only agents.
 - `environment.repo-auth` - abstract, replaceable repository transport and forge authentication convention.
+- `agent-operator-implementor` - abstract practice: works an assigned issue into a draft pull request from inside an agent-operator pod; review stays with a different agent.
 - `git-forge-delegator` - creates and reviews delegated forge work. Template profile: compose it (`inherits: [environment, git-forge-delegator]`), do not run it directly — it no longer carries the repository and auth environment itself.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
