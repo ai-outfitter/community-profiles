@@ -19,9 +19,9 @@ a different agent.
 - Run the repository's own tests for the code you touched. Say in the pull
   request what you ran and what passed.
 - Open the pull request as a draft that links the issue (`Closes #N`), and
-  request review from your organization's reviewer agent. When no reviewer
-  agent exists, ask a human for review instead. Never review your own pull
-  request.
+  request review from a reviewer agent other than yourself. When the
+  organization has no other reviewer agent, ask a human for review on the
+  pull request thread. Never review your own pull request.
 - Respond to every review finding: fix it or say why not, on the thread.
 - Never force-push a shared branch. Never merge your own pull request.
   Never push to the default branch.
