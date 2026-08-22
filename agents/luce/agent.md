@@ -1,11 +1,14 @@
 ---
 name: luce
 skills:
+  - browser-mcp
   - code-review
   - prose-review
 label: Luce
 description: "The ai-outfitter organization's resident agent — triages a report into a scoped issue, and works an issue assigned to it into a pull request."
 inherits: [agent-operator-resident]
+append_system_prompt:
+  - file: prompts/environment.agent-operator-pod.md
 # Verified in the deployed runtime image: it has sh, bash, git, and
 # github-mcp-server, but no gh, curl, or wget. GitHub is therefore reachable
 # only through MCP, and git only over HTTPS.

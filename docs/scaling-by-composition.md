@@ -86,8 +86,10 @@ two top-level residents and partition the skills:
 ```yaml
 # before — one resident
 name: engineer
-inherits: [environment]
 skills: [a, b, c, d]
+append_system_prompt:
+  - file: prompts/environment.repo-auth.md
+  - file: prompts/environment.repos.md
 ```
 
 ```yaml
@@ -210,11 +212,9 @@ only the template: [templates/org-context.md](templates/org-context.md).
 A template profile is a capability bundle meant for composition, not for
 direct running. It states one concern — a skill set, prompt fragments, tool
 bounds, and body policy — and nothing about where it runs.
-`git-forge-delegator` is the live example. Migration: a consumer that ran
-`git-forge-delegator` directly before this release inherited `environment`
-through it; that consumer MUST now compose its own runnable profile with
-`inherits: [environment, git-forge-delegator]`, or it silently loses the
-repository and auth policies.
+`git-forge-delegator` is the live example. A consumer MUST create a runnable
+profile that inherits `git-forge-delegator`. The runnable profile MUST append
+the environment fragments that describe its runtime.
 
 Document a profile's template status here and in the README, never in the
 profile body: the body is the agent's system prompt, and composition
@@ -228,19 +228,21 @@ Rules:
 
   ```yaml
   name: my-delegator
-  inherits: [environment, git-forge-delegator]
+  inherits: [git-forge-delegator]
+  append_system_prompt:
+    - file: prompts/environment.repo-auth.md
+    - file: prompts/environment.repos.md
   ```
 
 - A template profile SHOULD NOT declare `tools.deny`. Inherited denies are
-  irrevocable, so a deny in a template binds every consumer forever. Denies
-  belong to environment profiles such as `environment.container-readonly`, where the
-  boundary is the point.
+  irrevocable, so a deny in a template binds every consumer forever. A
+  runnable profile MUST declare a deny when the deny is part of its capability
+  boundary. The explorer profile is the catalog example.
 
-The reason templates stay flat: a template that inherits an environment
-forces that environment on every consumer and hides the chain inside the
-template. Flat templates let each organization pick its own environment per
-runnable profile, and let a reader see the complete composition in one
-frontmatter block.
+The reason templates stay flat: a template that appends runtime text forces
+that environment on every consumer. Flat templates let each organization pick
+its own environment fragments. A reader can see the complete composition in
+the runnable profile's frontmatter.
 
 ## Runtime support
 

@@ -3,16 +3,6 @@ name: agent-operator-resident
 label: Agent Operator Resident
 description: "Abstract base for an organization-scoped resident agent operator, composed from shared forge, review, and implementation contracts."
 abstract: true
-# Deliberately does NOT inherit `environment.agent-operator-pod` for
-# portability: that profile inherits `environment` and selects the
-# `browser-mcp` skill, neither of which resolves in an organization catalog
-# that resolves offline, and Outfitter fails composition on a missing
-# parent — so inheriting it here would make a byte-identical vendored copy
-# impossible.
-#
-# A deployment that runs in an agent-operator pod and can resolve this
-# catalog MAY still compose both:
-# `inherits: [environment.agent-operator-pod, agent-operator-resident]`.
 append_system_prompt:
   - file: prompts/environment.forge.md
   - file: prompts/practice.review.md

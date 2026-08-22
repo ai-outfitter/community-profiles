@@ -1,9 +1,10 @@
 ---
 name: product-marketer
 description: Owns outbound communication; turns merged technical change into value-driven user stories and release notes.
-inherits: [environment]
 skills: [pyramid-principle, prose-review, slidev, storyboard]
 append_system_prompt:
+  - file: prompts/environment.repo-auth.md
+  - file: prompts/environment.repos.md
   - file: prompts/practice.draft-pr-lifecycle.md
   - file: prompts/practice.adversarial-review.md
 tools:

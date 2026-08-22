@@ -12,14 +12,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
 - `luce` - the ai-outfitter organization's resident agent: triages reports into scoped issues and works assigned issues into pull requests; composes the resident base.
-- `environment` - abstract loadout shell that composes the repository-location and authentication environment profiles.
-- `environment.repos` - abstract environment: repository checkout and worktree layout under `~/repos`.
-- `environment.agent-operator-pod` - abstract environment: the Kubernetes resident runtime.
-- `environment.actions-runner` - abstract environment: the ephemeral CI runner.
-- `environment.container-readonly` - abstract tool boundary for read-only agents.
-- `environment.repo-auth` - abstract, replaceable environment: repository transport and forge authentication.
 - `agent-operator-resident` - abstract base for an organization-scoped resident: forge identity, formal review, and assigned-issue implementation.
-- `git-forge-delegator` - creates and reviews delegated forge work. Template profile: compose it (`inherits: [environment, git-forge-delegator]`), do not run it directly — it no longer carries the repository and auth environment itself.
+- `git-forge-delegator` - creates and reviews delegated forge work. It is a template profile. A runnable consumer inherits it and appends its environment fragments.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
@@ -54,18 +48,19 @@ Shared prompt fragments in `prompts/`, appended by agents via
 - `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue (engineer, product-marketer).
 - `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (engineer, product-marketer).
 - `environment.forge` - define the organization-scoped forge identity, token boundaries, wake routing, and untrusted-data rules (agent-operator-resident).
-- `environment.agent-operator-pod` - describe the namespace, workspace, task plane, resources, browser, and credentials of a Kubernetes resident (environment.agent-operator-pod).
-- `environment.actions-runner` - describe the checkout, lifetime, visibility, identity, and routing of an ephemeral CI runner (environment.actions-runner).
-- `environment.repos` - define the workstation repository and worktree layout (environment.repos, through environment).
-- `environment.repo-auth` - define the GitHub CLI and HTTPS repository authentication convention (environment.repo-auth, through environment).
+- `environment.agent-operator-pod` - describe the namespace, workspace, task plane, resources, browser, and credentials of a Kubernetes resident (luce).
+- `environment.actions-runner` - describe the checkout, lifetime, visibility, identity, and routing of an ephemeral CI runner (actions-agent).
+- `environment.container-readonly` - describe a locked-down container and its read-only workspace (explorer).
+- `environment.repos` - define the workstation repository and worktree layout (engineer, product-marketer).
+- `environment.repo-auth` - define the GitHub CLI and HTTPS repository authentication convention (engineer, product-marketer).
 - `practice.review` - require one machine-readable formal review without agent approval or self-review (agent-operator-resident).
 - `practice.implement` - work an explicitly assigned issue into a tested draft pull request without self-review or self-merge (agent-operator-resident).
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
 
-See [Environment baseline](docs/environment.md) for the composable repository
-convention and the role-family boundaries.
+See [Environment fragments](docs/environment.md) for the repository convention,
+runtime fragments, and capability boundaries.
 
 See [Scaling by composition](docs/scaling-by-composition.md) for how an
 organization grows this catalog's roles: skills first, then resident fission
