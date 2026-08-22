@@ -1,9 +1,10 @@
 ---
 name: engineer
 description: Engineer agent that owns implementation and verification.
-inherits: [environment]
 skills: [code-review, replicad]
 append_system_prompt:
+  - file: prompts/environment.repo-auth.md
+  - file: prompts/environment.repos.md
   - file: prompts/prose.simplified-technical-english.md
   - file: prompts/practice.draft-pr-lifecycle.md
   - file: prompts/practice.adversarial-review.md

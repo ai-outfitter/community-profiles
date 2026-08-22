@@ -1,7 +1,6 @@
 ---
 name: explorer
 description: Read-only explorer that maps repositories or systems without mutation.
-inherits: [environment.container-readonly]
 thinking: high
 tools:
   allow:
@@ -9,6 +8,10 @@ tools:
     - grep
     - find
     - ls
+  deny:
+    - bash
+    - write
+    - edit
 ---
 
 # Explorer

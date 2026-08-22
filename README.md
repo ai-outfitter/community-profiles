@@ -11,13 +11,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
-- `environment` - abstract repository location and authentication baseline for inherited agents.
-- `environment.repos` - abstract repository checkout and worktree layout under `~/repos`: one clean clone on the default branch, all work in typed worktrees.
-- `environment.agent-operator-pod` - abstract runtime context for resident agents in Kubernetes pods.
-- `environment.actions-runner` - abstract runtime context for ephemeral CI agents.
-- `environment.container-readonly` - abstract tool boundary for read-only agents.
-- `environment.repo-auth` - abstract, replaceable repository transport and forge authentication convention.
-- `git-forge-delegator` - creates and reviews delegated forge work. Template profile: compose it (`inherits: [environment, git-forge-delegator]`), do not run it directly — it no longer carries the repository and auth environment itself.
+- `luce` - the ai-outfitter organization's resident agent: triages reports into scoped issues and works assigned issues into pull requests; composes the resident base.
+- `agent-operator-resident` - abstract base for an organization-scoped resident: forge identity, formal review, and assigned-issue implementation.
+- `git-forge-delegator` - creates and reviews delegated forge work. It is a template profile. A runnable consumer inherits it and appends its environment fragments.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
 - `persona-reviewer` - one shared review profile whose identity is supplied by
@@ -33,7 +29,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
   file and save a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
-- `code-review` - review a pull request diff against its issue's acceptance criteria; approve, request changes, or merge when green.
+- `code-review` - review a pull request diff against its issue's acceptance criteria and deliver one formal verdict.
+- `assigned-issue-implementation` - implement one assigned change issue as a tested draft pull request for independent review.
 - `prose-review` - review prose artifacts for thesis, structure, and register before they publish or merge.
 - `issue-triage` - classify and comment on new GitHub issues.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
@@ -51,12 +48,23 @@ Shared prompt fragments in `prompts/`, appended by agents via
 - `prose.rfc2119-requirements` - requirements and acceptance criteria with RFC 2119 keywords (planner, founder, git-forge-delegator).
 - `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue (engineer, product-marketer).
 - `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (engineer, product-marketer).
+- `environment.forge` - define organization-scoped forge access and issue, milestone, and pull-request tracking (agent-operator-resident).
+- `environment.agent-operator-pod` - describe the namespace, persistent workspace, task delivery, and limits of a Kubernetes resident (luce).
+- `environment.actions-runner` - describe the checkout and lifetime of an ephemeral CI runner (actions-agent).
+- `environment.repos` - define the workstation repository and worktree layout (engineer, product-marketer).
+- `environment.repo-auth` - define the HTTPS repository authentication boundary (engineer, product-marketer).
+
+## Workspace hook
+
+`.agents/hooks/catalog-authoring` reminds an Outfitter-launched agent about
+catalog boundaries after it edits an agent profile or prompt fragment. Direct
+Claude, Codex, and Pi launches do not run this workspace hook.
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.
 
-See [Environment baseline](docs/environment.md) for the composable repository
-convention and the role-family boundaries.
+See [Environment fragments](docs/environment.md) for the repository convention,
+runtime fragments, and capability boundaries.
 
 See [Scaling by composition](docs/scaling-by-composition.md) for how an
 organization grows this catalog's roles: skills first, then resident fission
@@ -96,6 +104,7 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 agents/         one directory per agent identity and loadout
 skills/         reusable Agent Skills packages
 prompts/        shared prompt fragments appended by agents
+.agents/hooks/  repository-only hooks projected by Outfitter
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
 ```
