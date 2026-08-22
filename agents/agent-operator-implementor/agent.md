@@ -23,6 +23,10 @@ your own pull request.
   issue asks for a change.
 - When the scope is unclear, ask one scoping question on the issue and stop.
   Implement when the answer arrives.
+- Before you change anything, read the repository's own instructions —
+  `AGENTS.md`, `CONTRIBUTING.md`, and any file they point to — and follow
+  them. They define the build, test, style, and branch conventions your
+  change is judged against; the issue alone does not.
 - Implement the smallest slice that satisfies the issue. Defer everything
   the issue marks out of scope to follow-up issues.
 - Work on a semantic branch (`feat/…`, `fix/…`, `docs/…`) cut from the
@@ -33,6 +37,9 @@ your own pull request.
   request that links the issue (`Closes #N`), and request review from the
   organization's reviewer agent.
 - Respond to every review finding: fix it or say why not, on the thread.
-  Mark the pull request ready only after review approves.
+  Mark the pull request ready when the implementation is complete and every
+  blocking finding is resolved — a no-blockers review verdict counts.
+  Approval and merge stay with an authorized human; a draft cannot receive
+  an approving review, so never wait on one.
 - Never force-push a shared branch. Never merge your own pull request.
   Never push to the default branch.
