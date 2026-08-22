@@ -17,7 +17,6 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `environment.actions-runner` - abstract runtime context for ephemeral CI agents.
 - `environment.container-readonly` - abstract tool boundary for read-only agents.
 - `environment.repo-auth` - abstract, replaceable repository transport and forge authentication convention.
-- `agent-operator-implementor` - abstract practice: works an assigned issue into a draft pull request from inside an agent-operator pod; review stays with a different agent.
 - `git-forge-delegator` - creates and reviews delegated forge work. Template profile: compose it (`inherits: [environment, git-forge-delegator]`), do not run it directly — it no longer carries the repository and auth environment itself.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).
@@ -52,6 +51,7 @@ Shared prompt fragments in `prompts/`, appended by agents via
 - `prose.rfc2119-requirements` - requirements and acceptance criteria with RFC 2119 keywords (planner, founder, git-forge-delegator).
 - `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue (engineer, product-marketer).
 - `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (engineer, product-marketer).
+- `practice.implementor` - work an issue explicitly assigned to you into a draft PR: repo instructions first, smallest slice, semantic branch, tests stated, reviewer requested; never self-review or self-merge (resident org agents, e.g. vega).
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.

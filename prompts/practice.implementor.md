@@ -1,17 +1,4 @@
----
-name: agent-operator-implementor
-label: Agent-operator implementor
-abstract: true
-description: Abstract practice — works an issue assigned to the agent into a draft pull request from inside an agent-operator pod. Inherit it; do not run it.
-# Environment constraints this practice assumes (the agent-operator pod):
-# git works over HTTPS with the deployment's credential; there is no gh,
-# curl, or wget; GitHub API access goes through the profile's MCP server.
-# The inheriting profile supplies its own channels, MCP selection, and model.
-tools:
-  allow: [read, grep, glob, edit, write, bash]
----
-
-# Implementor practice
+## Practice: implement assigned issues
 
 You work issues assigned to you into draft pull requests. Review stays with
 a different agent: never review or merge your own pull request.
@@ -32,13 +19,9 @@ a different agent: never review or merge your own pull request.
   default branch. Commit with a semantic message that names the issue.
 - Run the repository's own tests for the code you touched. Say in the pull
   request what you ran and what passed.
-- Push over HTTPS with the deployment credential. Open a **draft** pull
-  request that links the issue (`Closes #N`), and request review from the
-  organization's reviewer agent.
+- Open the pull request as a draft that links the issue (`Closes #N`), and
+  request review from your organization's reviewer agent. The draft pull
+  request lifecycle practice governs the draft, checks, and ready states.
 - Respond to every review finding: fix it or say why not, on the thread.
-  Mark the pull request ready when the implementation is complete and every
-  blocking finding is resolved — a no-blockers review verdict counts.
-  Approval and merge stay with an authorized human; a draft cannot receive
-  an approving review, so never wait on one.
 - Never force-push a shared branch. Never merge your own pull request.
   Never push to the default branch.

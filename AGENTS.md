@@ -13,9 +13,11 @@ meta-commentary about the document, and in a composed prompt it is noise the
 agent must read past on every wake. The running agent IS the agent; there is
 no reader for whom the description is information.
 
-This applies equally to abstract profiles (`abstract: true`). Abstract means
-"not runnable alone" — the body still ends up verbatim inside some running
-agent's prompt, so it speaks to that agent, not about it.
+This applies equally to abstract profiles (`abstract: true`) and to the
+shared fragments in `prompts/` that agents glue in via
+`append_system_prompt: [{file: ...}]`. Neither runs alone — the text still
+ends up verbatim inside some running agent's prompt, so it speaks to that
+agent, not about it.
 
 Notes for maintainers — why a line exists, what it depends on, what breaks
 without it — go in frontmatter comments (`# …` inside the YAML block), which
