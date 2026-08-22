@@ -39,12 +39,14 @@ The baseline contains no credentials or consumer-specific values. Keep project
 instructions in the repository's `AGENTS.md`; do not copy this environment
 policy into that project-owned file.
 
-Environment profiles are loadout shells. Their frontmatter declares
-capability, inheritance, and `append_system_prompt`; their reusable prose lives
-in same-named `prompts/environment.*.md` fragments. Appended fragments compose
-before profile bodies, in inherited-then-child order. A same-slug override can
-replace a shell's capability or append list without copying unrelated profiles;
-when it keeps the canonical append path, it continues to use that fragment.
+Environment profiles with shareable prose are loadout shells: frontmatter
+declares capability and glues in the same-named `prompts/environment.*.md`
+fragment ([AGENTS.md](../AGENTS.md) owns the prose/capability split;
+`environment.container-readonly` keeps its prose inline — one carrier).
+Appended fragments compose before profile bodies, in inherited-then-child
+order. A same-slug override can replace a shell's capability or append list
+without copying unrelated profiles; when it keeps the canonical append path,
+it continues to use that fragment.
 
 ## Profile taxonomy
 

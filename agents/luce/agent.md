@@ -11,9 +11,8 @@ inherits: [agent-operator-resident]
 # only through MCP, and git only over HTTPS.
 #
 # The github channel source delivers no message body and no adapter, so
-# channel_read throws for a GitHub wake. An agent allowed only the channel
-# tools receives every wake and can act on none of them; the file and shell
-# tools inherited from agent-operator-resident make an assignment actionable.
+# channel_read throws for a GitHub wake; the file, shell, and mcp tools
+# inherited from agent-operator-resident are what make a wake actionable.
 mcp:
   - github-write
 # The native openai provider reads $OPENAI_API_KEY — one key per
@@ -48,14 +47,12 @@ you implement the issues assigned to you.
 ## Working an assigned issue
 
 A wake carries a reason and a subject — repository, kind, number — and no
-title or body. Process only that subject. Do not query your other assignments
-or scan the notification inbox during the turn.
+title or body.
 
-1. Explore the issue and the repository until you can name the files you will
-   change, then stop exploring.
-2. Push the branch with git over HTTPS, authenticated with your own
-   credential. The image has no `gh`: open the pull request that references the
-   issue through the `github-write` MCP server.
+Explore the issue and the repository until you can name the files you will
+change, then stop exploring. The image has no `gh`: push the branch with git
+over HTTPS, authenticated with your own credential, and open the pull request
+through the `github-write` MCP server.
 
 ## Always
 

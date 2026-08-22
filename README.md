@@ -11,13 +11,14 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
+- `luce` - the ai-outfitter organization's resident agent: triages reports into scoped issues and works assigned issues into pull requests; composes the resident base.
 - `environment` - abstract loadout shell that composes the repository-location and authentication environment profiles.
-- `environment.repos` - abstract shell that appends the repository checkout and worktree layout fragment.
-- `environment.agent-operator-pod` - abstract shell that appends the Kubernetes resident runtime fragment.
-- `environment.actions-runner` - abstract shell that appends the ephemeral CI runner fragment.
+- `environment.repos` - abstract environment: repository checkout and worktree layout under `~/repos`.
+- `environment.agent-operator-pod` - abstract environment: the Kubernetes resident runtime.
+- `environment.actions-runner` - abstract environment: the ephemeral CI runner.
 - `environment.container-readonly` - abstract tool boundary for read-only agents.
-- `environment.repo-auth` - abstract, replaceable shell that appends the repository transport and forge authentication fragment.
-- `agent-operator-resident` - abstract resident loadout shell that composes the organization-scoped forge, formal-review, and assigned-issue implementation fragments.
+- `environment.repo-auth` - abstract, replaceable environment: repository transport and forge authentication.
+- `agent-operator-resident` - abstract base for an organization-scoped resident: forge identity, formal review, and assigned-issue implementation.
 - `git-forge-delegator` - creates and reviews delegated forge work. Template profile: compose it (`inherits: [environment, git-forge-delegator]`), do not run it directly — it no longer carries the repository and auth environment itself.
 - `platform` - platform engineering setup for infrastructure, CI/CD, deployment, reliability, browser-debugging evidence, and developer tooling.
 - `media-editor` - video post-production setup for transcript-driven editing with whisper.cpp and ffmpeg. See [docs/media-editor.md](docs/media-editor.md).

@@ -25,8 +25,7 @@ never reach the prompt. The split is:
 
 | Surface | Audience | Voice |
 | --- | --- | --- |
-| Markdown body | The running agent | Direct address: "you" |
-| `prompts/*.md` | The running agent | Direct address: "you" |
+| Markdown body and `prompts/*.md` | The running agent | Direct address: "you" |
 | Frontmatter comments | Catalog maintainers | Anything |
 | `description:` | Humans browsing the catalog | Third person, one line |
 | README entry | Humans browsing the catalog | Third person, one line |

@@ -11,9 +11,9 @@ append_system_prompt:
 
 On any project past its first release, use the forge as your delegation
 ledger and delegate rather than implement: work you want done becomes an
-issue; work in progress is
-a linked branch or pull request; work completed is a merged PR you have
-reviewed. You do not implement locally on these projects.
+issue; work in progress is a linked branch or pull request; work completed
+is a merged PR you have reviewed. You do not implement locally on these
+projects.
 
 ## Delegate
 

@@ -62,10 +62,9 @@ section is the inline form.
 Two rules govern growth here:
 
 - The promotion rule mirrors skills-first: a register starts as an inline
-  `## Prose style` on one profile. Promote it to a `prompts/prose.*`
-  fragment when a second profile needs it. Do not create a fragment with
-  one carrier unless an offline organization catalog vendors a byte-identical
-  copy; the vendored copy counts as another carrier.
+  `## Prose style` on one profile and is promoted to a `prompts/prose.*`
+  fragment when it gains a second carrier — the carrier-count and vendoring
+  rules live in [AGENTS.md](../AGENTS.md).
 - Narrative roles opt out of the Simplified Technical English base on
   purpose. The product-marketer does not append it: that register is for
   text a reader parses unaided; persuasive prose is read by choice. Do not
