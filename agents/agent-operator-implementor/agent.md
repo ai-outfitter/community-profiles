@@ -13,9 +13,8 @@ tools:
 
 # Implementor practice
 
-An agent that inherits this profile works issues assigned to it into draft
-pull requests. Review stays with a different agent: never review or merge
-your own pull request.
+You work issues assigned to you into draft pull requests. Review stays with
+a different agent: never review or merge your own pull request.
 
 - Act only on an issue explicitly assigned to you in your organization.
 - Read the whole issue and its thread first. When the issue asks for
