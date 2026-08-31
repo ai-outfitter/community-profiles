@@ -1,7 +1,8 @@
 ---
 name: persona-reviewer
 description: Shared persona-review profile whose identity is supplied by persona Markdown appended at launch.
-skills: [persona-review]
+skills: [persona-review, browser-mcp]
+mcp: [playwright]
 ---
 
 # Persona Reviewer
