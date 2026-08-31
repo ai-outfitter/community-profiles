@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0](https://github.com/ai-outfitter/community-profiles/compare/v1.4.0...v1.5.0) (2026-08-31)
+
+
+### Features
+
+* **agents:** add product-marketer and document scaling by composition ([#46](https://github.com/ai-outfitter/community-profiles/issues/46)) ([ca4c50a](https://github.com/ai-outfitter/community-profiles/commit/ca4c50aa1cbb8206610f1d5e9e5d2415278be735))
+* **agents:** complete workflow-owned agent loadouts ([260e222](https://github.com/ai-outfitter/community-profiles/commit/260e2224a14405dc2bafa3791b466073e797a534))
+* **agents:** mark abstract profiles and document the taxonomy ([fae3cfa](https://github.com/ai-outfitter/community-profiles/commit/fae3cfaaaad5692c2d639f2b40ff65ead291ccef))
+* **workflows:** publish the ten canonical workflow packages ([e2f84de](https://github.com/ai-outfitter/community-profiles/commit/e2f84def8754346b987d7cfb97296bccf1ab3495))
+
+
+### Bug Fixes
+
+* **review:** keep pull request metadata author-owned ([710734b](https://github.com/ai-outfitter/community-profiles/commit/710734bd85fb1953dd234c5281e34f5d78e4dd7b))
+
 ## [1.4.0](https://github.com/ai-outfitter/community-profiles/compare/v1.3.1...v1.4.0) (2026-08-19)
 
 
