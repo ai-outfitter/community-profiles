@@ -80,6 +80,19 @@ outfitter run <agent-id>
 
 Pin `ref` to a tag or commit — an unpinned source runs whatever the catalog publishes next.
 
+## Workflows
+
+`workflows/<id>/workflow.yaml` contains the ten canonical, declarative workflow
+graphs. Outfitter resolves and validates their complete agent, skill, prompt,
+MCP, nested-workflow, and pinned-artifact closure; it never executes workflow
+nodes. Publication is blocked unless `outfitter validate --strict` succeeds.
+
+To validate against a local Outfitter build:
+
+```sh
+scripts/validate-workflows.sh /path/to/outfitter/code/cli/dist/cli.js
+```
+
 ## Contributing an agent or skill
 
 1. Add `agents/<id>/agent.md` with a matching `name`, a precise `description`, and the smallest useful loadout.
@@ -96,6 +109,7 @@ Prefer opening an issue first: newly opened issues are triaged automatically by 
 agents/         one directory per agent identity and loadout
 skills/         reusable Agent Skills packages
 prompts/        shared prompt fragments appended by agents
+workflows/      declarative workflow packages resolved by Outfitter
 models.json     model/provider configuration used by the CI agent
 settings.yml    Outfitter defaults for this standalone payload
 ```

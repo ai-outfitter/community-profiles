@@ -1,0 +1,29 @@
+name: Workflow validation
+
+on:
+  pull_request:
+    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "scripts/validate-workflows.sh"]
+  push:
+    branches: [main]
+    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "scripts/validate-workflows.sh"]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: ai-outfitter/outfitter
+          ref: v1.13.0
+          path: .ci/outfitter
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm, cache-dependency-path: .ci/outfitter/package-lock.json}
+      - run: npm ci
+        working-directory: .ci/outfitter
+      - run: npm run build
+        working-directory: .ci/outfitter
+      - run: scripts/validate-workflows.sh "$GITHUB_WORKSPACE/.ci/outfitter/code/cli/dist/cli.js"
