@@ -1,0 +1,21 @@
+version: 1
+id: organization-delegation
+title: Organization-wide delegation
+description: Publish shared agent profiles and delegate bounded work into issue triage.
+actors:
+  admin: {kind: human}
+  employee: {kind: human}
+  delegator: {kind: agent, profile: delegating-engineer}
+  outfitter: {kind: tool}
+environments: {workstation: local}
+integrations:
+  github: {kind: cli}
+  outfitter: {kind: cli}
+  pi: {kind: harness}
+  claude: {kind: harness}
+nodes:
+  - {id: publish, action: publish-organization-catalog, description: Publish shared profiles for the organization., actor: admin, environment: workstation, uses: [github]}
+  - {id: sync, action: sync-catalog, description: Pull organization profiles into the project., actor: employee, environment: workstation, needs: [publish], uses: [outfitter]}
+  - {id: compose, action: compose-delegation-guidance, description: Compose delegation guidance into supported harnesses., actor: outfitter, environment: workstation, needs: [sync], uses: [outfitter, pi, claude]}
+  - {id: request, action: create-scoped-issue, description: Create a bounded issue with acceptance criteria., actor: delegator, environment: workstation, needs: [compose], prompt_fragment: prompts/practice.subagent-delegation.md, uses: [github]}
+  - {id: triage, workflow: issue-triage, description: Classify and route the delegated issue., needs: [request]}

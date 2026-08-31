@@ -1,0 +1,16 @@
+version: 1
+id: persona-review
+title: Persona review
+description: Review an artifact from a selected persona's perspective and save a sourced report.
+actors:
+  coordinator: {kind: agent, profile: researcher}
+  reviewer: {kind: agent, profile: persona-reviewer}
+environments: {workstation: local}
+integrations:
+  browser: {kind: mcp, server: playwright}
+  outfitter: {kind: cli}
+nodes:
+  - {id: select, action: select-persona-and-artifact, description: Choose the persona and artifact to evaluate., actor: coordinator, environment: workstation, skill: persona-review}
+  - {id: launch, action: launch-isolated-reviewer, description: Start an isolated reviewer with the chosen context., actor: coordinator, environment: workstation, needs: [select], uses: [outfitter]}
+  - {id: inspect, action: inspect-artifact, description: Evaluate the artifact from the persona's perspective., actor: reviewer, environment: workstation, needs: [launch], skills: [persona-review, browser-mcp], uses: [browser]}
+  - {id: report, action: write-sourced-report, description: Write and save a sourced report with actionable findings., actor: reviewer, environment: workstation, needs: [inspect]}
