@@ -14,6 +14,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `environment` - portable repository location and authentication baseline for inherited agents.
 - `environment.repos` - repository checkout and worktree layout under `~/repos`: one clean clone on the default branch, all work in typed worktrees. Requires outfitter >= 1.9.0 (dotted slugs).
 - `agent-operator-pod` - runtime context for resident agents in Kubernetes pods.
+- `resident-agent` - standard GitHub-backed Kubernetes resident with Channels
+  Task isolation, forge tools, and native Pi context compaction defaults. An
+  organization or user can replace the same slug in a higher-precedence layer.
 - `actions-runner` - runtime context for ephemeral CI agents.
 - `container-readonly` - tool boundary for read-only agents.
 - `repo-auth` - replaceable repository transport and forge authentication convention.
