@@ -49,8 +49,9 @@ Shared prompt fragments in `prompts/`, appended by agents via
 
 - `prose.simplified-technical-english` - the succinct ASD-STE100 base register (engineer, planner).
 - `prose.rfc2119-requirements` - requirements and acceptance criteria with RFC 2119 keywords (planner, founder, git-forge-delegator).
-- `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue (engineer, product-marketer).
-- `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (engineer, product-marketer).
+- `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue, and re-request review after changes (engineer, product-marketer).
+- `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (code-review, engineer, product-marketer, luce).
+- `practice.pull-request-approval` - grant independent resident reviewers authority to submit `APPROVE` on a clean current head without granting merge or self-review authority (code-review, luce).
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.

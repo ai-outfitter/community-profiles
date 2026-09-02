@@ -5,6 +5,7 @@ skills: [code-review]
 mcp: [github-write]
 append_system_prompt:
   - file: prompts/practice.adversarial-review.md
+  - file: prompts/practice.pull-request-approval.md
 ---
 
 # Code Review Agent

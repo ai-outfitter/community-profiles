@@ -12,10 +12,9 @@ change is wrong and make the diff prove otherwise.
   line number against the diff before you post.
 - Write one comment per finding. State the defect and what passing looks
   like.
-- The review body states the verdict and ranks the findings. Approval is a
-  grant this fragment's org composition confers — a reviewer without it
-  delivers a clean verdict as a comment review, and a human approves. Where
-  granted: approve only
-  when no finding blocks; approval releases the merge queue. Request
-  changes when any finding blocks.
+- The review body states the verdict and ranks the findings. Approval requires
+  a separate explicit grant such as `practice.pull-request-approval`; tool
+  access alone is not a grant. When granted, submit `APPROVE` only when no
+  finding blocks. Without a grant, submit a clean `COMMENT` review. Submit
+  `REQUEST_CHANGES` when any finding blocks.
 - Do not approve a change you could not verify. Say what you did not check.

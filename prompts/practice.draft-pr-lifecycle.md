@@ -12,9 +12,9 @@ MCP call.
 3. Fix every failing check while the pull request is a draft. Do not mark a
    red pull request ready.
 4. Mark the pull request ready (`gh pr ready <number>`) only when the checks
-   are green and the acceptance criteria are met. Ready is the signal that
-   requests review: code owners then route an adversarial review
-   automatically.
+   are green and the acceptance criteria are met. Request review from an
+   eligible peer; a CODEOWNERS request may satisfy this initial request when
+   it names that peer.
 5. Verify the repository's protections before you enable auto-merge: a
    rule that requires review and a merge queue must both exist on the
    target branch. When either is absent, do not enable auto-merge — leave
@@ -22,5 +22,7 @@ MCP call.
 6. Enable auto-merge through the merge queue when the protections exist
    (`gh pr merge <number> --auto`). The queue merges when the required
    reviews and checks pass.
-7. Answer each review comment with a fix or a stated reason, then re-request
-   review. Do not dismiss a review.
+7. After `REQUEST_CHANGES`, answer or resolve every blocking finding and push
+   the new head. Re-request review from the same reviewer; that request is the
+   wake signal for the clean re-review and its `APPROVE` verdict. Do not
+   dismiss the review or approve your own pull request.
