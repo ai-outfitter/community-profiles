@@ -8,6 +8,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `founder` - owns the mission, priorities, constraints, and final decisions.
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
 - `engineer` - owns implementation and verification.
+- `resident-engineer` - implements the exact assigned issue through a pull request; an independent identity reviews it and a maintainer merges it.
+- `luce` - resident engineer with a planning, prose, and requirements-review emphasis.
+- `vega` - resident engineer with a correctness, failure-mode, and test-review emphasis.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
@@ -33,7 +36,8 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
   file and save a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
-- `code-review` - review a pull request diff against its issue's acceptance criteria; approve, request changes, or merge when green.
+- `code-review` - review a pull request diff against its issue's acceptance criteria; the reviewer approves or requests changes and a maintainer merges.
+- `resident-contribution` - route one exact Channels Task into assigned-issue implementation, independent review, or a bounded thread answer.
 - `prose-review` - review prose artifacts for thesis, structure, and register before they publish or merge.
 - `issue-triage` - classify and comment on new GitHub issues.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
@@ -49,8 +53,16 @@ Shared prompt fragments in `prompts/`, appended by agents via
 
 - `prose.simplified-technical-english` - the succinct ASD-STE100 base register (engineer, planner).
 - `prose.rfc2119-requirements` - requirements and acceptance criteria with RFC 2119 keywords (planner, founder, git-forge-delegator).
-- `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue (engineer, product-marketer).
-- `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (engineer, product-marketer).
+- `practice.draft-pr-lifecycle` - author changes through a draft PR: iterate and verify CI drafted, mark ready when green, enable auto-merge via the merge queue, and re-request review after changes (engineer, product-marketer).
+- `practice.adversarial-review` - review to find the failure; anchor findings as inline comments on real diff line numbers (code-review, engineer, product-marketer, luce).
+- `practice.pull-request-approval` - grant a distinct resident reviewer authority to submit `APPROVE` on a clean current head while a maintainer owns merge (code-review, resident-engineer, luce, vega).
+- `practice.resident-contribution` - route exact assignment and review Tasks across author, independent-reviewer, and maintainer ownership (resident-engineer, luce, vega).
+
+The `resident-contribution` skill routes an exact Channels Task: an assigned
+issue starts implementation through a reviewed pull request, while a review
+request produces `REQUEST_CHANGES` or `APPROVE`. It is composed into
+`resident-engineer`, `luce`, and `vega`; the author, reviewer, and maintainer
+remain distinct roles.
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.

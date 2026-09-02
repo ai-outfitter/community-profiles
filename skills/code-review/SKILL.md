@@ -24,14 +24,18 @@ the change, stop: an artifact must not merge self-reviewed.
 6. Deliver exactly one verdict as a formal review:
    - **Request changes** — name each defect at its file and line, and state
      what passing looks like.
-   - **No blocking findings** — a comment review stating which criteria are
-     satisfied, which are not applicable, and which you could not judge.
+   - **Approve** — when no blocking finding remains and the carrier has an
+     explicit approval grant, submit `APPROVE` on the current head. This also
+     applies to a re-review after the same reviewer requested changes.
+   - **No blocking findings** — when the carrier lacks approval authority,
+     submit a comment review stating which criteria are satisfied, which are
+     not applicable, and which you could not judge. State that the comment
+     does not clear an earlier `CHANGES_REQUESTED` decision.
 
-This skill defines how to review. What a clean verdict *releases* — whether
-this carrier may approve, and who merges — is organization policy, composed
-into the prompt from the org's context and practice fragments, never assumed
-from this skill. Without an explicit grant, a clean verdict is delivered as a
-comment review and a human approves and merges.
+This skill defines how to review. Approval authority is organization policy,
+composed into the prompt by a practice fragment and never inferred from tool
+access. With that grant, a clean review MUST submit `APPROVE`; without it, a
+clean review MUST submit `COMMENT`. Approval never grants merge authority.
 
 ## Transports
 
@@ -40,14 +44,18 @@ through any of them.
 
 - **`gh`** — `gh pr view/diff/checks <n>`, then
   `gh pr review <n> --request-changes --body-file <file>` (or
-  `--comment`). Write bodies to a file with a quoted heredoc; never pass
-  prose inline in double quotes.
+  `--approve` when granted, otherwise `--comment`). Write bodies to a file
+  with a quoted heredoc; never pass prose inline in double quotes.
 - **GitHub MCP tools** — `pull_request_read` for the diff, then the pending
-  review flow: `pull_request_review_write` `method: create` (no `event`),
-  one `add_comment_to_pending_review` per finding (`path`,
-  `subjectType: LINE`, `line`, `side: RIGHT`), then
-  `pull_request_review_write` `method: submit_pending` with
-  `event: REQUEST_CHANGES` or `event: COMMENT`.
+  review flow. On the consolidated surface use `pull_request_review_write`
+  `method: create` (no `event`), one `add_comment_to_pending_review` per
+  finding, then `pull_request_review_write` `method: submit_pending`. On the
+  `pull_requests_granular` surface use `create_pull_request_review`, one
+  `add_pull_request_review_comment` per finding, then
+  `submit_pending_pull_request_review`. Anchor findings with `path`,
+  `subjectType: LINE`, `line`, and `side: RIGHT`. Submit
+  `event: REQUEST_CHANGES`, `event: APPROVE` when granted, or `event: COMMENT`
+  without a grant.
 - **`github-mcp-server` binary, no MCP projection** — drive the same tools
   over stdio JSON-RPC from `bash`. The pending review lives in the server
   process, so create, comment, and submit MUST share one spawned process.
@@ -59,8 +67,7 @@ posts it. Do not claim the review is posted when you could not post it.
 
 ## Hard limits
 
-- One verdict per run. Do not request changes and declare no blocking
-  findings in the same run.
+- One verdict per run. Do not request changes and approve in the same run.
 - During a review, only submit review comments and one formal verdict.
 - Do not edit the pull request title, body, base branch, labels, assignees,
   milestone, draft state, merge settings, or other metadata.

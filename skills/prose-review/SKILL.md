@@ -29,23 +29,30 @@ structural tests.
    - **Request changes** — name each defect with its location and state what
      a fix looks like. Rank defects: thesis first, structure second,
      sentence-level last.
-   - **No blocking findings** — thesis clear, structure sound, register
-     correct.
+   - **Approve** — when no blocking finding remains and the carrier has an
+     explicit approval grant.
+   - **No blocking findings** — when the carrier lacks approval authority,
+     report that the clean comment does not approve or clear an earlier
+     `CHANGES_REQUESTED` decision.
 
-Whether a clean verdict lets this carrier approve, and who merges, is
-organization policy composed from the org's practice fragments — never
-assumed from this skill. Without an explicit grant, deliver the clean verdict
-as a comment review and leave approval to a human.
+Approval authority is organization policy composed from the org's practice
+fragments and never inferred from tool access. With that grant, a clean review
+MUST submit `APPROVE`; without it, a clean review MUST submit `COMMENT`.
+Approval never grants merge authority.
 
 On a forge, deliver the verdict as a pull request review through whatever
 surface the loadout provides:
 
 - **`gh`** — `gh pr review <n> --request-changes --body-file <file>` for a
-  blocking verdict, or `gh pr review <n> --comment --body-file <file>` for a
-  clean one; write the body to a file, never inline in double quotes.
-- **GitHub MCP tools** — `pull_request_review_write` with `method: create`,
-  then `method: submit_pending` with `event: REQUEST_CHANGES` or
-  `event: COMMENT`.
+  blocking verdict, `--approve` for a granted clean verdict, or `--comment`
+  for a clean verdict without approval authority; write the body to a file,
+  never inline in double quotes.
+- **GitHub MCP tools** — on the consolidated surface use
+  `pull_request_review_write` with `method: create`, then
+  `method: submit_pending`. On the `pull_requests_granular` surface use
+  `create_pull_request_review`, then `submit_pending_pull_request_review`.
+  Submit `event: REQUEST_CHANGES`, `event: APPROVE` when granted, or
+  `event: COMMENT` otherwise.
 - **`github-mcp-server` binary, no MCP projection** — drive those same tools
   over stdio JSON-RPC from `bash`, keeping create and submit in one spawned
   process.
