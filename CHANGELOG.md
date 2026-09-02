@@ -6,7 +6,6 @@
 ### Features
 
 * **workflows:** enable every published workflow ([62e6cce](https://github.com/ai-outfitter/community-profiles/commit/62e6cce0f522e6611a4dd3388bcb19a7f24e2ebe))
-* **workflows:** enable every published workflow ([51013e7](https://github.com/ai-outfitter/community-profiles/commit/51013e71994e55df6150aeb59bce50c4611ffd54))
 
 ## [1.5.0](https://github.com/ai-outfitter/community-profiles/compare/v1.4.0...v1.5.0) (2026-08-31)
 
