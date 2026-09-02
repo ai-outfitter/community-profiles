@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/ai-outfitter/community-profiles/compare/v1.5.0...v1.6.0) (2026-09-02)
+
+
+### Features
+
+* **workflows:** enable every published workflow ([62e6cce](https://github.com/ai-outfitter/community-profiles/commit/62e6cce0f522e6611a4dd3388bcb19a7f24e2ebe))
+
 ## [1.5.0](https://github.com/ai-outfitter/community-profiles/compare/v1.4.0...v1.5.0) (2026-08-31)
 
 
