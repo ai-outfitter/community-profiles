@@ -2,10 +2,10 @@ name: Workflow validation
 
 on:
   pull_request:
-    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "scripts/validate-workflows.sh"]
+    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "settings.yml", "scripts/validate-workflows.sh"]
   push:
     branches: [main]
-    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "scripts/validate-workflows.sh"]
+    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "settings.yml", "scripts/validate-workflows.sh"]
 
 permissions:
   contents: read
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ai-outfitter/outfitter
-          ref: v1.13.0
+          ref: v1.14.0
           path: .ci/outfitter
       - uses: actions/setup-node@v4
         with: {node-version: 22, cache: npm, cache-dependency-path: .ci/outfitter/package-lock.json}

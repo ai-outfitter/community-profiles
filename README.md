@@ -79,13 +79,18 @@ outfitter run <agent-id>
 ```
 
 Pin `ref` to a tag or commit — an unpinned source runs whatever the catalog publishes next.
+The catalog enables all of its published workflow roots when used as the project `.agents` tree.
+When using it only as a source, list the workflow roots you want in your own loaded settings;
+source settings are intentionally not imported.
 
 ## Workflows
 
 `workflows/<id>/workflow.yaml` contains the ten canonical, declarative workflow
-graphs. Outfitter resolves and validates their complete agent, skill, prompt,
-MCP, nested-workflow, and pinned-artifact closure; it never executes workflow
-nodes. Publication is blocked unless `outfitter validate --strict` succeeds.
+graphs. All ten are explicitly enabled in `settings.yml`. Outfitter resolves
+and validates their complete agent, skill, prompt, MCP, nested-workflow, and
+pinned-artifact closure; it never executes workflow nodes. Publication is
+blocked unless strict validation and two byte-identical exports of every root
+succeed against Outfitter v1.14.0.
 
 To validate against a local Outfitter build:
 

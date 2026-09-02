@@ -1,2 +1,13 @@
 default_agent: actions-agent
 default_harness: pi
+workflows:
+  - adversarial-review
+  - bug-issue
+  - engineer
+  - founder
+  - grafana-alert
+  - issue-triage
+  - organization-delegation
+  - persona-review
+  - research-triage
+  - software-factory
