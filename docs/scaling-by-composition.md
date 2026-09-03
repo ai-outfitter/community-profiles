@@ -140,25 +140,32 @@ per the rule below and a `bash`-capable peer or a human posts its verdict.
 
 ### Draft, review, merge
 
-Two catalog prompt fragments carry the pull-request lifecycle:
+Three catalog prompt fragments carry the pull-request lifecycle:
 
 - `prompts/practice.draft-pr-lifecycle.md` — the author side. Open the pull
   request as a draft, iterate and verify CI while drafted, mark it ready
   only when green, and enable auto-merge through the merge queue at that
-  moment. Ready is the review request: code owners route an adversarial
-  review automatically.
+  moment. After changes, request the same reviewer again on the corrected
+  head.
 - `prompts/practice.adversarial-review.md` — the reviewer side. Review to
   find the failure. Anchor every finding as an inline review comment on the
-  real file and line numbers from the diff. Approval releases the merge
-  queue; request changes blocks it.
+  real file and line numbers from the diff. It does not itself grant approval.
+- `prompts/practice.pull-request-approval.md` — the authority boundary for an
+  independent reviewer. A clean current head receives `APPROVE`; a
+  blocking finding receives `REQUEST_CHANGES`. The authenticated reviewer
+  differs from the author and a maintainer owns merge.
 
-`engineer` and `product-marketer` carry both: each authors its own artifact
-class and reviews the other's.
+`engineer` and `product-marketer` carry the author and adversarial-review
+practices: each authors its own artifact class and reviews the other's.
+
+`repo-contributor` and its children compose the separate approval practice. The author,
+authenticated reviewer, and maintainer remain distinct owners for the branch,
+verdict, and merge.
 
 The wiring is consumer-repo configuration, not catalog content: a
-`CODEOWNERS` file that names the reviewing agent identities, a branch
-ruleset that requires their review, and a merge queue. The fragments state
-the behavior each side follows once that wiring exists.
+`CODEOWNERS` file that names the reviewing agent identities, a branch ruleset
+that requires their review, and a merge queue. The fragments state the
+behavior each side follows once that wiring exists.
 
 ## Org context
 
