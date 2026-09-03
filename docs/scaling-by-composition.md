@@ -151,14 +151,14 @@ Three catalog prompt fragments carry the pull-request lifecycle:
   find the failure. Anchor every finding as an inline review comment on the
   real file and line numbers from the diff. It does not itself grant approval.
 - `prompts/practice.pull-request-approval.md` — the authority boundary for an
-  independent resident reviewer. A clean current head receives `APPROVE`; a
+  independent reviewer. A clean current head receives `APPROVE`; a
   blocking finding receives `REQUEST_CHANGES`. The authenticated reviewer
   differs from the author and a maintainer owns merge.
 
 `engineer` and `product-marketer` carry the author and adversarial-review
 practices: each authors its own artifact class and reviews the other's.
 
-Resident review carriers compose the separate approval practice. The author,
+`repo-contributor` and its children compose the separate approval practice. The author,
 authenticated reviewer, and maintainer remain distinct owners for the branch,
 verdict, and merge.
 

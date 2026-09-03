@@ -24,5 +24,6 @@ MCP call.
    reviews and checks pass.
 7. After `REQUEST_CHANGES`, answer or resolve every blocking finding and push
    the new head. Re-request review from the same reviewer; that request is the
-   wake signal for the clean re-review and its `APPROVE` verdict. Do not
-   dismiss the review or approve your own pull request.
+   wake signal for the re-review. A granted reviewer approves; otherwise a
+   clean comment verdict is delivered and a human approves. Do not dismiss
+   the review or approve your own pull request.

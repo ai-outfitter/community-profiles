@@ -1,9 +1,9 @@
 version: 1
 id: software-factory
 title: Software factory
-description: Delegate typed issues to a resident engineer for CI-gated implementation and independent review.
+description: Delegate typed issues to a repo-contributor for CI-gated implementation and independent review.
 actors:
-  resident: {kind: agent, profile: resident-engineer}
+  implementer: {kind: agent, profile: repo-contributor}
   platform: {kind: system}
 environments: {delegated: delegated-runtime, actions: github-actions}
 integrations:
@@ -22,9 +22,9 @@ integrations:
     ref: 255a84fb6391b331c085a15b69b97ccce07d2f94
     sha256: e2327231bbe02401a6cf00206f40617b77956c5da51f44d551f700dc0da28c1d
 nodes:
-  - {id: prepare, action: receive-typed-issue, description: Accept one typed issue., actor: resident, environment: delegated, uses: [github, operator-deploy]}
-  - {id: implement, action: implement-and-verify, description: Implement and verify the requested change on a semantic branch., actor: resident, environment: delegated, needs: [prepare], uses: [github, git]}
-  - {id: draft, action: open-draft-pr, description: Publish the verified implementation as a draft pull request., actor: resident, environment: delegated, needs: [implement], uses: [github]}
-  - {id: ci, action: wait-for-required-ci, description: Wait for required checks to pass., actor: resident, environment: actions, needs: [draft], uses: [github, actions-runner]}
+  - {id: prepare, action: receive-typed-issue, description: Accept one typed issue., actor: implementer, environment: delegated, uses: [github, operator-deploy]}
+  - {id: implement, action: implement-and-verify, description: Implement and verify the requested change on a semantic branch., actor: implementer, environment: delegated, needs: [prepare], uses: [github, git]}
+  - {id: draft, action: open-draft-pr, description: Publish the verified implementation as a draft pull request., actor: implementer, environment: delegated, needs: [implement], uses: [github]}
+  - {id: ci, action: wait-for-required-ci, description: Wait for required checks to pass., actor: implementer, environment: actions, needs: [draft], uses: [github, actions-runner]}
   - {id: review, workflow: adversarial-review, description: Request an independent review., needs: [ci]}
   - {id: merge, action: merge-after-approval, description: Let the platform merge after every required gate., actor: platform, environment: actions, needs: [review]}
