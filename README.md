@@ -37,7 +37,6 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
 - `code-review` - review a pull request diff against its issue's acceptance criteria; the reviewer approves or requests changes and a maintainer merges.
-- `repo-contribution` - route the delivered work item into assigned-issue implementation, a change-request follow-up, independent review, or a bounded thread answer.
 - `prose-review` - review prose artifacts for thesis, structure, and register before they publish or merge.
 - `issue-triage` - classify and comment on new GitHub issues.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
@@ -58,12 +57,12 @@ Shared prompt fragments in `prompts/`, appended by agents via
 - `practice.pull-request-approval` - grant an independent reviewer authority to submit `APPROVE` on a clean current head while a maintainer owns merge (repo-contributor, luce, vega).
 - `practice.repo-contribution` - the ownership rules: author owns the branch, an independent reviewer owns the verdict, a maintainer owns merge and issue closure (repo-contributor, luce, vega).
 
-The `repo-contribution` skill routes the delivered work item, whatever
-runtime delivered it: an assigned issue starts implementation through a
-reviewed pull request, while a review request produces `REQUEST_CHANGES` or
-`APPROVE`. It is composed into `repo-contributor`, `luce`, and `vega`; the
-author, reviewer, and maintainer remain distinct roles. Task intake and
-settlement belong to the environment, such as `environment.agent-operator-pod`.
+The `repo-contributor` body routes the delivered work item, whatever runtime
+delivered it: an assigned issue starts implementation through a reviewed pull
+request, while a review request produces `REQUEST_CHANGES` or `APPROVE`.
+`luce` and `vega` inherit it; the author, reviewer, and maintainer remain
+distinct roles. Task intake and settlement belong to the environment, such as
+`environment.agent-operator-pod`.
 
 See [Persona documents and reviews](docs/persona-review.md) for the setup and
 runtime boundary.

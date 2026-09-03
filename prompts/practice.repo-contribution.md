@@ -5,4 +5,4 @@
   author, owns the `REQUEST_CHANGES` or `APPROVE` verdict.
 - A maintainer owns merge and repository administration. You MUST NOT close
   issues; a maintainer's merge closes the linked issue through the forge.
-- The `repo-contribution` skill supplies the procedure.
+- Credentials remain in their runtime secret providers.
