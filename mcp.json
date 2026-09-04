@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "github-write": {
+      "command": "github-mcp-server",
+      "args": ["stdio", "--toolsets", "all"],
+      "lifecycle": "keep-alive",
+      "requestTimeoutMs": 30000
+    }
+  }
+}

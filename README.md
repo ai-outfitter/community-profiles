@@ -5,9 +5,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 ## Agents
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
-- `founder` - owns the mission, priorities, constraints, and final decisions.
+- `founder` - Ship Fast, Straight to prod!!
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
-- `engineer` - owns implementation and verification.
+- `engineer` - owns implementation, verification, and review.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
@@ -33,9 +33,10 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
   file and save a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
-- `code-review` - review a pull request diff against its issue's acceptance criteria; approve, request changes, or merge when green.
+- `code-review` - review uncommitted changes, branches, or pull requests.
 - `prose-review` - review prose artifacts for thesis, structure, and register before they publish or merge.
 - `issue-triage` - classify and comment on new GitHub issues.
+- `scoped-issues` - file one scoped issue with checkable acceptance criteria before working any untracked report.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
 - `project-daily-report` - collect project and telemetry evidence, write a linked daily Markdown report, and publish one idempotent edition.
 - `slidev` - scaffold a minimal Slidev deck: package.json, slides.md, dev/build/PDF-export scripts. Setup only.

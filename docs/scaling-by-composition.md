@@ -122,15 +122,16 @@ two review skills:
   `product-marketer`, `planner`, and `researcher`.
 
 The carrier's tool surface bounds the verdict path. Posting a forge review
-needs `bash` for `gh`. A read-only carrier — `planner`, or a `researcher`
+needs `bash` for `gh` or a GitHub MCP surface. A read-only carrier — `planner`, or a `researcher`
 that carries a review skill — can judge the artifact but cannot post: it
 MUST deliver its verdict in-session, and a `bash`-capable peer or a human
 posts it to the forge. Do not document a review capability the carrier's
 tools cannot execute.
 
-Rule: an organization MUST keep a minimum of three agents with overlapping
-review competence, so every artifact class has a reviewer who is not its
-author. An artifact MUST NOT merge self-reviewed.
+Rule: every artifact merges reviewed. The judgment comes from cold-context
+subagents the author never briefs — the code-review skill's lens fan-out —
+or from a distinct reviewer agent; either way a human holds the merge
+unless the organization grants otherwise.
 
 The typical founding shape is three agents: a pure engineer, a
 `researcher` that overlaps both review classes, and a pure
