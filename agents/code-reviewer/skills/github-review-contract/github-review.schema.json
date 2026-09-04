@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-outfitter.github.io/community-profiles/github-review.schema.json",
+  "title": "GitHub create-review request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["commit_id", "body", "event", "comments"],
+  "properties": {
+    "commit_id": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "body": { "type": "string", "minLength": 1 },
+    "event": { "enum": ["APPROVE", "REQUEST_CHANGES"] },
+    "comments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "line", "side", "body"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "line": { "type": "integer", "minimum": 1 },
+          "side": { "const": "RIGHT" },
+          "body": {
+            "type": "string",
+            "pattern": "^\\[P[0-2]\\] .+\\n\\nReasoning: .+\\n\\nImpact: .+\\n\\nFix: .+"
+          }
+        }
+      }
+    }
+  }
+}

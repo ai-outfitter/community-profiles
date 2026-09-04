@@ -1,0 +1,13 @@
+{
+  "commit_id": "0123456789abcdef0123456789abcdef01234567",
+  "body": "One blocking correctness finding remains.",
+  "event": "REQUEST_CHANGES",
+  "comments": [
+    {
+      "path": "src/example.ts",
+      "line": 2,
+      "side": "RIGHT",
+      "body": "[P1] Preserve the checked result\n\nReasoning: The new line discards the required result.\n\nImpact: Callers receive stale data.\n\nFix: Return the checked value."
+    }
+  ]
+}

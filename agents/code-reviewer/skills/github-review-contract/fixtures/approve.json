@@ -1,0 +1,6 @@
+{
+  "commit_id": "0123456789abcdef0123456789abcdef01234567",
+  "body": "No blocking findings. The pinned requirements and diff were inspected; runtime behavior was not executed by this read-only review.",
+  "event": "APPROVE",
+  "comments": []
+}
