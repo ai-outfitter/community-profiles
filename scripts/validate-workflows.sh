@@ -12,6 +12,7 @@ trap 'rm -rf "$validation_root"' EXIT HUP INT TERM
 mkdir -p "$validation_root/home" "$validation_root/project"
 ln -s "$catalog_root" "$validation_root/project/.agents"
 
+"$catalog_root/scripts/pr-lifecycle-contract.test.sh"
 "$catalog_root/skills/code-review/scripts/review-protocol.test.sh"
 
 (
