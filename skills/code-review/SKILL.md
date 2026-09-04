@@ -17,16 +17,17 @@ review of your own change"), so every artifact merges peer-reviewed.
 
 When your pull request is ready (draft cleared, checks green) and nothing
 routes a reviewer automatically — no code owners, no resident review agent —
-you start the adversarial review yourself. Launch an independent reviewer
-with a cold context and hand it only the pull request; the reviewer is
-shell-less and reads and posts through the GitHub MCP:
+you start the adversarial review yourself: a fresh session with a cold
+context, handed only the pull request. Code review is a skill, not a
+profile — the new session runs the same composed agent, and this skill
+routes the review request:
 
 ```sh
-outfitter run code-review -- -p "Review pull request #<n> in <owner>/<repo> against its linked issue's acceptance criteria."
+outfitter run -- -p "Review pull request #<n> in <owner>/<repo> against its linked issue's acceptance criteria."
 ```
 
-That session composes this same skill with the adversarial-review practice
-and submits the formal review on the pull request. Then act on the verdict:
+That session reads the diff, the linked issue, and the check results and
+submits the formal review on the pull request. Then act on the verdict:
 fix and push for each blocking finding and start a fresh review of the new
 revision; report a clean verdict to the human who merges.
 
