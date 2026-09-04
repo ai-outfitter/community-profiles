@@ -1,0 +1,19 @@
+{
+  "lensAttemptsPerInvocation": 2,
+  "formalReviewsPerPullRequestHead": 1,
+  "formalReviewTransport": "github-mcp-only",
+  "formalReviewTransaction": "create-add-comments-submit-verify",
+  "formalReviewFallback": "in-session-incomplete",
+  "ambiguousWritePolicy": "reconcile-cleanup-no-blind-retry",
+  "incompleteTransport": "in-session-only",
+  "incompletePrefix": "Verdict: incomplete; ",
+  "incompleteBlocksMerge": true,
+  "incompleteSeverityPolicy": "compute-before-status-no-downgrade",
+  "preserveHealthyLensFindings": true,
+  "simplifyEvidenceUnit": "changed-file-and-diff-hunk",
+  "simplifyHunkIdentifier": "path-plus-coordinate-prefix",
+  "inlineFindingLimit": 10,
+  "overflowFindingTransport": "review-body",
+  "incompleteMergeBlockOwner": "invoker-or-workflow",
+  "localAndBranchTransport": "in-session-only"
+}

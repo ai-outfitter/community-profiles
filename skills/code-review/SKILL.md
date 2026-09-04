@@ -12,7 +12,7 @@ allowed-tools: >-
 
 # Code review
 
-One formal review per pull request revision. You carry both roles:
+One formal review per pull request head. You carry both roles:
 
 - **Author** — your pull request is ready (draft cleared, checks green)
   and nothing routes a reviewer: run the review yourself, then fix what
@@ -34,33 +34,11 @@ alone.
 ## Protocol contract
 
 This is a content and execution protocol for the reviewing agent, not
-runtime enforcement by Outfitter. The structured-output schema enforces
-the envelope shape and the simplify evidence marker; the parent must still
-cross-check evidence coverage and apply the limits.
-
-<!-- code-review-protocol:start -->
-```json
-{
-  "lensAttemptsPerInvocation": 2,
-  "formalReviewsPerPullRequestHead": 1,
-  "formalReviewTransport": "github-mcp-only",
-  "formalReviewTransaction": "create-add-comments-submit-verify",
-  "formalReviewFallback": "in-session-incomplete",
-  "ambiguousWritePolicy": "reconcile-cleanup-no-blind-retry",
-  "incompleteTransport": "in-session-only",
-  "incompletePrefix": "Verdict: incomplete;",
-  "incompleteBlocksMerge": true,
-  "incompleteSeverityPolicy": "compute-before-status-no-downgrade",
-  "preserveHealthyLensFindings": true,
-  "simplifyEvidenceUnit": "changed-file-and-diff-hunk",
-  "simplifyHunkIdentifier": "path-plus-coordinate-prefix",
-  "inlineFindingLimit": 10,
-  "overflowFindingTransport": "review-body",
-  "incompleteMergeBlockOwner": "invoker-or-workflow",
-  "localAndBranchTransport": "in-session-only"
-}
-```
-<!-- code-review-protocol:end -->
+runtime enforcement by Outfitter. The machine-readable contract is
+[`assets/code-review-protocol.json`](assets/code-review-protocol.json).
+The structured-output schema enforces the envelope shape and the simplify
+evidence marker; the parent must still cross-check evidence coverage and
+apply the limits.
 
 ## Process
 
@@ -95,8 +73,8 @@ cross-check evidence coverage and apply the limits.
    region MUST appear once. Ignore trailing hunk section text during this
    comparison. Extra or invented regions make the envelope invalid. Marker
    presence alone is insufficient.
-6. Merge all healthy envelopes and all unresolved findings from prior
-   reviews on this head. An incomplete lens MUST NOT erase a healthy
+6. Merge all healthy envelopes and all unresolved findings from the prior
+   reviews and inline threads gathered in step 1. An incomplete lens MUST NOT erase a healthy
    lens's finding or reduce its severity. Dedup repeated findings without
    dropping them: retain the original inline comment and cite it in the
    merged body rather than reposting it. Compute the effective verdict
@@ -161,7 +139,7 @@ cross-check evidence coverage and apply the limits.
    incomplete result creates no GitHub review or status, the invoker or
    enclosing workflow MUST carry and enforce the merge block.
 9. As author, act on a complete verdict: fix each blocking finding, push,
-   and review the new revision. Report a clean verdict to the human who
+   and review the new head. Report a clean verdict to the human who
    merges. An incomplete verdict MUST be reported as a workflow failure,
    never as a clean review or authority to merge.
 

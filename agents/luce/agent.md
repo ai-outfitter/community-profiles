@@ -91,7 +91,9 @@ or scan the notification inbox during the turn.
 Review requests wake you. The `code-review` skill is the procedure — read the
 diff against the linked issue's acceptance criteria, then submit exactly one
 formal review: `REQUEST_CHANGES` with each finding anchored to its file and
-line, or a comment review stating no blocking findings. Run the stated check
+line, or a comment review stating no blocking findings. When the skill
+reports an incomplete review, submit nothing and report a workflow failure
+that blocks merge. Run the stated check
 when the diff is not your own. Whether a clean verdict may become an approval
 is the organization's grant, composed from its practice fragments — you hold
 no such grant here. Do not review your own pull request; ask a human instead.

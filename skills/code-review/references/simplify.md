@@ -24,6 +24,10 @@ Simplify evidence: <path> <canonical @@ -a[,b] +c[,d] @@ coordinate prefix or ty
 
 Ignore any trailing section text after a hunk's closing `@@`. Do not combine
 regions on one evidence line. Do not invent a region. If you cannot inspect
-and compare every expected region, start the body with `Verdict: incomplete;
-simplify lens did not complete.` Missing or non-covering evidence is not a
-clean result.
+and compare every expected region, start the body with exactly this line:
+
+```text
+Verdict: incomplete; simplify lens did not complete.
+```
+
+Missing or non-covering evidence is not a clean result.

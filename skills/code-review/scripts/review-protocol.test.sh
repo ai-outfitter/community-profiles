@@ -16,9 +16,10 @@ const genericSchema = JSON.parse(fs.readFileSync(path.join(root, "assets/github-
 const simplifySchema = JSON.parse(fs.readFileSync(path.join(root, "assets/simplify-review.schema.json"), "utf8"));
 const mcpConfig = JSON.parse(fs.readFileSync(path.join(repositoryRoot, "mcp.json"), "utf8"));
 
-const match = skill.match(/<!-- code-review-protocol:start -->\s*```json\s*([\s\S]*?)\s*```\s*<!-- code-review-protocol:end -->/);
-if (!match) throw new Error("missing machine-readable code-review protocol block");
-const protocol = JSON.parse(match[1]);
+const protocol = JSON.parse(fs.readFileSync(path.join(root, "assets/code-review-protocol.json"), "utf8"));
+if (!skill.includes("assets/code-review-protocol.json")) {
+  throw new Error("SKILL.md does not link the protocol contract asset");
+}
 
 const expected = {
   lensAttemptsPerInvocation: 2,
@@ -28,7 +29,7 @@ const expected = {
   formalReviewFallback: "in-session-incomplete",
   ambiguousWritePolicy: "reconcile-cleanup-no-blind-retry",
   incompleteTransport: "in-session-only",
-  incompletePrefix: "Verdict: incomplete;",
+  incompletePrefix: "Verdict: incomplete; ",
   incompleteBlocksMerge: true,
   incompleteSeverityPolicy: "compute-before-status-no-downgrade",
   preserveHealthyLensFindings: true,
@@ -39,8 +40,14 @@ const expected = {
   incompleteMergeBlockOwner: "invoker-or-workflow",
   localAndBranchTransport: "in-session-only",
 };
-if (JSON.stringify(protocol) !== JSON.stringify(expected)) {
-  throw new Error(`unexpected protocol contract: ${JSON.stringify(protocol)}`);
+const expectedKeys = Object.keys(expected).sort();
+if (JSON.stringify(Object.keys(protocol).sort()) !== JSON.stringify(expectedKeys)) {
+  throw new Error(`unexpected protocol contract keys: ${JSON.stringify(Object.keys(protocol).sort())}`);
+}
+for (const key of expectedKeys) {
+  if (protocol[key] !== expected[key]) {
+    throw new Error(`unexpected protocol contract value for ${key}: ${JSON.stringify(protocol[key])}`);
+  }
 }
 
 const requiredDirectReviewTools = [
@@ -104,7 +111,10 @@ for (const property of ["commit_id", "event", "comments"]) {
   }
 }
 
-const evidencePattern = new RegExp(simplifySchema.properties.body.pattern, "m");
+const evidencePattern = new RegExp(simplifySchema.properties.body.pattern);
+if (!simplifySchema.properties.body.pattern.startsWith(`^(${protocol.incompletePrefix}`)) {
+  throw new Error("simplify schema pattern drifted from the protocol incomplete prefix");
+}
 const validBody = "Verdict: clean.\nSimplify evidence: src/a.js @@ -1 +1 @@ — direct return.";
 const incompleteBody = "Verdict: incomplete; simplify lens did not complete.";
 const invalidBody = "Verdict: clean. Inspected src/a.js.";
