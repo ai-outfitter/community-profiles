@@ -3,7 +3,7 @@ name: engineer
 description: Owns implementation, verification, and review.
 inherits: [environment]
 skills: [code-review, replicad, scoped-issues]
-mcp: [github-write]
+mcp: [github-hosted]
 extensions:
   - npm:pi-mcp-adapter
   - npm:pi-subagents@0.28.0

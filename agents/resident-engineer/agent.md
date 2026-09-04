@@ -2,7 +2,7 @@
 name: resident-engineer
 description: Delegated resident engineer that implements assigned issues through reviewed pull requests.
 inherits: [engineer]
-mcp: [github-write]
+mcp: [github-hosted]
 ---
 
 # Resident Engineer

@@ -46,9 +46,10 @@ surface the loadout provides:
 - **GitHub MCP tools** — `pull_request_review_write` with `method: create`,
   then `method: submit_pending` with `event: REQUEST_CHANGES` or
   `event: COMMENT`.
-- **`github-mcp-server` binary, no MCP projection** — drive those same tools
-  over stdio JSON-RPC from `bash`, keeping create and submit in one spawned
-  process.
+- **No MCP projection** — drive those same tools over JSON-RPC against
+  GitHub's hosted MCP endpoint (`https://api.githubcopilot.com/mcp/`, bearer
+  `GITHUB_PERSONAL_ACCESS_TOKEN`) with `curl` from `bash`, keeping create and
+  submit in one session.
 
 Elsewhere, deliver it as a ranked list.
 

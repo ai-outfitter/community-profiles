@@ -7,7 +7,7 @@ actors:
   platform: {kind: system}
 environments: {delegated: delegated-runtime, actions: github-actions}
 integrations:
-  github: {kind: mcp, server: github-write}
+  github: {kind: mcp, server: github-hosted}
   git: {kind: transport}
   actions-runner:
     kind: artifact

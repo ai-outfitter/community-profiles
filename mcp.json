@@ -1,9 +1,12 @@
 {
   "mcpServers": {
-    "github-write": {
-      "command": "github-mcp-server",
-      "args": ["stdio", "--toolsets", "all"],
-      "lifecycle": "keep-alive",
+    "github-hosted": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}",
+        "X-MCP-Toolsets": "all"
+      },
       "requestTimeoutMs": 30000
     }
   }
