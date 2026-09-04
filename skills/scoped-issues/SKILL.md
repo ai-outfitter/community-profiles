@@ -1,9 +1,8 @@
 ---
 name: scoped-issues
 description: >-
-  File one scoped forge issue with mechanically checkable acceptance
-  criteria before implementing any reported bug or feature that no open
-  issue tracks, then work that issue.
+  File one scoped issue with checkable acceptance criteria before working
+  any untracked report.
 ---
 
 # Scoped issues

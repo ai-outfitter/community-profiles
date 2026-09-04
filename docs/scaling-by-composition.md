@@ -122,7 +122,7 @@ two review skills:
   `product-marketer`, `planner`, and `researcher`.
 
 The carrier's tool surface bounds the verdict path. Posting a forge review
-needs `bash` for `gh`. A read-only carrier — `planner`, or a `researcher`
+needs `bash` for `gh` or a GitHub MCP surface. A read-only carrier — `planner`, or a `researcher`
 that carries a review skill — can judge the artifact but cannot post: it
 MUST deliver its verdict in-session, and a `bash`-capable peer or a human
 posts it to the forge. Do not document a review capability the carrier's

@@ -1,1 +1,0 @@
-{"mcpServers":{"github-write":{"command":"github-mcp-server","args":["stdio","--tools","get_me,issue_read,get_file_contents,pull_request_read,pull_request_review_write,add_comment_to_pending_review"],"lifecycle":"keep-alive","requestTimeoutMs":30000}}}
