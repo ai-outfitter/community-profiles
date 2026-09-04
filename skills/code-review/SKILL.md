@@ -55,18 +55,21 @@ comment review and a human approves and merges.
 ## Transports
 
 Use whichever forge surface the loadout provides; the review is the same
-through any of them.
+through any of them. A dedicated reviewer carries only the GitHub MCP —
+reading the diff, the issue, and the check results and submitting the
+formal review are all MCP calls, so the review needs no shell.
 
-- **`gh`** — `gh pr view/diff/checks <n>`, then
-  `gh pr review <n> --request-changes --body-file <file>` (or
-  `--comment`). Write bodies to a file with a quoted heredoc; never pass
-  prose inline in double quotes.
-- **GitHub MCP tools** — `pull_request_read` for the diff, then the pending
+- **GitHub MCP tools** — `pull_request_read` for the diff and check
+  results, `issue_read` for the acceptance criteria, then the pending
   review flow: `pull_request_review_write` `method: create` (no `event`),
   one `add_comment_to_pending_review` per finding (`path`,
   `subjectType: LINE`, `line`, `side: RIGHT`), then
   `pull_request_review_write` `method: submit_pending` with
   `event: REQUEST_CHANGES` or `event: COMMENT`.
+- **`gh`** — for carriers with a shell: `gh pr view/diff/checks <n>`, then
+  `gh pr review <n> --request-changes --body-file <file>` (or
+  `--comment`). Write bodies to a file with a quoted heredoc; never pass
+  prose inline in double quotes.
 - **`github-mcp-server` binary, no MCP projection** — drive the same tools
   over stdio JSON-RPC from `bash`. The pending review lives in the server
   process, so create, comment, and submit MUST share one spawned process.
