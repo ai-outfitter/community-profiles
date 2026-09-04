@@ -53,26 +53,18 @@ submission belongs to pull requests alone.
 
 ## Review envelope
 
-Every subagent returns exactly one JSON object, and the merged review is
-one more object of the same shape — the request body for
+Every subagent returns exactly one JSON object validating against
+[`github-review.schema.json`](github-review.schema.json), and the merged
+review is one more object of the same shape — the request body for
 `POST /repos/{owner}/{repo}/pulls/{n}/reviews`, so submission needs no
-reshaping:
-
-```json
-{
-  "commit_id": "<reviewed head sha>",
-  "event": "REQUEST_CHANGES | COMMENT",
-  "body": "<verdict first; criteria satisfied, not applicable, not judged>",
-  "comments": [
-    { "path": "<file>", "line": 1, "side": "RIGHT",
-      "body": "[P1] <defect; what passing looks like>" }
-  ]
-}
-```
+reshaping. Read the schema before reviewing; validate each subagent
+envelope and the merged one against it.
 
 - Severity is the `[P0]`–`[P3]` prefix on each comment body (GitHub has
   no severity field): P0 data loss, security, outage; P1 wrong
   primary-path behavior; P2 other actionable defect; P3 non-blocking.
+- `body` leads with the verdict, then the criteria satisfied, not
+  applicable, and not judged.
 - `event` is `REQUEST_CHANGES` when a P0–P2 finding survives the merge,
   else `COMMENT`. GitHub rejects `REQUEST_CHANGES` and `APPROVE` from
   the pull request's own author, so a self-review submits the same
@@ -103,13 +95,17 @@ Diff (head <sha>):
 Check results:
 <checks>
 
-Return only a JSON review envelope, no prose outside it:
-{ "commit_id": "<head sha>", "event": "REQUEST_CHANGES | COMMENT",
-  "body": "<verdict and reasoning>",
-  "comments": [ { "path": "<file from the diff>", "line": <int>,
-    "side": "RIGHT|LEFT", "body": "[P0-P3] <defect; what passing looks
-    like>" } ] }
+Return only one JSON review envelope validating against this schema, no
+prose outside it. Severity is the [P0-3] prefix: P0 data loss, security,
+outage; P1 wrong primary-path behavior; P2 other actionable defect; P3
+non-blocking. Each comment body states the defect and what passing looks
+like.
+
+<contents of github-review.schema.json>
 ```
+
+Fill the last placeholder with the schema file itself, so a subagent
+carries the contract even with no file access.
 
 ## Transports
 
