@@ -4,6 +4,8 @@ description: Independent review agent that returns one evidence-backed verdict w
 skills: [code-review]
 tools: {allow: [read, grep, glob, mcp]}
 mcp: [github-write]
+extensions:
+  - npm:pi-mcp-adapter
 append_system_prompt:
   - file: prompts/practice.adversarial-review.md
 ---

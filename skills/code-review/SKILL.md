@@ -18,12 +18,11 @@ review of your own change"), so every artifact merges peer-reviewed.
 When your pull request is ready (draft cleared, checks green) and nothing
 routes a reviewer automatically — no code owners, no resident review agent —
 you start the adversarial review yourself. Launch an independent reviewer
-with a cold context and hand it only the pull request. The reviewer is
-shell-less and works through the GitHub MCP, so launch it in a harness
-that projects MCP servers (claude or codex; pi has no MCP client yet):
+with a cold context and hand it only the pull request; the reviewer is
+shell-less and reads and posts through the GitHub MCP:
 
 ```sh
-outfitter run code-review --harness claude -- -p "Review pull request #<n> in <owner>/<repo> against its linked issue's acceptance criteria."
+outfitter run code-review -- -p "Review pull request #<n> in <owner>/<repo> against its linked issue's acceptance criteria."
 ```
 
 That session composes this same skill with the adversarial-review practice
