@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.8.0](https://github.com/ai-outfitter/community-profiles/compare/v1.7.0...v1.8.0) (2026-09-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **mcp:** the MCP server id github-write is renamed github-hosted; tool names are mcp__github-hosted__*.
+
+### Features
+
+* **mcp:** github-hosted replaces the github-mcp-server binary ([94aa8d4](https://github.com/ai-outfitter/community-profiles/commit/94aa8d4a8beb2dbe1e8b18dd7f4f35999a9cc854))
+
+
+### Miscellaneous Chores
+
+* revert the 2.0.0 release; the MCP rename ships as 1.8.0 ([0fe90ca](https://github.com/ai-outfitter/community-profiles/commit/0fe90ca1887dcbbc65a5615c23b55b25e0a4360f))
+
 ## [1.7.0](https://github.com/ai-outfitter/community-profiles/compare/v1.6.0...v1.7.0) (2026-09-04)
 
 
