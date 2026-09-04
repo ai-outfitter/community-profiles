@@ -1,108 +1,133 @@
 ---
 name: code-review
 description: >-
-  Adversarial pull request review: cold-context subagents return findings
-  as JSON, the parent submits one formal verdict, the author fixes.
+  Adversarial pull request review: cold-context subagents each return a
+  GitHub review envelope, the parent merges and submits one, the author
+  fixes.
 ---
 
 # Code review
 
 One review per pull request revision. You carry both roles:
 
-- **Author** — your pull request is ready (draft cleared, checks green) and
-  nothing routes a reviewer: run the review yourself, then fix what it
-  finds.
+- **Author** — your pull request is ready (draft cleared, checks green)
+  and nothing routes a reviewer: run the review yourself, then fix what
+  it finds.
 - **Reviewer** — a review request names a pull request: run the review on
   it.
 
-In both roles the judgment comes from cold-context subagents; you
-aggregate their findings and submit one formal review. This one procedure
-covers a local session, a resident reviewer, and an actions carrier.
+The judgment comes from cold-context subagents; you merge their envelopes
+and submit one formal review. One procedure covers a local session, a
+resident reviewer, and an actions carrier.
 
 ## Process
 
-1. Gather the material: the pull request, its full diff, its check
-   results, and the linked issue. The issue's acceptance criteria are the
-   review standard; when none exist, derive them from the issue text and
-   state them in the review body.
-2. You MUST spawn one subagent per lens — at minimum **criteria** (does
-   the diff do what the issue asks, no more and no less), **correctness**
-   (broken invariants, missing error handling, untested behavior, security
+1. Gather: the pull request, its full diff, check results, the linked
+   issue, and the existing reviews and inline threads. The issue's
+   acceptance criteria are the review standard; derive them from the
+   issue text and state them in the review body when none exist. A formal
+   review already on this revision ends the run — report it instead of
+   duplicating it.
+2. You MUST spawn one subagent per lens — **criteria** (the diff does
+   what the issue asks, no more and no less), **correctness** (broken
+   invariants, missing error handling, untested behavior, security
    boundaries), and **checks** (a red check blocks) — each from the
    template below with the material inlined. A subagent gets a cold
    context: the filled template and nothing from your conversation. Use
-   the harness's subagent tool; without one, write each filled template to
-   a file and run it as its own print-mode session from a shell
+   the harness's subagent tool; without one, write each filled template
+   to a file and run it as its own print-mode session from a shell
    (`pi -p "$(cat <lens>.md)"`, `claude -p ...`, or the harness
-   equivalent), reading its final message as the JSON.
-3. Aggregate: merge the findings, drop duplicates, rank by severity. The
-   subagents produce the findings; you verify each against the diff and
-   discard what it disproves — you own the verdict, they inform it.
-4. Submit exactly one formal review (transports below): one inline comment
-   per finding at its real path and line, then `REQUEST_CHANGES` when any
-   finding blocks, else `COMMENT` stating which criteria are satisfied,
-   which are not applicable, and which you could not judge.
+   equivalent), reading its final message as the envelope.
+3. Merge the envelopes into one: pool the comments, dedup to one finding
+   per root cause — dropping any a prior review or thread already raised
+   — verify each against the diff, and recompute the verdict from what
+   survives. Subagent verdicts are advisory; you own the merged one.
+4. Submit the merged envelope as the one formal review (transports
+   below).
 5. As author, act on the verdict: fix each blocking finding, push, and
    review the new revision. Report a clean verdict to the human who
    merges.
+
+## Review envelope
+
+Every subagent returns exactly one JSON object, and the merged review is
+one more object of the same shape — the request body for
+`POST /repos/{owner}/{repo}/pulls/{n}/reviews`, so submission needs no
+reshaping:
+
+```json
+{
+  "commit_id": "<reviewed head sha>",
+  "event": "REQUEST_CHANGES | COMMENT",
+  "body": "<verdict first; criteria satisfied, not applicable, not judged>",
+  "comments": [
+    { "path": "<file>", "line": 1, "side": "RIGHT",
+      "body": "[P1] <defect; what passing looks like>" }
+  ]
+}
+```
+
+- Severity is the `[P0]`–`[P3]` prefix on each comment body (GitHub has
+  no severity field): P0 data loss, security, outage; P1 wrong
+  primary-path behavior; P2 other actionable defect; P3 non-blocking.
+- `event` is `REQUEST_CHANGES` when a P0–P2 finding survives the merge,
+  else `COMMENT`. GitHub rejects `REQUEST_CHANGES` and `APPROVE` from
+  the pull request's own author, so a self-review submits the same
+  comments as a `COMMENT` review whose body leads with the verdict it
+  would otherwise carry.
+- `path`, `line`, `side` anchor a comment to the diff: `RIGHT` for a new
+  line, `LEFT` for a deleted one. A finding that anchors to no diff line
+  goes in `body` instead of being dropped.
+- Include only findings likely real and actionable, one per root cause;
+  an empty `comments` array with the inspected surface stated in `body`
+  is a valid clean review.
 
 ## Subagent template
 
 ```text
 Review pull request #<n> in <owner>/<repo> through the <lens> lens only.
 You have no prior context; judge only the material below. Assume the
-change is wrong and make the diff prove otherwise.
+change is wrong and make the diff prove otherwise. These findings were
+already raised — do not repeat them:
+<existing review and thread findings, or "none">
 
 Acceptance criteria:
 <criteria>
 
-Diff:
+Diff (head <sha>):
 <diff>
 
 Check results:
 <checks>
 
-Return only JSON matching this schema — no prose outside it. Use real
-paths and line numbers from the diff. `blocking: true` for a defect that
-must be fixed before merge; `body` states the defect and what passing
-looks like.
-
-{
-  "verdict": "request_changes | comment",
-  "summary": "<verdict and ranked findings, one paragraph>",
-  "findings": [
-    { "path": "<file>", "line": <int>, "side": "RIGHT",
-      "blocking": <bool>, "body": "<defect; what passing looks like>" }
-  ]
-}
+Return only a JSON review envelope, no prose outside it:
+{ "commit_id": "<head sha>", "event": "REQUEST_CHANGES | COMMENT",
+  "body": "<verdict and reasoning>",
+  "comments": [ { "path": "<file from the diff>", "line": <int>,
+    "side": "RIGHT|LEFT", "body": "[P0-P3] <defect; what passing looks
+    like>" } ] }
 ```
-
-The finding fields map one-to-one onto the MCP review-comment call, so
-aggregation is concatenation, dedup, and rank — no reshaping.
 
 ## Transports
 
 - **GitHub MCP** — `pull_request_read` and `issue_read` gather;
   `pull_request_review_write` `method: create` (no `event`) opens the
-  pending review, one `add_comment_to_pending_review` per finding
-  (`path`, `subjectType: LINE`, `line`, `side`), then
-  `pull_request_review_write` `method: submit_pending` with the `event`.
-- **`gh`** — `gh pr view/diff/checks <n>` gather; submit with
-  `gh api repos/{owner}/{repo}/pulls/<n>/reviews` passing `event`, `body`,
-  and the findings as the `comments` array (body from a file, never
-  inline prose in double quotes).
-- **`github-mcp-server` over stdio** — the same MCP tools as JSON-RPC from
-  a shell; the pending review lives in the server process, so create,
-  comment, and submit share one spawned process.
+  pending review, one `add_comment_to_pending_review` per envelope
+  comment (`path`, `subjectType: LINE`, `line`, `side`), then
+  `pull_request_review_write` `method: submit_pending` with the
+  envelope's `event`.
+- **`gh`** — `gh pr view/diff/checks <n>` gathers; the merged envelope
+  submits verbatim:
+  `gh api repos/{owner}/{repo}/pulls/<n>/reviews --input envelope.json`.
 
-If no transport reaches the forge, deliver the full verdict in-session —
-ranked findings and the verdict word — for a forge-capable peer or human
-to post. Never claim a review posted that you could not post.
+If no transport reaches the forge, deliver the envelope in-session for a
+forge-capable peer or human to post. Never claim a review posted that you
+could not post.
 
 Whether a clean verdict may become an `APPROVE`, and who merges, is
 organization policy composed from the org's fragments — never assumed
-here. Without an explicit grant, a clean verdict is a `COMMENT` review and
-a human approves and merges.
+here. Without an explicit grant, a clean verdict is a `COMMENT` review
+and a human approves and merges.
 
 ## Hard limits
 
