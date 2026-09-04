@@ -38,11 +38,13 @@ submission belongs to pull requests alone.
    issue text and state them in the review body when none exist. A formal
    review already on this revision ends the run — report it instead of
    duplicating it.
-2. You MUST spawn one subagent per lens — **criteria**, **correctness**,
-   and **checks** — with the harness's subagent tool, each on the
-   three-line prompt below and nothing from your conversation. The
-   subagent reads the skill files and gathers the pull request through
-   the MCP itself; its final message is its envelope.
+2. You MUST spawn one subagent per lens prompt under
+   [`references/`](references/) — **criteria**, **correctness**,
+   **checks**, and **simplify** (a lens that starts subagents of its
+   own) — with the harness's subagent tool, each on the three-line
+   prompt below and nothing from your conversation. The subagent reads
+   its lens file and gathers the pull request through the MCP itself;
+   its final message is its envelope.
 3. Merge the envelopes into one: pool the comments, dedup to one finding
    per root cause — dropping any a prior review or thread already raised
    — verify each against the diff, and recompute the verdict from what
@@ -57,21 +59,22 @@ submission belongs to pull requests alone.
 
 Every envelope — each subagent's and the merged review — is one JSON
 object validating against
-[`github-review.schema.json`](github-review.schema.json), the request
-body for `POST /repos/{owner}/{repo}/pulls/{n}/reviews`; the schema's
-`description` fields carry the semantics.
+[`assets/github-review.schema.json`](assets/github-review.schema.json),
+the request body for `POST /repos/{owner}/{repo}/pulls/{n}/reviews`; the
+schema's `description` fields carry the semantics. A carrier with a
+shell MAY check anchors mechanically:
+`scripts/validate_review.py --diff pr.patch --review envelope.json`.
 
 ## Subagent prompt
 
-[`subagent-prompt.md`](subagent-prompt.md) is the complete subagent
-instruction and [`github-review.schema.json`](github-review.schema.json)
-its output contract. Neither needs reading — each subagent gets this
-prompt, with the file path from this skill's own directory:
+Each [`references/<lens>.md`](references/) is a complete subagent
+instruction with the schema as its output contract. Neither needs
+reading — each subagent gets this prompt, with the path from this
+skill's own directory:
 
 ```text
-Read <skill dir>/subagent-prompt.md and follow it.
-Lens: <criteria|correctness|checks>. Target: pull request #<n> in
-<owner>/<repo>, head <sha>.
+Read <skill dir>/references/<lens>.md and follow it.
+Target: pull request #<n> in <owner>/<repo>, head <sha>.
 Already raised: <one line per prior finding, or none>.
 ```
 
