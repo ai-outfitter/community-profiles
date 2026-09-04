@@ -154,7 +154,8 @@ Two catalog prompt fragments carry the pull-request lifecycle:
   queue; request changes blocks it.
 
 `engineer` and `product-marketer` carry both: each authors its own artifact
-class and reviews the other's.
+class and reviews the other's. `luce` carries the author lifecycle for its
+assigned implementation work.
 
 The wiring is consumer-repo configuration, not catalog content: a
 `CODEOWNERS` file that names the reviewing agent identities, a branch
