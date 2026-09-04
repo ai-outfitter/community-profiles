@@ -95,16 +95,8 @@ Already raised: <one line per prior finding, or none>.
 
 ## Transport
 
-The GitHub MCP is the review surface: `pull_request_read` and
-`issue_read` gather; `pull_request_review_write` `method: create` (no
-`event`) opens the pending review, one `add_comment_to_pending_review`
-per envelope comment (`path`, `subjectType: LINE`, `line`, `side`), then
-`pull_request_review_write` `method: submit_pending` with the envelope's
-`event`.
-
-If the MCP cannot reach the forge, deliver the envelope in-session for a
-forge-capable peer or human to post. Never claim a review posted that
-you could not post.
+Submit the merged envelope to a pull request through the GitHub MCP, or
+return the JSON directly to the parent agent.
 
 Whether a clean verdict may become an `APPROVE`, and who merges, is
 organization policy composed from the org's fragments — never assumed
