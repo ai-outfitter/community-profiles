@@ -90,12 +90,18 @@ The `environment.agent-operator-pod` profile extends the baseline for
 Kubernetes residents. It inherits `environment`, which supplies the repository
 and authentication rules. The profile also supplies the pod runtime context:
 namespace scope, persistent workspace, durable task re-offers, resource limits,
-the Chrome sidecar, and operator-provisioned credentials:
+the Chrome sidecar, and operator-provisioned credentials.
+
+A resident composes a role profile with this environment directly. There is
+no intermediate resident base profile: a resident such as Luce or Vega
+inherits `engineer` and `environment.agent-operator-pod`, then adds its
+persona body and forge MCP selection:
 
 ```yaml
 ---
 name: resident
-inherits: [environment.agent-operator-pod]
+inherits: [engineer, environment.agent-operator-pod]
+mcp: [github-hosted]
 ---
 ```
 

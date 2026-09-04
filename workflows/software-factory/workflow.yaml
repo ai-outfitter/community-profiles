@@ -3,7 +3,7 @@ id: software-factory
 title: Software factory
 description: Delegate typed issues to a resident engineer for CI-gated implementation and independent review.
 actors:
-  resident: {kind: agent, profile: resident-engineer}
+  resident: {kind: agent, profile: engineer}
   platform: {kind: system}
 environments: {delegated: delegated-runtime, actions: github-actions}
 integrations:
