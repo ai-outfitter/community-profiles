@@ -31,16 +31,12 @@ submission belongs to pull requests alone.
    issue text and state them in the review body when none exist. A formal
    review already on this revision ends the run — report it instead of
    duplicating it.
-2. You MUST spawn one subagent per lens — **criteria** (the diff does
-   what the issue asks, no more and no less), **correctness** (broken
-   invariants, missing error handling, untested behavior, security
-   boundaries), and **checks** (a red check blocks) — each from the
-   template below with the material inlined. A subagent gets a cold
-   context: the filled template and nothing from your conversation. Use
-   the harness's subagent tool; without one, write each filled template
-   to a file and run it as its own print-mode session from a shell
-   (`pi -p "$(cat <lens>.md)"`, `claude -p ...`, or the harness
-   equivalent), reading its final message as the envelope.
+2. You MUST spawn one subagent per lens — **criteria**, **correctness**,
+   and **checks** — each on a prompt assembled by the recipe below. A
+   subagent gets a cold context: the assembled prompt and nothing from
+   your conversation. Use the harness's subagent tool; without one, run
+   each prompt as its own print-mode session from a shell, reading its
+   final message as the envelope.
 3. Merge the envelopes into one: pool the comments, dedup to one finding
    per root cause — dropping any a prior review or thread already raised
    — verify each against the diff, and recompute the verdict from what
@@ -57,8 +53,8 @@ Every subagent returns exactly one JSON object validating against
 [`github-review.schema.json`](github-review.schema.json), and the merged
 review is one more object of the same shape — the request body for
 `POST /repos/{owner}/{repo}/pulls/{n}/reviews`, so submission needs no
-reshaping. Read the schema before reviewing; validate each subagent
-envelope and the merged one against it.
+reshaping. Validate each subagent envelope and the merged one against
+the schema file.
 
 - Severity is the `[P0]`–`[P3]` prefix on each comment body (GitHub has
   no severity field): P0 data loss, security, outage; P1 wrong
@@ -77,35 +73,24 @@ envelope and the merged one against it.
   an empty `comments` array with the inspected surface stated in `body`
   is a valid clean review.
 
-## Subagent template
+## Subagent prompt
 
-```text
-Review pull request #<n> in <owner>/<repo> through the <lens> lens only.
-You have no prior context; judge only the material below. Assume the
-change is wrong and make the diff prove otherwise. These findings were
-already raised — do not repeat them:
-<existing review and thread findings, or "none">
+[`subagent-prompt.md`](subagent-prompt.md) is the complete subagent
+instruction and [`github-review.schema.json`](github-review.schema.json)
+its output contract. Neither needs reading — assemble each prompt by
+concatenating them with the material sections they name, from this
+skill's own directory:
 
-Acceptance criteria:
-<criteria>
-
-Diff (head <sha>):
-<diff>
-
-Check results:
-<checks>
-
-Return only one JSON review envelope validating against this schema, no
-prose outside it. Severity is the [P0-3] prefix: P0 data loss, security,
-outage; P1 wrong primary-path behavior; P2 other actionable defect; P3
-non-blocking. Each comment body states the defect and what passing looks
-like.
-
-<contents of github-review.schema.json>
+```sh
+{ cat "$SKILL_DIR/subagent-prompt.md" "$SKILL_DIR/github-review.schema.json"
+  echo "## Lens";                echo "<criteria|correctness|checks>"
+  echo "## Already raised";     cat already-raised.md   # or: echo none
+  echo "## Acceptance criteria"; cat criteria.md
+  echo "## Diff (head <sha>)";  cat diff.patch
+  echo "## Checks";             cat checks.txt
+} > "<lens>-prompt.md"
+pi -p "$(cat <lens>-prompt.md)"   # or claude -p, or the subagent tool
 ```
-
-Fill the last placeholder with the schema file itself, so a subagent
-carries the contract even with no file access.
 
 ## Transports
 
