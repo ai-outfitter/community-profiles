@@ -2,7 +2,7 @@
 name: code-review
 description: Review uncommitted changes, branches, or pull requests.
 allowed-tools: >-
-  Read, Grep, Glob,
+  Read, Grep, Glob, Task,
   mcp__github-write__get_me, mcp__github-write__issue_read,
   mcp__github-write__get_file_contents,
   mcp__github-write__pull_request_read,
@@ -68,15 +68,20 @@ shell MAY check anchors mechanically:
 ## Subagent prompt
 
 Each [`references/<lens>.md`](references/) is a complete subagent
-instruction with the schema as its output contract. Neither needs
-reading — each subagent gets this prompt, with the path from this
-skill's own directory:
+instruction. Neither it nor the schema needs reading — spawn each
+subagent with the prompt below and
+[`assets/github-review.schema.json`](assets/github-review.schema.json)
+as its structured-output schema, so the harness enforces the envelope:
 
 ```text
 Read <skill dir>/references/<lens>.md and follow it.
 Target: pull request #<n> in <owner>/<repo>, head <sha>.
 Already raised: <one line per prior finding, or none>.
 ```
+
+Where the subagent tool takes no output schema, append one line: "Your
+final message is one JSON object validating against
+<skill dir>/assets/github-review.schema.json — read it first."
 
 ## Transport
 

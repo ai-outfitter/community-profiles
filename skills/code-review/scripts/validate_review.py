@@ -19,15 +19,28 @@ SEVERITY_RE = re.compile(r"^\[P[0-3]\] .+", re.DOTALL)
 
 
 def diff_lines(patch: str) -> dict[str, dict[str, set[int]]]:
-    """Map each path to its RIGHT (added) and LEFT (deleted) line numbers."""
+    """Map each path to its RIGHT (added) and LEFT (deleted) line numbers.
+
+    A deleted file (`+++ /dev/null`) anchors under its old path with LEFT
+    lines only; a new file anchors under its new path.
+    """
     result: dict[str, dict[str, set[int]]] = {}
+    left_path: str | None = None
     path: str | None = None
     left = right = None
 
     for raw in patch.splitlines():
-        if raw.startswith("+++ b/"):
-            path = raw[6:]
-            result.setdefault(path, {"RIGHT": set(), "LEFT": set()})
+        if raw.startswith("diff --git "):
+            path = left_path = None
+            left = right = None
+            continue
+        if raw.startswith("--- "):
+            left_path = raw[6:] if raw.startswith("--- a/") else None
+            continue
+        if raw.startswith("+++ "):
+            path = raw[6:] if raw.startswith("+++ b/") else left_path
+            if path is not None:
+                result.setdefault(path, {"RIGHT": set(), "LEFT": set()})
             left = right = None
             continue
         match = HUNK_RE.match(raw)

@@ -36,7 +36,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `code-review` - review uncommitted changes, branches, or pull requests.
 - `prose-review` - review prose artifacts for thesis, structure, and register before they publish or merge.
 - `issue-triage` - classify and comment on new GitHub issues.
-- `scoped-issues` - file one scoped issue with mechanically checkable acceptance criteria before implementing an untracked report, then work that issue.
+- `scoped-issues` - file one scoped issue with checkable acceptance criteria before working any untracked report.
 - `mermaid` - generate Mermaid diagrams across 20+ diagram types, routing to a per-type syntax reference. Vendored from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill) (MIT).
 - `project-daily-report` - collect project and telemetry evidence, write a linked daily Markdown report, and publish one idempotent edition.
 - `slidev` - scaffold a minimal Slidev deck: package.json, slides.md, dev/build/PDF-export scripts. Setup only.
