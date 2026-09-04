@@ -2,8 +2,7 @@
 name: code-review
 description: Review uncommitted changes, branches, or pull requests.
 allowed-tools: >-
-  Read, Grep, Glob, Bash(gh:*), Bash(git:*), Bash(cat:*), Bash(pi:*),
-  Bash(claude:*), Bash(codex:*),
+  Read, Grep, Glob,
   mcp__github-write__get_me, mcp__github-write__issue_read,
   mcp__github-write__get_file_contents,
   mcp__github-write__pull_request_read,
@@ -40,11 +39,10 @@ submission belongs to pull requests alone.
    review already on this revision ends the run — report it instead of
    duplicating it.
 2. You MUST spawn one subagent per lens — **criteria**, **correctness**,
-   and **checks** — each on a prompt assembled by the recipe below. A
-   subagent gets a cold context: the assembled prompt and nothing from
-   your conversation. Use the harness's subagent tool; without one, run
-   each prompt as its own print-mode session from a shell, reading its
-   final message as the envelope.
+   and **checks** — with the harness's subagent tool, each on the
+   three-line prompt below and nothing from your conversation. The
+   subagent reads the skill files and gathers the pull request through
+   the MCP itself; its final message is its envelope.
 3. Merge the envelopes into one: pool the comments, dedup to one finding
    per root cause — dropping any a prior review or thread already raised
    — verify each against the diff, and recompute the verdict from what
@@ -85,36 +83,28 @@ the schema file.
 
 [`subagent-prompt.md`](subagent-prompt.md) is the complete subagent
 instruction and [`github-review.schema.json`](github-review.schema.json)
-its output contract. Neither needs reading — assemble each prompt by
-concatenating them with the material sections they name, from this
-skill's own directory:
+its output contract. Neither needs reading — each subagent gets this
+prompt, with the file path from this skill's own directory:
 
-```sh
-{ cat "$SKILL_DIR/subagent-prompt.md" "$SKILL_DIR/github-review.schema.json"
-  echo "## Lens";                echo "<criteria|correctness|checks>"
-  echo "## Already raised";     cat already-raised.md   # or: echo none
-  echo "## Acceptance criteria"; cat criteria.md
-  echo "## Diff (head <sha>)";  cat diff.patch
-  echo "## Checks";             cat checks.txt
-} > "<lens>-prompt.md"
-pi -p "$(cat <lens>-prompt.md)"   # or claude -p, or the subagent tool
+```text
+Read <skill dir>/subagent-prompt.md and follow it.
+Lens: <criteria|correctness|checks>. Target: pull request #<n> in
+<owner>/<repo>, head <sha>.
+Already raised: <one line per prior finding, or none>.
 ```
 
-## Transports
+## Transport
 
-- **GitHub MCP** — `pull_request_read` and `issue_read` gather;
-  `pull_request_review_write` `method: create` (no `event`) opens the
-  pending review, one `add_comment_to_pending_review` per envelope
-  comment (`path`, `subjectType: LINE`, `line`, `side`), then
-  `pull_request_review_write` `method: submit_pending` with the
-  envelope's `event`.
-- **`gh`** — `gh pr view/diff/checks <n>` gathers; the merged envelope
-  submits verbatim:
-  `gh api repos/{owner}/{repo}/pulls/<n>/reviews --input envelope.json`.
+The GitHub MCP is the review surface: `pull_request_read` and
+`issue_read` gather; `pull_request_review_write` `method: create` (no
+`event`) opens the pending review, one `add_comment_to_pending_review`
+per envelope comment (`path`, `subjectType: LINE`, `line`, `side`), then
+`pull_request_review_write` `method: submit_pending` with the envelope's
+`event`.
 
-If no transport reaches the forge, deliver the envelope in-session for a
-forge-capable peer or human to post. Never claim a review posted that you
-could not post.
+If the MCP cannot reach the forge, deliver the envelope in-session for a
+forge-capable peer or human to post. Never claim a review posted that
+you could not post.
 
 Whether a clean verdict may become an `APPROVE`, and who merges, is
 organization policy composed from the org's fragments — never assumed
