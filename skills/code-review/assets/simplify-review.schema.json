@@ -1,0 +1,57 @@
+{
+  "$comment": "Simplify-lens envelope. It mirrors github-review.schema.json but requires an evidence marker in body. The parent still cross-checks one marker per actual diff region; JSON Schema cannot compare body text with a separately gathered diff.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["commit_id", "body", "event", "comments"],
+  "properties": {
+    "commit_id": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{40}$",
+      "description": "The reviewed head sha."
+    },
+    "body": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(Verdict: incomplete; |[\\s\\S]*Simplify evidence: )",
+      "description": "Either an honest incomplete body beginning 'Verdict: incomplete; ' or a completed verdict containing one Simplify evidence line per expected changed file and canonical diff-hunk coordinate prefix (or typed non-text region). The parent verifies complete and exact region coverage."
+    },
+    "event": {
+      "type": "string",
+      "enum": ["APPROVE", "REQUEST_CHANGES", "COMMENT"],
+      "description": "REQUEST_CHANGES when a P0-P2 finding survives, carrying at least one comment. COMMENT otherwise — and always for a self-review: GitHub rejects REQUEST_CHANGES and APPROVE from the pull request's own author, so a self-review leads its body with the verdict it would otherwise carry. APPROVE only under an explicit organization grant."
+    },
+    "comments": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "One finding per root cause; only findings likely real and actionable.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "line", "side", "body"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "File path from the diff."
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Real line number from the diff."
+          },
+          "side": {
+            "type": "string",
+            "enum": ["LEFT", "RIGHT"],
+            "description": "RIGHT for a new line, LEFT for a deleted one."
+          },
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^\\[P[0-3]\\] .+",
+            "description": "Severity prefix then the defect and what passing looks like. P0 data loss, security, outage; P1 wrong primary-path behavior; P2 other actionable defect; P3 non-blocking."
+          }
+        }
+      }
+    }
+  }
+}

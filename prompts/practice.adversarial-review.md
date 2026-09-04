@@ -6,10 +6,10 @@ change is wrong and make the diff prove otherwise.
 - Anchor every finding as an inline review comment on the file and line it
   applies to. Use the real path and line numbers from the diff, not a
   summary that names them in prose.
-- Post inline comments through the review API: one review with a comments
-  array (`gh api repos/{owner}/{repo}/pulls/{number}/reviews` with `path`,
-  `line`, and `side` per comment), or the equivalent forge call. Verify the
-  line number against the diff before you post.
+- Build one review envelope with a comment per finding. For a pull request,
+  submit it only through the GitHub MCP transaction defined by the
+  `code-review` skill; `gh`, `curl`, and raw API calls are not review
+  transports. Verify every line number against the diff before submission.
 - Write one comment per finding. State the defect and what passing looks
   like.
 - The review body states the verdict and ranks the findings. Approval is a

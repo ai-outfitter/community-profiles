@@ -9,5 +9,5 @@ integrations:
   github: {kind: mcp, server: github-write}
 nodes:
   - {id: lenses, action: spawn-lens-subagents, description: One subagent per lens returns a review envelope., actor: reviewer, environment: delegated, skill: code-review, uses: [github]}
-  - {id: merge_envelopes, action: merge-review-envelopes, description: Pool the findings, drop what prior reviews raised, recompute the verdict., actor: reviewer, environment: delegated, needs: [lenses]}
-  - {id: deliver, action: submit-review-envelope, description: Submit one formal review through the GitHub MCP, or return the envelope to the caller., actor: reviewer, environment: delegated, needs: [merge_envelopes], uses: [github]}
+  - {id: merge_envelopes, action: merge-review-envelopes, description: Pool the findings with unresolved prior findings, dedup without dropping any, recompute the verdict., actor: reviewer, environment: delegated, needs: [lenses]}
+  - {id: deliver, action: submit-review-envelope, description: Submit one formal review through the GitHub MCP, or return the envelope to the caller; an incomplete merge submits nothing, is reported as a workflow failure, and blocks merge., actor: reviewer, environment: delegated, needs: [merge_envelopes], uses: [github]}
