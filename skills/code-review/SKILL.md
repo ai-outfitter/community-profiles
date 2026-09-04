@@ -43,6 +43,10 @@ cross-check evidence coverage and apply the limits.
 {
   "lensAttemptsPerInvocation": 2,
   "formalReviewsPerPullRequestHead": 1,
+  "formalReviewTransport": "github-mcp-only",
+  "formalReviewTransaction": "create-add-comments-submit-verify",
+  "formalReviewFallback": "in-session-incomplete",
+  "ambiguousWritePolicy": "reconcile-cleanup-no-blind-retry",
   "incompleteTransport": "in-session-only",
   "incompletePrefix": "Verdict: incomplete;",
   "incompleteBlocksMerge": true,
@@ -111,8 +115,45 @@ cross-check evidence coverage and apply the limits.
    An incomplete result always blocks merge, including when no code
    finding survives.
 8. Submit the one formal pull-request review only when every lens is
-   complete. If any lens remains incomplete, submit no GitHub review or
-   comment: return the incomplete merged report in-session and block merge.
+   complete, and only through the configured GitHub MCP. In Pi, use the
+   directly exposed GitHub MCP review tools when present; otherwise use the
+   `mcp` proxy to discover and call `pull_request_review_write` and
+   `add_comment_to_pending_review`. Do not use `gh`, `curl`, or a raw GitHub
+   API request as a transport fallback. Map the merged REST-shaped envelope
+   to the MCP transaction exactly:
+
+   a. Call `get_me`, then `pull_request_read` with `method: "get_reviews"`.
+      If the current viewer already has a pending review on this pull request,
+      fail closed without any write; this invocation does not own that review.
+      Otherwise call `pull_request_review_write` with `method: "create"`, the
+      repository coordinates, and `commitID` set from the envelope's
+      `commit_id`. Omit `event` so this creates a pending review. Treat the
+      pending review as owned by this invocation only after the create call
+      returns its positive success result.
+   b. For each envelope comment, call `add_comment_to_pending_review` with
+      the repository coordinates, `subjectType: "LINE"`, and its `path`,
+      `line`, `side`, and `body`. A line comment MUST target a changed diff
+      line; a finding without one belongs in the review body.
+   c. Call `pull_request_review_write` with `method: "submit_pending"`, the
+      repository coordinates, and the envelope's `body` and `event`.
+   d. Read the reviews and review comments back through
+      `pull_request_read`. The exact-head review and every intended inline
+      comment MUST be present before reporting successful delivery.
+
+   A read-only MCP call may be retried once. A failed or ambiguous write MUST
+   NOT be repeated blindly. First reconcile through `pull_request_read`: if
+   the exact-head formal review exists, verify it and stop. If `create` did
+   not return its positive success result, ownership is unknown: do not call
+   `delete_pending`; return an incomplete report and leave any pending review
+   for explicit operator reconciliation. After an acknowledged create, this
+   invocation owns the pending review. If a later add or submit fails and no
+   exact-head formal review exists, call `pull_request_review_write` once with
+   `method: "delete_pending"` to remove only that owned partial transaction.
+   Whether cleanup succeeds or reports no pending review, return an incomplete
+   merged report in-session and block merge; a later invocation may try again
+   from a known state. If the MCP route is absent, verification fails, or any
+   lens remains incomplete, submit no alternative GitHub review or comment
+   and apply that same fail-closed result.
    A later invocation may rerun normally because no review slot was
    consumed. Uncommitted and branch reviews always return their complete or
    incomplete merged envelope in-session and never submit to GitHub. Every
@@ -163,7 +204,14 @@ against <schema path> — read it first."
 ## Transport
 
 Submit the merged envelope to a pull request through the GitHub MCP, or
-return the JSON directly to the parent agent.
+return the JSON directly to the parent agent. A missing or failed GitHub MCP
+transport is an incomplete review, never permission to substitute another
+GitHub client.
+
+This is a behavioral contract, not a shell sandbox. A broad authoring profile
+may still possess other GitHub clients. Live rehearsal MUST verify transport
+compliance; deployments that need technical enforcement SHOULD use a dedicated
+reviewer carrier whose runtime exposes only the approved MCP write path.
 
 Whether a clean verdict may become an `APPROVE`, and who merges, is
 organization policy composed from the org's fragments — never assumed

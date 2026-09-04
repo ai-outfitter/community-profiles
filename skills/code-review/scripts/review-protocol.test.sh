@@ -8,10 +8,13 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.argv[2];
+const repositoryRoot = path.resolve(root, "../..");
 const skill = fs.readFileSync(path.join(root, "SKILL.md"), "utf8");
+const adversarialPractice = fs.readFileSync(path.join(repositoryRoot, "prompts/practice.adversarial-review.md"), "utf8");
 const lens = fs.readFileSync(path.join(root, "references/simplify.md"), "utf8");
 const genericSchema = JSON.parse(fs.readFileSync(path.join(root, "assets/github-review.schema.json"), "utf8"));
 const simplifySchema = JSON.parse(fs.readFileSync(path.join(root, "assets/simplify-review.schema.json"), "utf8"));
+const mcpConfig = JSON.parse(fs.readFileSync(path.join(repositoryRoot, "mcp.json"), "utf8"));
 
 const match = skill.match(/<!-- code-review-protocol:start -->\s*```json\s*([\s\S]*?)\s*```\s*<!-- code-review-protocol:end -->/);
 if (!match) throw new Error("missing machine-readable code-review protocol block");
@@ -20,6 +23,10 @@ const protocol = JSON.parse(match[1]);
 const expected = {
   lensAttemptsPerInvocation: 2,
   formalReviewsPerPullRequestHead: 1,
+  formalReviewTransport: "github-mcp-only",
+  formalReviewTransaction: "create-add-comments-submit-verify",
+  formalReviewFallback: "in-session-incomplete",
+  ambiguousWritePolicy: "reconcile-cleanup-no-blind-retry",
   incompleteTransport: "in-session-only",
   incompletePrefix: "Verdict: incomplete;",
   incompleteBlocksMerge: true,
@@ -34,6 +41,48 @@ const expected = {
 };
 if (JSON.stringify(protocol) !== JSON.stringify(expected)) {
   throw new Error(`unexpected protocol contract: ${JSON.stringify(protocol)}`);
+}
+
+const requiredDirectReviewTools = [
+  "get_me",
+  "issue_read",
+  "get_file_contents",
+  "pull_request_read",
+  "pull_request_review_write",
+  "add_comment_to_pending_review",
+];
+const configuredDirectTools = mcpConfig.mcpServers?.["github-write"]?.directTools;
+if (JSON.stringify(configuredDirectTools) !== JSON.stringify(requiredDirectReviewTools)) {
+  throw new Error(`GitHub MCP direct review tools drifted: ${JSON.stringify(configuredDirectTools)}`);
+}
+
+if (/\bgh\s+api\s+repos\b|\bcurl\s+(?:-|https?:)/i.test(adversarialPractice)) {
+  throw new Error("adversarial-review practice reintroduced a forbidden review transport");
+}
+const normalizedPractice = adversarialPractice.replace(/\s+/g, " ");
+for (const requiredPracticeText of ["GitHub MCP transaction", "code-review", "raw API calls are not review transports"]) {
+  if (!normalizedPractice.includes(requiredPracticeText)) {
+    throw new Error(`adversarial-review practice omits transport contract: ${requiredPracticeText}`);
+  }
+}
+const normalizedSkill = skill.replace(/\s+/g, " ");
+for (const transactionRequirement of [
+  '`get_me`',
+  'method: "get_reviews"',
+  'method: "create"',
+  'commitID',
+  'subjectType: "LINE"',
+  'method: "submit_pending"',
+  'method: "delete_pending"',
+  'pull_request_read',
+  "this invocation does not own that review",
+  "only after the create call returns its positive success result",
+  "do not call `delete_pending`",
+  "remove only that owned partial transaction",
+]) {
+  if (!normalizedSkill.includes(transactionRequirement)) {
+    throw new Error(`code-review skill omits MCP transaction requirement: ${transactionRequirement}`);
+  }
 }
 
 for (const recursiveInstruction of ["Start a few", 'agent: "delegate"', "subagents of your own"]) {
