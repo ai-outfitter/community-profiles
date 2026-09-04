@@ -13,8 +13,3 @@ the diff: where a materially simpler correct version exists, that is a
 finding (P3, or P2 when the extra complexity hides behavior), naming
 the simplification. Matching complexity is a clean result, not a
 finding.
-
-Report only findings the already-raised list lacks. Return only one
-JSON object validating against `../assets/github-review.schema.json` —
-read it; its `description` fields carry the semantics — and no prose
-outside it.

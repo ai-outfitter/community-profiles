@@ -11,8 +11,3 @@ swallowed errors, broken invariants, missing error handling, behavior
 no test covers, and every security boundary the change touches. For
 each deleted or replaced line, name the invariant it enforced and find
 where the new code re-establishes it.
-
-Report only findings the already-raised list lacks. Return only one
-JSON object validating against `../assets/github-review.schema.json` —
-read it; its `description` fields carry the semantics — and no prose
-outside it.
