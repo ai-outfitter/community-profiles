@@ -2,13 +2,33 @@
 name: code-review
 description: >-
   Review a pull request diff against its issue's acceptance criteria and
-  deliver one verdict, through whatever forge surface the carrier has.
+  deliver one verdict, through whatever forge surface the carrier has — or,
+  when you authored the change, start that adversarial review yourself in a
+  cold-context session.
 ---
 
 # Code review
 
 Review one pull request per run as a peer, not as the author. If you authored
-the change, stop: an artifact must not merge self-reviewed.
+the change, do not review it — start its review instead (see "Starting the
+review of your own change"): an artifact must not merge self-reviewed.
+
+## Starting the review of your own change
+
+When your pull request is ready (draft cleared, checks green) and nothing
+routes a reviewer automatically — no code owners, no resident review agent —
+you start the adversarial review yourself. Launch an independent reviewer
+with a cold context and hand it only the pull request:
+
+```sh
+outfitter run code-review -- -p "Review pull request #<n> in <owner>/<repo> against its linked issue's acceptance criteria."
+```
+
+That session composes this same skill with the adversarial-review practice
+and submits the formal review on the pull request. Then act on the verdict:
+fix and push for each blocking finding and start a fresh review of the new
+revision; report a clean verdict to the human who merges. Never reply to
+findings from inside your own session with a review of your own.
 
 ## Process
 

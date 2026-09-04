@@ -14,7 +14,9 @@ MCP call.
 4. Mark the pull request ready (`gh pr ready <number>`) only when the checks
    are green and the acceptance criteria are met. Ready is the signal that
    requests review: code owners then route an adversarial review
-   automatically.
+   automatically. When nothing routes one — no code owners, no resident
+   reviewer — start it yourself per the code-review skill's "Starting the
+   review of your own change".
 5. Verify the repository's protections before you enable auto-merge: a
    rule that requires review and a merge queue must both exist on the
    target branch. When either is absent, do not enable auto-merge — leave
