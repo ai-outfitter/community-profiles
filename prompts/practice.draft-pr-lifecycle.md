@@ -7,8 +7,15 @@ MCP call.
 
 1. Push the branch and open the pull request as a draft immediately
    (`gh pr create --draft`).
-2. Iterate on the draft. Push each revision. Verify CI after each push
-   (`gh pr checks <number> --watch`).
+2. Iterate on the draft. Push each revision. Verify CI after each push. GitHub
+   can briefly return a nonzero result with `no checks reported` before the
+   workflow run is attached to the pull request. That is a registration-pending
+   state, not a terminal result. Poll `gh pr checks <number>` every five seconds
+   for up to two minutes until at least one check is listed, then run
+   `gh pr checks <number> --watch`. If no check appears before the deadline,
+   leave the pull request draft and report the workflow incomplete. Never
+   report completion while the pull request is draft or CI has not been
+   observed green.
 3. Fix every failing check while the pull request is a draft. Do not mark a
    red pull request ready.
 4. Mark the pull request ready (`gh pr ready <number>`) only when the checks
@@ -25,3 +32,16 @@ MCP call.
    reviews and checks pass.
 7. Answer each review comment with a fix or a stated reason, then re-request
    review. Do not dismiss a review.
+
+<!-- ci-wait-protocol:start -->
+```json
+{
+  "registrationPollSeconds": 5,
+  "registrationTimeoutSeconds": 120,
+  "noChecksReportedState": "registration-pending",
+  "noChecksReportedIsTerminal": false,
+  "readyRequiresObservedChecks": true,
+  "readyRequiresGreenChecks": true
+}
+```
+<!-- ci-wait-protocol:end -->
