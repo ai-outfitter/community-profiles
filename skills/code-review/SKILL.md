@@ -25,17 +25,19 @@ covers a local session, a resident reviewer, and an actions carrier.
    results, and the linked issue. The issue's acceptance criteria are the
    review standard; when none exist, derive them from the issue text and
    state them in the review body.
-2. Spawn one subagent per lens — at minimum **criteria** (does the diff do
-   what the issue asks, no more and no less), **correctness** (broken
-   invariants, missing error handling, untested behavior, security
+2. You MUST spawn one subagent per lens — at minimum **criteria** (does
+   the diff do what the issue asks, no more and no less), **correctness**
+   (broken invariants, missing error handling, untested behavior, security
    boundaries), and **checks** (a red check blocks) — each from the
    template below with the material inlined. A subagent gets a cold
    context: the filled template and nothing from your conversation. Use
-   the harness's subagent tool; without one, run each template as its own
-   print-mode session and read its final message.
-3. Aggregate: merge the findings, drop duplicates, rank by severity.
-   Discard a finding the diff disproves — you own the verdict, the
-   subagents inform it.
+   the harness's subagent tool; without one, write each filled template to
+   a file and run it as its own print-mode session from a shell
+   (`pi -p "$(cat <lens>.md)"`, `claude -p ...`, or the harness
+   equivalent), reading its final message as the JSON.
+3. Aggregate: merge the findings, drop duplicates, rank by severity. The
+   subagents produce the findings; you verify each against the diff and
+   discard what it disproves — you own the verdict, they inform it.
 4. Submit exactly one formal review (transports below): one inline comment
    per finding at its real path and line, then `REQUEST_CHANGES` when any
    finding blocks, else `COMMENT` stating which criteria are satisfied,
