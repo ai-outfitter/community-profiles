@@ -61,9 +61,7 @@ Every envelope — each subagent's and the merged review — is one JSON
 object validating against
 [`assets/github-review.schema.json`](assets/github-review.schema.json),
 the request body for `POST /repos/{owner}/{repo}/pulls/{n}/reviews`; the
-schema's `description` fields carry the semantics. A carrier with a
-shell MAY check anchors mechanically:
-`scripts/validate_review.py --diff pr.patch --review envelope.json`.
+schema's `description` fields carry the semantics.
 
 ## Subagent prompt
 
