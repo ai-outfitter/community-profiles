@@ -17,10 +17,5 @@ Your single lens:
 Report only findings the already-raised list lacks.
 
 Return only one JSON object validating against
-`github-review.schema.json` beside this file — read it — and no prose
-outside it. `commit_id` is the reviewed head sha. Severity is the
-`[P0-3]` prefix on each comment body: P0 data loss, security, outage;
-P1 wrong primary-path behavior; P2 other actionable defect; P3
-non-blocking. Each comment body states the defect and what passing
-looks like; anchor `path`, `line`, and `side` to real diff lines
-(`RIGHT` new, `LEFT` deleted).
+`github-review.schema.json` beside this file — read it; its
+`description` fields carry the semantics — and no prose outside it.

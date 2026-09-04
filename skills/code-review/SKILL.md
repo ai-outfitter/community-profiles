@@ -55,29 +55,11 @@ submission belongs to pull requests alone.
 
 ## Review envelope
 
-Every subagent returns exactly one JSON object validating against
-[`github-review.schema.json`](github-review.schema.json), and the merged
-review is one more object of the same shape — the request body for
-`POST /repos/{owner}/{repo}/pulls/{n}/reviews`, so submission needs no
-reshaping. Validate each subagent envelope and the merged one against
-the schema file.
-
-- Severity is the `[P0]`–`[P3]` prefix on each comment body (GitHub has
-  no severity field): P0 data loss, security, outage; P1 wrong
-  primary-path behavior; P2 other actionable defect; P3 non-blocking.
-- `body` leads with the verdict, then the criteria satisfied, not
-  applicable, and not judged.
-- `event` is `REQUEST_CHANGES` when a P0–P2 finding survives the merge —
-  such an envelope carries at least one comment — else `COMMENT`. GitHub rejects `REQUEST_CHANGES` and `APPROVE` from
-  the pull request's own author, so a self-review submits the same
-  comments as a `COMMENT` review whose body leads with the verdict it
-  would otherwise carry.
-- `path`, `line`, `side` anchor a comment to the diff: `RIGHT` for a new
-  line, `LEFT` for a deleted one. A finding that anchors to no diff line
-  goes in `body` instead of being dropped.
-- Include only findings likely real and actionable, one per root cause;
-  an empty `comments` array with the inspected surface stated in `body`
-  is a valid clean review.
+Every envelope — each subagent's and the merged review — is one JSON
+object validating against
+[`github-review.schema.json`](github-review.schema.json), the request
+body for `POST /repos/{owner}/{repo}/pulls/{n}/reviews`; the schema's
+`description` fields carry the semantics.
 
 ## Subagent prompt
 

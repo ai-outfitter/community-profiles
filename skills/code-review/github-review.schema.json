@@ -1,36 +1,53 @@
 {
-  "$comment": "Review envelope shaped as the request body for POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews. Severity is the [P0-3] prefix on each comment body because GitHub has no severity property. No $schema URI or allOf conditionals: some harness structured-output validators (claude --json-schema) reject them.",
+  "$comment": "Review envelope shaped as the request body for POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews. No $schema URI or allOf conditionals: some harness structured-output validators (claude --json-schema) reject them.",
   "type": "object",
   "additionalProperties": false,
   "required": ["commit_id", "body", "event", "comments"],
   "properties": {
     "commit_id": {
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{40}$"
+      "pattern": "^[0-9a-fA-F]{40}$",
+      "description": "The reviewed head sha."
     },
     "body": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "Verdict first, then the criteria satisfied, not applicable, and not judged. A finding that anchors to no diff line goes here. An empty comments array with the inspected surface stated here is a valid clean review."
     },
     "event": {
       "type": "string",
-      "enum": ["APPROVE", "REQUEST_CHANGES", "COMMENT"]
+      "enum": ["APPROVE", "REQUEST_CHANGES", "COMMENT"],
+      "description": "REQUEST_CHANGES when a P0-P2 finding survives, carrying at least one comment. COMMENT otherwise — and always for a self-review: GitHub rejects REQUEST_CHANGES and APPROVE from the pull request's own author, so a self-review leads its body with the verdict it would otherwise carry. APPROVE only under an explicit organization grant."
     },
     "comments": {
       "type": "array",
       "maxItems": 10,
+      "description": "One finding per root cause; only findings likely real and actionable.",
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["path", "line", "side", "body"],
         "properties": {
-          "path": { "type": "string", "minLength": 1 },
-          "line": { "type": "integer", "minimum": 1 },
-          "side": { "type": "string", "enum": ["LEFT", "RIGHT"] },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "File path from the diff."
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Real line number from the diff."
+          },
+          "side": {
+            "type": "string",
+            "enum": ["LEFT", "RIGHT"],
+            "description": "RIGHT for a new line, LEFT for a deleted one."
+          },
           "body": {
             "type": "string",
             "minLength": 1,
-            "pattern": "^\\[P[0-3]\\] .+"
+            "pattern": "^\\[P[0-3]\\] .+",
+            "description": "Severity prefix then the defect and what passing looks like. P0 data loss, security, outage; P1 wrong primary-path behavior; P2 other actionable defect; P3 non-blocking."
           }
         }
       }
