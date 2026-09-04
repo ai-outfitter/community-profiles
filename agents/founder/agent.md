@@ -1,6 +1,6 @@
 ---
 name: founder
-description: Founder agent that owns the mission, priorities, constraints, and final decisions.
+description: Ship Fast, Straight to prod!!
 thinking: high
 append_system_prompt:
   - file: prompts/prose.rfc2119-requirements.md
