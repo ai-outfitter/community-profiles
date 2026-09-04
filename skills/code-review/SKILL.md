@@ -47,6 +47,8 @@ cross-check evidence coverage and apply the limits.
   "formalReviewTransaction": "create-add-comments-submit-verify",
   "formalReviewFallback": "in-session-incomplete",
   "ambiguousWritePolicy": "reconcile-cleanup-no-blind-retry",
+  "formalReviewReadback": ["get_reviews", "get_review_comments"],
+  "reviewCommentCountPolicy": "exact-post-submit-delta-including-zero",
   "incompleteTransport": "in-session-only",
   "incompletePrefix": "Verdict: incomplete;",
   "incompleteBlocksMerge": true,
@@ -122,7 +124,10 @@ cross-check evidence coverage and apply the limits.
    API request as a transport fallback. Map the merged REST-shaped envelope
    to the MCP transaction exactly:
 
-   a. Call `get_me`, then `pull_request_read` with `method: "get_reviews"`.
+   a. Call `get_me`, then `pull_request_read` with `method: "get_reviews"`
+      and `method: "get_review_comments"`. Retain the current viewer's
+      existing review IDs and review-comment URLs as the pre-submit baseline.
+      Follow review and review-comment pagination to completion.
       If the current viewer already has a pending review on this pull request,
       fail closed without any write; this invocation does not own that review.
       Otherwise call `pull_request_review_write` with `method: "create"`, the
@@ -136,9 +141,21 @@ cross-check evidence coverage and apply the limits.
       line; a finding without one belongs in the review body.
    c. Call `pull_request_review_write` with `method: "submit_pending"`, the
       repository coordinates, and the envelope's `body` and `event`.
-   d. Read the reviews and review comments back through
-      `pull_request_read`. The exact-head review and every intended inline
-      comment MUST be present before reporting successful delivery.
+   d. After submission, call `pull_request_read` with `method: "get_reviews"`
+      and, separately, with `method: "get_review_comments"`. The
+      `get_review_comments` call is mandatory even when the envelope has zero
+      inline comments. Relative to the pre-submit baseline, exactly one new
+      current-viewer formal review MUST be present. Its `commit_id` and body
+      MUST equal the envelope's, and its state MUST match the event
+      (`COMMENT` -> `COMMENTED`, `APPROVE` -> `APPROVED`, or
+      `REQUEST_CHANGES` -> `CHANGES_REQUESTED`). Compare current-viewer
+      review-comment URLs with the pre-submit baseline: the exact number of
+      new comments MUST equal
+      `envelope.comments.length`, including zero, and their path, body, and
+      target line as represented by the returned `line` or `original_line`
+      MUST match the intended comments one-for-one. Follow pagination to
+      completion. Do not report successful delivery unless both read-backs
+      pass.
 
    A read-only MCP call may be retried once. A failed or ambiguous write MUST
    NOT be repeated blindly. First reconcile through `pull_request_read`: if

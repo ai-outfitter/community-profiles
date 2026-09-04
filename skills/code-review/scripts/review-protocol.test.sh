@@ -27,6 +27,8 @@ const expected = {
   formalReviewTransaction: "create-add-comments-submit-verify",
   formalReviewFallback: "in-session-incomplete",
   ambiguousWritePolicy: "reconcile-cleanup-no-blind-retry",
+  formalReviewReadback: ["get_reviews", "get_review_comments"],
+  reviewCommentCountPolicy: "exact-post-submit-delta-including-zero",
   incompleteTransport: "in-session-only",
   incompletePrefix: "Verdict: incomplete;",
   incompleteBlocksMerge: true,
@@ -79,10 +81,26 @@ for (const transactionRequirement of [
   "only after the create call returns its positive success result",
   "do not call `delete_pending`",
   "remove only that owned partial transaction",
+  'method: "get_review_comments"',
+  "pre-submit baseline",
+  "mandatory even when the envelope has zero inline comments",
+  "exactly one new current-viewer formal review MUST be present",
+  "`COMMENT` -> `COMMENTED`",
+  "exact number of new comments MUST equal `envelope.comments.length`, including zero",
+  "returned `line` or `original_line`",
+  "Follow pagination to completion",
+  "both read-backs pass",
 ]) {
   if (!normalizedSkill.includes(transactionRequirement)) {
     throw new Error(`code-review skill omits MCP transaction requirement: ${transactionRequirement}`);
   }
+}
+
+const submitIndex = normalizedSkill.indexOf('method: "submit_pending"');
+const postSubmitSectionIndex = normalizedSkill.indexOf('d. After submission', submitIndex);
+const reviewCommentsReadbackIndex = normalizedSkill.indexOf('method: "get_review_comments"', postSubmitSectionIndex);
+if (submitIndex < 0 || postSubmitSectionIndex < 0 || reviewCommentsReadbackIndex < 0) {
+  throw new Error("code-review skill does not require get_review_comments after formal review submission");
 }
 
 for (const recursiveInstruction of ["Start a few", 'agent: "delegate"', "subagents of your own"]) {
