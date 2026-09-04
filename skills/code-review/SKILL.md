@@ -9,9 +9,9 @@ description: >-
 
 # Code review
 
-Review one pull request per run as a peer, not as the author. If you authored
-the change, do not review it — start its review instead (see "Starting the
-review of your own change"): an artifact must not merge self-reviewed.
+Review one pull request per run as a peer. The author of a change starts
+its review and an independent peer delivers the verdict (see "Starting the
+review of your own change"), so every artifact merges peer-reviewed.
 
 ## Starting the review of your own change
 
@@ -27,8 +27,7 @@ outfitter run code-review -- -p "Review pull request #<n> in <owner>/<repo> agai
 That session composes this same skill with the adversarial-review practice
 and submits the formal review on the pull request. Then act on the verdict:
 fix and push for each blocking finding and start a fresh review of the new
-revision; report a clean verdict to the human who merges. Never reply to
-findings from inside your own session with a review of your own.
+revision; report a clean verdict to the human who merges.
 
 ## Process
 
@@ -85,5 +84,4 @@ posts it. Do not claim the review is posted when you could not post it.
 - Do not edit the pull request title, body, base branch, labels, assignees,
   milestone, draft state, merge settings, or other metadata.
 - Do not push commits to the branch under review; the author owns the fix.
-- Do not review your own pull request.
 - Report a scope conflict instead of reviewing beyond the diff.
