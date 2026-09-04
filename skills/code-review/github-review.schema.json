@@ -1,6 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$comment": "Review envelope shaped as the request body for POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews. Severity is the [P0-3] prefix on each comment body because GitHub has no severity property.",
+  "$comment": "Review envelope shaped as the request body for POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews. Severity is the [P0-3] prefix on each comment body because GitHub has no severity property. No $schema URI or allOf conditionals: some harness structured-output validators (claude --json-schema) reject them.",
   "type": "object",
   "additionalProperties": false,
   "required": ["commit_id", "body", "event", "comments"],
@@ -36,16 +35,5 @@
         }
       }
     }
-  },
-  "allOf": [
-    {
-      "if": {
-        "properties": { "event": { "const": "REQUEST_CHANGES" } },
-        "required": ["event"]
-      },
-      "then": {
-        "properties": { "comments": { "minItems": 1 } }
-      }
-    }
-  ]
+  }
 }

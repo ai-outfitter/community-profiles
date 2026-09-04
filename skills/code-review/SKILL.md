@@ -67,8 +67,8 @@ the schema file.
   primary-path behavior; P2 other actionable defect; P3 non-blocking.
 - `body` leads with the verdict, then the criteria satisfied, not
   applicable, and not judged.
-- `event` is `REQUEST_CHANGES` when a P0–P2 finding survives the merge,
-  else `COMMENT`. GitHub rejects `REQUEST_CHANGES` and `APPROVE` from
+- `event` is `REQUEST_CHANGES` when a P0–P2 finding survives the merge —
+  such an envelope carries at least one comment — else `COMMENT`. GitHub rejects `REQUEST_CHANGES` and `APPROVE` from
   the pull request's own author, so a self-review submits the same
   comments as a `COMMENT` review whose body leads with the verdict it
   would otherwise carry.
