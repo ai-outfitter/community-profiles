@@ -177,6 +177,142 @@ cross-check evidence coverage and apply the limits.
    invocation still gets only two attempts per failed lens. Because an
    incomplete result creates no GitHub review or status, the invoker or
    enclosing workflow MUST carry and enforce the merge block.
+
+   When Pi exposes GitHub through the `mcp` proxy, use this canonical helper
+   inside one `mcpScript` invocation. Proxy calls wrap the server payload as
+   JSON text in `result.data.content`; treating `result.data` as the payload
+   makes a successful read look empty. These helpers decode that wrapper,
+   fail closed on an unexpected shape, retry each read-only page at most once,
+   and use the pagination contract for each method. Do not route write calls
+   through the retry helper.
+
+<!-- github-mcp-read-helper:start -->
+```js
+const GITHUB_MCP_PAGE_SIZE = 100;
+
+function decodeGitHubMcpPayload(result, method) {
+  if (!result || result.ok !== true) {
+    const detail = result?.error?.message || "unknown MCP read failure";
+    throw new Error(`${method} failed: ${detail}`);
+  }
+  if (result.data?.isError === true) {
+    throw new Error(`${method} returned an MCP error result`);
+  }
+  const content = result.data?.content;
+  if (!Array.isArray(content)) {
+    throw new Error(`${method} returned no MCP content array`);
+  }
+  const text = content
+    .filter((block) => block?.type === "text" && typeof block.text === "string")
+    .map((block) => block.text)
+    .join("");
+  if (!text) throw new Error(`${method} returned no text payload`);
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new Error(`${method} returned malformed JSON: ${error.message}`);
+  }
+}
+
+function normalizeReviewPage(payload) {
+  if (!Array.isArray(payload)) {
+    throw new Error("get_reviews payload is not an array");
+  }
+  return payload;
+}
+
+function normalizeReviewCommentPage(payload) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    throw new Error("get_review_comments payload is not an object");
+  }
+  if (!Array.isArray(payload.review_threads)) {
+    throw new Error("get_review_comments payload has no review_threads array");
+  }
+  if (!Number.isInteger(payload.totalCount) || payload.totalCount < 0) {
+    throw new Error("get_review_comments payload has an invalid totalCount");
+  }
+  const pageInfo = payload.pageInfo;
+  if (!pageInfo || typeof pageInfo.hasNextPage !== "boolean") {
+    throw new Error("get_review_comments payload has invalid pageInfo");
+  }
+  if (pageInfo.hasNextPage &&
+      (typeof pageInfo.endCursor !== "string" || !pageInfo.endCursor)) {
+    throw new Error("get_review_comments next page has no endCursor");
+  }
+  for (const thread of payload.review_threads) {
+    if (!thread || typeof thread !== "object" || !Array.isArray(thread.comments)) {
+      throw new Error("get_review_comments thread has no comments array");
+    }
+    if (!Number.isInteger(thread.total_count) ||
+        thread.total_count !== thread.comments.length) {
+      throw new Error("get_review_comments thread comments are incomplete");
+    }
+  }
+  return payload;
+}
+
+async function readGitHubMcpPage(tools, input, normalize) {
+  let firstError;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const result = await tools.call("github-write_pull_request_read", input);
+      return normalize(decodeGitHubMcpPayload(result, input.method));
+    } catch (error) {
+      if (attempt === 0) firstError = error;
+      else throw new Error(`${input.method} failed after one retry: ${error.message}; first failure: ${firstError.message}`);
+    }
+  }
+}
+
+async function readAllReviews(tools, coordinates) {
+  const reviews = [];
+  for (let page = 1; ; page += 1) {
+    const batch = await readGitHubMcpPage(tools, {
+      ...coordinates, method: "get_reviews", page,
+      perPage: GITHUB_MCP_PAGE_SIZE,
+    }, normalizeReviewPage);
+    reviews.push(...batch);
+    if (batch.length < GITHUB_MCP_PAGE_SIZE) return reviews;
+  }
+}
+
+async function readAllReviewComments(tools, coordinates) {
+  const comments = [];
+  const seenCursors = new Set();
+  let expectedThreads;
+  let threadCount = 0;
+  let after;
+  for (;;) {
+    const input = {
+      ...coordinates, method: "get_review_comments",
+      perPage: GITHUB_MCP_PAGE_SIZE,
+    };
+    if (after) input.after = after;
+    const page = await readGitHubMcpPage(
+      tools, input, normalizeReviewCommentPage,
+    );
+    if (expectedThreads === undefined) expectedThreads = page.totalCount;
+    else if (page.totalCount !== expectedThreads) {
+      throw new Error("get_review_comments totalCount changed during pagination");
+    }
+    threadCount += page.review_threads.length;
+    for (const thread of page.review_threads) comments.push(...thread.comments);
+    if (!page.pageInfo.hasNextPage) {
+      if (threadCount !== expectedThreads) {
+        throw new Error("get_review_comments returned an incomplete thread set");
+      }
+      return comments;
+    }
+    after = page.pageInfo.endCursor;
+    if (seenCursors.has(after)) {
+      throw new Error("get_review_comments repeated its endCursor");
+    }
+    seenCursors.add(after);
+  }
+}
+```
+<!-- github-mcp-read-helper:end -->
+
 9. As author, act on a complete verdict: fix each blocking finding, push,
    and review the new revision. Report a clean verdict to the human who
    merges. An incomplete verdict MUST be reported as a workflow failure,

@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "data": {
+    "content": [{
+      "type": "text",
+      "text": "{\"review_threads\":[{\"comments\":[],\"total_count\":1}],\"totalCount\":1,\"pageInfo\":{\"hasNextPage\":false}}"
+    }]
+  }
+}
