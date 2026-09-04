@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/ai-outfitter/community-profiles/compare/v1.6.0...v1.7.0) (2026-09-04)
+
+
+### Features
+
+* **engineer:** scoped issues and subagent-backed adversarial self-review ([#67](https://github.com/ai-outfitter/community-profiles/issues/67)) ([a3878fa](https://github.com/ai-outfitter/community-profiles/commit/a3878fad176b3832eb8b136cabb9823035f0a35e))
+
 ## [1.6.0](https://github.com/ai-outfitter/community-profiles/compare/v1.5.0...v1.6.0) (2026-09-02)
 
 
