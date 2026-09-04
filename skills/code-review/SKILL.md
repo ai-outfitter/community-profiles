@@ -1,9 +1,6 @@
 ---
 name: code-review
-description: >-
-  Adversarial pull request review: cold-context subagents each return a
-  GitHub review envelope, the parent merges and submits one, the author
-  fixes.
+description: Review uncommitted changes, branches, or pull requests.
 ---
 
 # Code review
@@ -19,6 +16,12 @@ One review per pull request revision. You carry both roles:
 The judgment comes from cold-context subagents; you merge their envelopes
 and submit one formal review. One procedure covers a local session, a
 resident reviewer, and an actions carrier.
+
+The same fan-out and merge review uncommitted changes (diff against
+`HEAD`, `commit_id` is the `HEAD` sha) or a branch (diff against the merge
+base, `commit_id` is the tip): the review standard is the stated intent or
+linked issue, and the merged envelope is delivered in-session — formal
+submission belongs to pull requests alone.
 
 ## Process
 

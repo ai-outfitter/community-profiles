@@ -33,7 +33,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
   file and save a sourced report in the adopted voice.
 - `media-editor` - transcript-driven video editing: toolchain setup, whisper.cpp transcription, and ffmpeg cut/speed/export, with per-step references.
 - `pyramid-principle` - structure ideas, documents, and communications top-down (conclusion first) for clarity.
-- `code-review` - adversarial PR review: cold-context subagents return GitHub review envelopes, the parent merges and submits one, the author fixes.
+- `code-review` - review uncommitted changes, branches, or pull requests.
 - `prose-review` - review prose artifacts for thesis, structure, and register before they publish or merge.
 - `issue-triage` - classify and comment on new GitHub issues.
 - `scoped-issues` - file one scoped issue with mechanically checkable acceptance criteria before implementing an untracked report, then work that issue.
