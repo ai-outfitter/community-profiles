@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "data": {
+    "content": [
+      { "type": "text", "text": "[{\"id\":5114879517," },
+      { "type": "image", "data": "ignored" },
+      { "type": "text", "text": "\"state\":\"COMMENTED\",\"commit_id\":\"abc123\"}]" }
+    ]
+  }
+}

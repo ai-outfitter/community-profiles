@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "data": {
+    "isError": true,
+    "content": [{ "type": "text", "text": "[]" }]
+  }
+}

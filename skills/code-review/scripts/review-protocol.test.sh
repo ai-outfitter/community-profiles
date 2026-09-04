@@ -15,6 +15,7 @@ const lens = fs.readFileSync(path.join(root, "references/simplify.md"), "utf8");
 const genericSchema = JSON.parse(fs.readFileSync(path.join(root, "assets/github-review.schema.json"), "utf8"));
 const simplifySchema = JSON.parse(fs.readFileSync(path.join(root, "assets/simplify-review.schema.json"), "utf8"));
 const mcpConfig = JSON.parse(fs.readFileSync(path.join(repositoryRoot, "mcp.json"), "utf8"));
+const fixtures = path.join(root, "scripts", "fixtures");
 
 const match = skill.match(/<!-- code-review-protocol:start -->\s*```json\s*([\s\S]*?)\s*```\s*<!-- code-review-protocol:end -->/);
 if (!match) throw new Error("missing machine-readable code-review protocol block");
@@ -102,6 +103,89 @@ const reviewCommentsReadbackIndex = normalizedSkill.indexOf('method: "get_review
 if (submitIndex < 0 || postSubmitSectionIndex < 0 || reviewCommentsReadbackIndex < 0) {
   throw new Error("code-review skill does not require get_review_comments after formal review submission");
 }
+
+const helperMatch = skill.match(/<!-- github-mcp-read-helper:start -->\s*```js\s*([\s\S]*?)\s*```\s*<!-- github-mcp-read-helper:end -->/);
+if (!helperMatch) throw new Error("missing canonical GitHub MCP read helper");
+const helperSource = `${helperMatch[1]}\nexport { decodeGitHubMcpPayload, normalizeReviewPage, normalizeReviewCommentPage, readGitHubMcpPage, readAllReviews, readAllReviewComments };`;
+const helper = await import(`data:text/javascript;base64,${Buffer.from(helperSource).toString("base64")}`);
+const loadFixture = (name) => JSON.parse(fs.readFileSync(path.join(fixtures, name), "utf8"));
+
+const reviewsPage = loadFixture("get-reviews.wrapper.json");
+const commentsPage = loadFixture("get-review-comments.wrapper.json");
+const reviews = helper.normalizeReviewPage(helper.decodeGitHubMcpPayload(reviewsPage, "get_reviews"));
+if (reviews.length !== 1 || reviews[0].id !== 5114879517) {
+  throw new Error("review wrapper decoder lost the inner review array");
+}
+const commentPayload = helper.normalizeReviewCommentPage(helper.decodeGitHubMcpPayload(commentsPage, "get_review_comments"));
+if (commentPayload.review_threads[0].comments[0].url !== "https://example.test/comment/7") {
+  throw new Error("review-comment wrapper decoder lost the inner thread comments");
+}
+for (const fixture of [
+  "declared-error.wrapper.json",
+  "incomplete-comments.wrapper.json",
+  "malformed-json.wrapper.json",
+  "malformed-comments.wrapper.json",
+]) {
+  const wrapped = loadFixture(fixture);
+  let rejected = false;
+  try {
+    const payload = helper.decodeGitHubMcpPayload(wrapped, "get_review_comments");
+    helper.normalizeReviewCommentPage(payload);
+  } catch {
+    rejected = true;
+  }
+  if (!rejected) throw new Error(`${fixture} did not fail closed`);
+}
+
+const wrap = (payload) => ({
+  ok: true,
+  data: { content: [{ type: "text", text: JSON.stringify(payload) }] },
+});
+const fullReviewPage = Array.from({ length: 100 }, (_, id) => ({ id }));
+const reviewCalls = [];
+const reviewTools = { call: async (name, input) => {
+  if (name !== "github-write_pull_request_read") throw new Error("unexpected tool");
+  reviewCalls.push(input);
+  return wrap(input.page === 1 ? fullReviewPage : [{ id: 100 }]);
+} };
+const allReviews = await helper.readAllReviews(reviewTools, { owner: "o", repo: "r", pullNumber: 1 });
+if (allReviews.length !== 101 || reviewCalls.map((call) => call.page).join(",") !== "1,2") {
+  throw new Error("get_reviews did not use REST short-page pagination");
+}
+
+const commentCalls = [];
+const commentTools = { call: async (_name, input) => {
+  commentCalls.push(input);
+  if (commentCalls.length === 1) throw new Error("transient read failure");
+  if (!input.after) return wrap({ review_threads: [{ comments: [{ id: 1 }], total_count: 1 }], totalCount: 2, pageInfo: { hasNextPage: true, endCursor: "cursor-1" } });
+  return wrap({ review_threads: [{ comments: [{ id: 2 }], total_count: 1 }], totalCount: 2, pageInfo: { hasNextPage: false } });
+} };
+const allComments = await helper.readAllReviewComments(commentTools, { owner: "o", repo: "r", pullNumber: 1 });
+if (allComments.map((comment) => comment.id).join(",") !== "1,2") {
+  throw new Error("get_review_comments did not collect every thread comment");
+}
+if (commentCalls.length !== 3 || commentCalls[0].after || commentCalls[1].after || commentCalls[2].after !== "cursor-1") {
+  throw new Error("get_review_comments did not retry once then use cursor pagination");
+}
+let readAttempts = 0;
+await helper.readGitHubMcpPage({ call: async () => { readAttempts += 1; throw new Error("down"); } }, { method: "get_reviews" }, helper.normalizeReviewPage).then(
+  () => { throw new Error("failed read did not reject"); },
+  () => {},
+);
+if (readAttempts !== 2) throw new Error(`read helper attempted ${readAttempts} calls instead of two`);
+if (/pull_request_review_write|add_comment_to_pending_review/.test(helperMatch[1])) {
+  throw new Error("read retry helper includes a GitHub write tool");
+}
+const incompleteOuterPage = wrap({
+  review_threads: [], totalCount: 1, pageInfo: { hasNextPage: false },
+});
+await helper.readAllReviewComments(
+  { call: async () => incompleteOuterPage },
+  { owner: "o", repo: "r", pullNumber: 1 },
+).then(
+  () => { throw new Error("incomplete outer thread set did not reject"); },
+  () => {},
+);
 
 for (const recursiveInstruction of ["Start a few", 'agent: "delegate"', "subagents of your own"]) {
   if (lens.includes(recursiveInstruction)) throw new Error(`recursive simplify instruction returned: ${recursiveInstruction}`);
