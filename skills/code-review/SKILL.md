@@ -1,6 +1,14 @@
 ---
 name: code-review
 description: Review uncommitted changes, branches, or pull requests.
+allowed-tools: >-
+  Read, Grep, Glob, Bash(gh:*), Bash(git:*), Bash(cat:*), Bash(pi:*),
+  Bash(claude:*), Bash(codex:*),
+  mcp__github-write__get_me, mcp__github-write__issue_read,
+  mcp__github-write__get_file_contents,
+  mcp__github-write__pull_request_read,
+  mcp__github-write__pull_request_review_write,
+  mcp__github-write__add_comment_to_pending_review
 ---
 
 # Code review
