@@ -107,6 +107,8 @@ scripts/validate-workflows.sh /path/to/outfitter/code/cli/dist/cli.js
 4. Select resources by slug from agent frontmatter. Keep Pi-only extensions explicit and pinned when reproducibility matters.
 5. Run `outfitter validate --strict`, then open a pull request that names the intended harnesses (Pi or Claude Code).
 
+Pull requests MUST be authored as drafts. Marking a pull request ready requests review from the agents team via CODEOWNERS. Changes under `.github/` MUST remain owned by a human.
+
 Prefer opening an issue first: newly opened issues are triaged automatically by the conventional [`actions-agent`](agents/actions-agent/agent.md) and its selected [issue-triage skill](skills/issue-triage/SKILL.md) (running on this repo via [`ai-outfitter/actions`](https://github.com/ai-outfitter/actions), see [.github/workflows/issue-triage.yml](.github/workflows/issue-triage.yml)). The agent labels the issue `feat` (new agent, skill, or prompting change) or `fix`, and comments with a suggested plan and example sketches following Outfitter best practices. Issues it cannot classify confidently get no label — just a comment asking a maintainer to take a look.
 
 ## Layout

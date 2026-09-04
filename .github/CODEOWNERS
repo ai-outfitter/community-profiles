@@ -1,0 +1,8 @@
+# Resident reviewers: GitHub requests a review from the agents team when a
+# pull request leaves draft (ready_for_review). The team must hold write
+# access on this repository or GitHub ignores the line.
+* @ai-outfitter/ent:agents
+
+# Sensitive paths: human owner only. Never mix an agent with a required human
+# owner on one line — GitHub accepts any single listed owner's approval.
+/.github/ @ncrmro
