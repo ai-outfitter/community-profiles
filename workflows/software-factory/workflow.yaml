@@ -21,6 +21,9 @@ integrations:
     path: actions/deploy-catalog/action.yml
     ref: 255a84fb6391b331c085a15b69b97ccce07d2f94
     sha256: e2327231bbe02401a6cf00206f40617b77956c5da51f44d551f700dc0da28c1d
+outputs:
+  pull-request: {from: draft, type: pull-request}
+  merge-commit: {from: merge, type: git-commit}
 nodes:
   - {id: prepare, action: receive-typed-issue, description: Accept one typed issue., actor: resident, environment: delegated, uses: [github, operator-deploy]}
   - {id: implement, action: implement-and-verify, description: Implement and verify the requested change on a semantic branch., actor: resident, environment: delegated, needs: [prepare], uses: [github, git]}
