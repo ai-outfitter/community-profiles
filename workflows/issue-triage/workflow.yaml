@@ -6,6 +6,8 @@ actors:
   triager: {kind: agent, profile: actions-agent}
 environments: {actions: github-actions}
 integrations: {gh: {kind: cli}}
+outputs:
+  pull-request: {from: feature, output: pull-request}
 nodes:
   - {id: classify, action: classify-untyped-issue, description: Add a type only when the issue is untyped., actor: triager, environment: actions, skill: issue-triage, uses: [gh]}
   - {id: feature, workflow: software-factory, description: Implement feature work through the software factory., needs: [classify]}
