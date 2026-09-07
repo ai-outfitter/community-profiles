@@ -1,6 +1,6 @@
 ---
 name: engineer
-description: Owns implementation, verification, and review.
+description: Implements approved changes through reviewed pull requests, verifies them with the repository's checks, and reviews adversarially before merge. Ships with code-review and scoped-issues skills, GitHub MCP, and subagent delegation.
 inherits: [environment]
 skills: [code-review, replicad, scoped-issues]
 mcp: [github-hosted]

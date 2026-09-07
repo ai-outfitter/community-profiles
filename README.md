@@ -5,9 +5,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 ## Agents
 
 - `actions-agent` - conventional headless identity for GitHub Actions automation.
-- `founder` - Ship Fast, Straight to prod!!
+- `founder` - owns the mission, priorities, and constraints, and makes the final call when roles disagree; directs the planner with clear goals and decision limits.
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
-- `engineer` - owns implementation, verification, and review.
+- `engineer` - implements approved changes through reviewed pull requests, verifies them with the repository's checks, and reviews adversarially; ships with code-review and scoped-issues skills, GitHub MCP, and subagent delegation.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
