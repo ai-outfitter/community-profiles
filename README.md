@@ -109,12 +109,14 @@ object the same way:
 
 A recorded value is a JSON object describing the forge object as observed. For a forge object it SHOULD include at least the repository full name, the number or sha, and the `html_url`, so a consumer can locate it and read its state from the forge. Outfitter and Channels validate no more than that (ai-outfitter/outfitter#380).
 
-`software-factory` declares `pull-request` (from `draft`) and `merge-commit`
-(from `merge`, label `git-commit`); `issue-triage` maps `pull-request` up
-through its nested `feature` node. An execution engine records the values and
-evaluates cross-task dependencies; the object's state (draft, reviewed, merged)
-is read from the forge, never asserted by the agent. Outfitter does not
-validate recorded values (ai-outfitter/outfitter#380).
+`engineer` declares `issue` (from `issue`), `pull-request` (from `draft`), and
+`merge-commit` (from `merge`, label `git-commit`); `software-factory` declares
+`pull-request` (from `draft`) and `merge-commit` (from `merge`, label
+`git-commit`); `issue-triage` maps `pull-request` up through its nested
+`feature` node. An execution engine records the values and evaluates cross-task
+dependencies; the object's state (draft, reviewed, merged) is read from the
+forge, never asserted by the agent. Outfitter does not validate recorded values
+(ai-outfitter/outfitter#380).
 
 To validate against a local Outfitter build:
 
