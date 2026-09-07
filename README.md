@@ -91,7 +91,7 @@ graphs. All ten are explicitly enabled in `settings.yml`. Outfitter resolves
 and validates their complete agent, skill, prompt, MCP, nested-workflow, and
 pinned-artifact closure; it never executes workflow nodes. Publication is
 blocked unless strict validation and two byte-identical exports of every root
-succeed against Outfitter v1.14.0.
+succeed against Outfitter v1.16.0.
 
 ### Workflow outputs
 
@@ -106,6 +106,8 @@ object the same way:
 | `git-commit` | a commit, typically the merge commit |
 | `git-branch` | a branch |
 | `issue` | a forge issue |
+
+A recorded value is a JSON object describing the forge object as observed. For a forge object it SHOULD include at least the repository full name, the number or sha, and the `html_url`, so a consumer can locate it and read its state from the forge. Outfitter and Channels validate no more than that (ai-outfitter/outfitter#380).
 
 `software-factory` declares `pull-request` (from `draft`) and `merge-commit`
 (from `merge`, label `git-commit`); `issue-triage` maps `pull-request` up
