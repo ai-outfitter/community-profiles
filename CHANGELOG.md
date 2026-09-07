@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.9.0](https://github.com/ai-outfitter/community-profiles/compare/v1.8.0...v1.9.0) (2026-09-07)
+
+
+### Features
+
+* **issue-triage:** map the software factory pull request output ([24a2d58](https://github.com/ai-outfitter/community-profiles/commit/24a2d58f281c59282a752b8dd7fbdd77d2a0bf70))
+* **output-types:** publish the four forge-neutral output value schemas ([032b49a](https://github.com/ai-outfitter/community-profiles/commit/032b49aa00db3207720b09f3c3907316a6257e0a))
+* **software-factory:** declare pull-request and merge-commit outputs ([800a235](https://github.com/ai-outfitter/community-profiles/commit/800a235209dab98dbbe65e188d4ec089c63e5c3e))
+* **workflows:** declare software-factory and issue-triage outputs ([77deb8e](https://github.com/ai-outfitter/community-profiles/commit/77deb8e1510a2294f84e321a1a333110100766c7))
+
 ## [1.8.0](https://github.com/ai-outfitter/community-profiles/compare/v1.7.0...v1.8.0) (2026-09-04)
 
 
