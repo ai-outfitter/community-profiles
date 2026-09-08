@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/ai-outfitter/community-profiles/compare/v1.9.0...v1.9.1) (2026-09-08)
+
+
+### Bug Fixes
+
+* **residents:** make Luce and Vega deployable ([df4affc](https://github.com/ai-outfitter/community-profiles/commit/df4affc886a018f4461f4d645e88789f02b8e581))
+
 ## [1.9.0](https://github.com/ai-outfitter/community-profiles/compare/v1.8.0...v1.9.0) (2026-09-07)
 
 
