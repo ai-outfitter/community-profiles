@@ -5,7 +5,6 @@
 
 ### Bug Fixes
 
-* **residents:** make Luce and Vega deployable ([1cfd713](https://github.com/ai-outfitter/community-profiles/commit/1cfd713c2a45832df54628e963793d35b61d0071))
 * **residents:** make Luce and Vega deployable ([df4affc](https://github.com/ai-outfitter/community-profiles/commit/df4affc886a018f4461f4d645e88789f02b8e581))
 
 ## [1.9.0](https://github.com/ai-outfitter/community-profiles/compare/v1.8.0...v1.9.0) (2026-09-07)
