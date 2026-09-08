@@ -1,6 +1,6 @@
 ---
 name: pcb-tools-setup
-description: Establish and prove a repository-pinned headless PCB toolchain with KiCad MCP, pcbnew, SKiDL, KiBot, freerouting, vendor-library import, and simulation capabilities.
+description: Prove a headless PCB toolchain with catalog-pinned KiCad MCP and repository-pinned pcbnew, SKiDL, KiBot, freerouting, vendor-library import, and simulation capabilities.
 ---
 
 # PCB tools setup
@@ -17,8 +17,9 @@ Prove the repository's declared equivalents of:
 - KiCad, `kicad-cli`, and a matching pcbnew Python API. Preserve the KiCad,
   Python, and wxPython ABI; a successful CLI invocation does not prove that
   `import pcbnew` works.
-- The pinned KiCad MCP server. Its standard local transport is stdio; bind an
-  optional HTTP transport only to loopback unless authentication is present.
+- The catalog-pinned KiCad MCP server. It manages its own runtime dependencies
+  outside the project environment. Its standard local transport is stdio; bind
+  an optional HTTP transport only to loopback unless authentication is present.
 - SKiDL for typed schematic source and standard KiCad netlists, KiBot for
   preflights and fabrication outputs, and the repository's declared netlist
   parser or importer, such as kinet2pcb.
@@ -30,9 +31,9 @@ Prove the repository's declared equivalents of:
   environment is a supported pattern, not a required implementation.
 
 Set repository-owned search paths, including `KICAD_SEARCH_PATHS`, and the
-freerouting executable path when the project uses them. Keep Python packages in
-the repository environment. Pin packages or the containing image; do not
-silently consume an unversioned latest release.
+freerouting executable path when the project uses them. Keep project Python
+packages in the repository environment. Pin packages or the containing image;
+do not silently consume an unversioned latest release.
 
 ## Capability gate
 
@@ -51,8 +52,8 @@ ngspice -v
 
 Run `kicad_tool_inventory`, project discovery, and a read-only project summary
 through KiCad MCP. Record the MCP package version and available tool groups.
-Stop if the server is missing, its pin differs from the repository contract,
-or required inspection and validation tools are unavailable.
+Stop if the server is missing, its observed version differs from the catalog
+pin, or required inspection and validation tools are unavailable.
 
 Compile every committed Python pipeline entrypoint and run the repository's
 declared formatter, linter, type checker, and tests. Do not describe
