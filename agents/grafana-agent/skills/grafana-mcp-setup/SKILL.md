@@ -1,6 +1,6 @@
 ---
 name: grafana-mcp-setup
-description: Deploy the Grafana MCP server into a Kubernetes cluster securely — read-only Grafana credentials in Secrets, an authenticated nginx front, NetworkPolicy scoping, all as declarative config. Use when standing up, hardening, or re-keying Grafana MCP access for agents.
+description: Deploy or harden Grafana MCP in Kubernetes with read-only credentials, authenticated access, NetworkPolicy scoping, and declarative configuration.
 ---
 
 # Grafana MCP setup

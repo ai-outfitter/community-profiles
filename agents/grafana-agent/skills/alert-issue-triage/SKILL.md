@@ -1,9 +1,9 @@
 ---
 name: alert-issue-triage
 description: >-
-  Find the existing tracking issue for a firing alert and post one comment with
-  the investigation finding and a recommendation. Never opens, labels, edits, or
-  closes issues — the scope ends at the diagnosis comment.
+  Find the existing tracking issue for one firing alert and post one diagnosis
+  and recommendation comment without opening, labeling, editing, or closing
+  issues.
 ---
 
 # Alert issue triage

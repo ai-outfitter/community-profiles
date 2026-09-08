@@ -10,7 +10,11 @@ from pathlib import Path
 
 
 MAX_DESCRIPTION_LENGTH = 200
-RESOURCE_GLOBS = ("agents/**/agent.md", "skills/**/SKILL.md")
+RESOURCE_GLOBS = (
+    "agents/**/agent.md",
+    "agents/**/skills/**/SKILL.md",
+    "skills/**/SKILL.md",
+)
 
 
 def frontmatter(text: str, path: Path) -> list[str]:
