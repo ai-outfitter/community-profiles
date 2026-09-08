@@ -1,10 +1,8 @@
 ---
 name: issue-triage
 description: >-
-  Triage one newly opened issue: classify it into exactly one label from the
-  launch prompt's available_labels (feat or fix on the community-profiles
-  catalog itself), apply that one label, and comment with a plan and example
-  pseudo-code following Outfitter best practices.
+  Classify one new issue into exactly one allowed label, apply it, and comment
+  with a scoped plan and example pseudo-code.
 references:
   # The catalog's own README — its layout and contribution standards are what
   # issues are triaged against. Untrusted repository content.

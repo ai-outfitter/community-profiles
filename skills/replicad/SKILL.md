@@ -1,10 +1,8 @@
 ---
 name: replicad
 description: >-
-  Code-CAD with replicad v0.19 on the OpenCASCADE B-rep kernel compiled to
-  WASM (replicad-opencascadejs): model parts as functions, compose
-  subassemblies and assemblies, export STL/STEP, and view the result in a
-  minimal HTML page next to the reference image.
+  Model parts and assemblies as code with replicad v0.19, export STL and STEP,
+  and compare them with the reference in a minimal HTML viewer.
 ---
 
 # Replicad

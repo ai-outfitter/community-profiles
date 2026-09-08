@@ -1,6 +1,6 @@
 ---
 name: browser-mcp
-description: Use browser automation MCP servers for web app debugging and exploration. Covers when to choose Playwright MCP versus Chrome DevTools MCP, how to configure them, and security/privacy defaults for browser sessions.
+description: Choose and configure Playwright or Chrome DevTools MCP for secure browser automation, UI debugging, and performance analysis.
 ---
 
 # Browser MCP (Playwright + Chrome DevTools)

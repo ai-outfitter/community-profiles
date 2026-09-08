@@ -12,6 +12,8 @@ trap 'rm -rf "$validation_root"' EXIT HUP INT TERM
 mkdir -p "$validation_root/home" "$validation_root/project"
 ln -s "$catalog_root" "$validation_root/project/.agents"
 
+python3 "$catalog_root/scripts/validate-descriptions.py"
+
 (
   cd "$validation_root/project"
   HOME="$validation_root/home" node "$1" validate --strict

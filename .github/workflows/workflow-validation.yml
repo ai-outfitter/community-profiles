@@ -2,10 +2,10 @@ name: Workflow validation
 
 on:
   pull_request:
-    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "settings.yml", "scripts/validate-workflows.sh"]
+    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "settings.yml", ".pre-commit-config.yaml", "scripts/**"]
   push:
     branches: [main]
-    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "settings.yml", "scripts/validate-workflows.sh"]
+    paths: ["agents/**", "skills/**", "prompts/**", "workflows/**", "settings.yml", ".pre-commit-config.yaml", "scripts/**"]
 
 permissions:
   contents: read
