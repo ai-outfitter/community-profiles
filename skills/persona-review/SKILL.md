@@ -1,6 +1,6 @@
 ---
 name: persona-review
-description: "Review a product, document, website, plan, or user experience and write a sourced report from the persona Markdown appended to a shared agent at launch. Use when running the shared persona-reviewer or another agent with one or more persona documents. This skill supplies review and report behavior; it does not author personas."
+description: Review an artifact from appended persona Markdown and write a sourced report; this skill reviews but does not author personas.
 ---
 
 # Persona review

@@ -1,6 +1,6 @@
 ---
 name: persona-authoring
-description: "Create or revise one portable, Markdown-first persona document per person or role. Use when recording who a project serves, defining a user or stakeholder, supplying durable project-steering context to agentic tools, or preparing a persona for an Outfitter review. Persona-specific information stays in the Markdown body; this skill authors context and does not run reviews."
+description: Create or revise one portable Markdown persona per person or role for durable project guidance and persona-based reviews.
 ---
 
 # Persona authoring

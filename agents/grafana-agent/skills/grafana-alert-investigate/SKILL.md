@@ -1,10 +1,8 @@
 ---
 name: grafana-alert-investigate
 description: >-
-  Investigate one firing observability alert for the alerting resource across
-  Grafana signals (Loki logs, Prometheus metrics, Tempo traces, Pyroscope
-  profiles) and, when in-cluster, the read-only Kubernetes API, then classify it
-  as expected/known-noisy or a real anomaly with a confidence level.
+  Investigate one firing alert across Grafana signals and read-only Kubernetes
+  data, then classify it as expected noise or an anomaly with confidence.
 ---
 
 # Grafana alert investigate

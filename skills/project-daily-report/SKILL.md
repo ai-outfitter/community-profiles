@@ -1,6 +1,6 @@
 ---
 name: project-daily-report
-description: Collect project and telemetry evidence, write a 300–500 word linked daily Markdown report, and publish one idempotent edition. Use for automatic project standups, daily operations summaries, and corrected report editions.
+description: Collect project and telemetry evidence, write a linked 300–500 word daily report, and publish one idempotent edition.
 ---
 
 # Project daily report

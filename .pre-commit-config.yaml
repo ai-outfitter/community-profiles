@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: validate-descriptions
+        name: validate agent and skill descriptions
+        entry: python3 scripts/validate-descriptions.py
+        language: system
+        pass_filenames: false
+        always_run: true
