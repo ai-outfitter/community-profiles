@@ -8,7 +8,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `founder` - owns the mission, priorities, and constraints, and makes the final call when roles disagree; directs the planner with clear goals and decision limits.
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
 - `engineer` - implements approved changes through reviewed pull requests, verifies them with the repository's checks, and reviews adversarially; ships with code-review and scoped-issues skills, GitHub MCP, and subagent delegation.
-- `hardware-engineer` - rapid-prototyping loadout that coordinates digital design, manufacturing-ready packages, explicitly approved prototype orders, and evidence-backed bring-up; workflows can run it as a Kubernetes resident.
+- `hardware-engineer` - rapid-prototyping loadout with a pinned KiCad MCP that coordinates digital design, manufacturing-ready packages, explicitly approved prototype orders, and evidence-backed bring-up; workflows can run it as a Kubernetes resident.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
@@ -47,6 +47,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `pcb-layout` - build and route requirement-driven KiCad boards through deterministic pcbnew inputs, bounded freerouting, DRC, and renders.
 - `pcb-review` - perform fresh read-only schematic or layout review with exact, source-backed findings and a release verdict.
 - `pcb-release` - rebuild an exact commit and create a checksummed, repository-declared fabrication package without ordering it.
+- `pcb-tools-setup` - establish and prove the repository-pinned KiCad MCP, pcbnew, SKiDL, KiBot, freerouting, library-import, and simulation toolchain.
 
 ## Prompts
 
@@ -118,7 +119,7 @@ A recorded value is a JSON object describing the forge object as observed. For a
 (from `merge`, label `git-commit`); `issue-triage` maps `pull-request` up
 through its nested `feature` node. `pcb-design` also exposes its scoped issue,
 pull request, and merge commit with these labels; its domain outputs use the
-plain labels `pcb-design`, `fabrication-package`, and two typed
+plain labels `pcb-design`, `fabrication-package`, `toolchain-evidence`, and two typed
 `review-evidence` records. An
 execution engine records the values and evaluates cross-task dependencies; the
 object's state (draft, reviewed, merged) is read from the forge, never asserted
@@ -135,9 +136,12 @@ scripts/validate-workflows.sh /path/to/outfitter/code/cli/dist/cli.js
 
 1. Add `agents/<id>/agent.md` with a matching `name`, a precise `description`, and the smallest useful loadout.
 2. Keep durable policy in the agent and reusable procedures in `skills/<id>/SKILL.md`; prefer adding a skill over a near-duplicate agent.
-3. A template profile (a capability bundle meant for composition, like `git-forge-delegator`) MUST NOT inherit other profiles; the runnable profile composes the full chain — see [Scaling by composition](docs/scaling-by-composition.md).
-4. Select resources by slug from agent frontmatter. Keep Pi-only extensions explicit and pinned when reproducibility matters.
-5. Run `outfitter validate --strict`, then open a pull request that names the intended harnesses (Pi or Claude Code).
+3. Keep every agent and skill `description` at 200 Unicode characters or
+   fewer. Install the repository's pre-commit hooks with `pre-commit install`;
+   CI runs the same `scripts/validate-descriptions.py` check.
+4. A template profile (a capability bundle meant for composition, like `git-forge-delegator`) MUST NOT inherit other profiles; the runnable profile composes the full chain — see [Scaling by composition](docs/scaling-by-composition.md).
+5. Select resources by slug from agent frontmatter. Keep Pi-only extensions explicit and pinned when reproducibility matters.
+6. Run `outfitter validate --strict`, then open a pull request that names the intended harnesses (Pi or Claude Code).
 
 Prefer opening an issue first: newly opened issues are triaged automatically by the conventional [`actions-agent`](agents/actions-agent/agent.md) and its selected [issue-triage skill](skills/issue-triage/SKILL.md) (running on this repo via [`ai-outfitter/actions`](https://github.com/ai-outfitter/actions), see [.github/workflows/issue-triage.yml](.github/workflows/issue-triage.yml)). The agent labels the issue `feat` (new agent, skill, or prompting change) or `fix`, and comments with a suggested plan and example sketches following Outfitter best practices. Issues it cannot classify confidently get no label — just a comment asking a maintainer to take a look.
 
