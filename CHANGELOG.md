@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.2](https://github.com/ai-outfitter/community-profiles/compare/v1.9.1...v1.9.2) (2026-09-08)
+
+
+### Bug Fixes
+
+* **luce:** allow issue routing mutations ([#93](https://github.com/ai-outfitter/community-profiles/issues/93)) ([2cc3bcc](https://github.com/ai-outfitter/community-profiles/commit/2cc3bcc63a3c90a00486b61a67e452eb71924ebd))
+
 ## [1.9.1](https://github.com/ai-outfitter/community-profiles/compare/v1.9.0...v1.9.1) (2026-09-08)
 
 
