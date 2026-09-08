@@ -114,12 +114,14 @@ it, merge when green. Review is a *skill* carried by several agents, not a
 dedicated reviewer role.
 
 Different agent types review different artifact classes. The catalog ships
-two review skills:
+three review skills:
 
 - [`code-review`](../skills/code-review/SKILL.md) — carried by `engineer`
   and `researcher`.
 - [`prose-review`](../skills/prose-review/SKILL.md) — carried by
   `product-marketer`, `planner`, and `researcher`.
+- [`pcb-review`](../skills/pcb-review/SKILL.md) — carried by
+  `hardware-engineer` and run in a fresh, read-only review environment.
 
 The carrier's tool surface bounds the verdict path. Posting a forge review
 needs `bash` for `gh` or a GitHub MCP surface. A read-only carrier — `planner`, or a `researcher`

@@ -8,6 +8,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `founder` - owns the mission, priorities, and constraints, and makes the final call when roles disagree; directs the planner with clear goals and decision limits.
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
 - `engineer` - implements approved changes through reviewed pull requests, verifies them with the repository's checks, and reviews adversarially; ships with code-review and scoped-issues skills, GitHub MCP, and subagent delegation.
+- `hardware-engineer` - rapid-prototyping loadout that coordinates digital design, manufacturing-ready packages, explicitly approved prototype orders, and evidence-backed bring-up; workflows can run it as a Kubernetes resident.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
@@ -42,6 +43,10 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `slidev` - scaffold a minimal Slidev deck: package.json, slides.md, dev/build/PDF-export scripts. Setup only.
 - `storyboard` - sequence a story into beats, each pairing a claim, a prose line, and an image prompt, written as storyboard.md before deck or one-pager work.
 - `replicad` - code-CAD with replicad v0.19 on the OpenCASCADE B-rep WASM kernel: parts as functions, subassemblies, STL/STEP export, and a minimal side-by-side HTML viewer.
+- `pcb-schematic` - create sourced, named-pin typed SKiDL schematics and standard KiCad netlists with fault-tested electrical gates.
+- `pcb-layout` - build and route requirement-driven KiCad boards through deterministic pcbnew inputs, bounded freerouting, DRC, and renders.
+- `pcb-review` - perform fresh read-only schematic or layout review with exact, source-backed findings and a release verdict.
+- `pcb-release` - rebuild an exact commit and create a checksummed, repository-declared fabrication package without ordering it.
 
 ## Prompts
 
@@ -86,8 +91,8 @@ source settings are intentionally not imported.
 
 ## Workflows
 
-`workflows/<id>/workflow.yaml` contains the ten canonical, declarative workflow
-graphs. All ten are explicitly enabled in `settings.yml`. Outfitter resolves
+`workflows/<id>/workflow.yaml` contains the eleven canonical, declarative workflow
+graphs. All eleven are explicitly enabled in `settings.yml`. Outfitter resolves
 and validates their complete agent, skill, prompt, MCP, nested-workflow, and
 pinned-artifact closure; it never executes workflow nodes. Publication is
 blocked unless strict validation and two byte-identical exports of every root
@@ -97,8 +102,8 @@ succeed against Outfitter v1.16.0.
 
 A workflow may declare named `outputs`, each bound to the node that produces
 it. `type` is an optional plain label; Outfitter checks only that it is a slug.
-This catalog uses four labels so that workflows name the same kind of forge
-object the same way:
+This catalog uses these conventional forge labels so workflows name the same
+kind of forge object the same way:
 
 | Label | Object |
 | --- | --- |
@@ -111,10 +116,14 @@ A recorded value is a JSON object describing the forge object as observed. For a
 
 `software-factory` declares `pull-request` (from `draft`) and `merge-commit`
 (from `merge`, label `git-commit`); `issue-triage` maps `pull-request` up
-through its nested `feature` node. An execution engine records the values and
-evaluates cross-task dependencies; the object's state (draft, reviewed, merged)
-is read from the forge, never asserted by the agent. Outfitter does not
-validate recorded values (ai-outfitter/outfitter#380).
+through its nested `feature` node. `pcb-design` also exposes its scoped issue,
+pull request, and merge commit with these labels; its domain outputs use the
+plain labels `pcb-design`, `fabrication-package`, and two typed
+`review-evidence` records. An
+execution engine records the values and evaluates cross-task dependencies; the
+object's state (draft, reviewed, merged) is read from the forge, never asserted
+by the agent. Outfitter does not validate recorded values
+(ai-outfitter/outfitter#380).
 
 To validate against a local Outfitter build:
 

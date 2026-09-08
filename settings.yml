@@ -8,6 +8,7 @@ workflows:
   - grafana-alert
   - issue-triage
   - organization-delegation
+  - pcb-design
   - persona-review
   - research-triage
   - software-factory

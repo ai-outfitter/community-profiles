@@ -1,0 +1,44 @@
+version: 1
+id: pcb-design
+title: PCB design
+description: Coordinate a PCB from a scoped issue through independently reviewed design, CI, and platform-controlled merge.
+actors:
+  resident: {kind: agent, profile: hardware-engineer}
+  schematic-reviewer: {kind: agent, profile: hardware-engineer}
+  layout-reviewer: {kind: agent, profile: hardware-engineer}
+  platform: {kind: system}
+environments:
+  resident: agent-operator-pod
+  design: design-job
+  review: review-job
+  actions: github-actions
+integrations:
+  github: {kind: mcp, server: github-hosted}
+  git: {kind: transport}
+  actions-runner:
+    kind: artifact
+    repository: ai-outfitter/actions
+    path: action.yml
+    ref: 991cc550d0532adfbce7d6b424a0ac525b4cf761
+    sha256: 94d32a670da604fb28796040d9ead64d8daca3e06363789183e8e3015b7c8030
+outputs:
+  issue: {from: issue, type: issue}
+  pull-request: {from: draft, type: pull-request}
+  merge-commit: {from: merge, type: git-commit}
+  pcb-design: {from: release, type: pcb-design}
+  fabrication-package: {from: release, type: fabrication-package}
+  schematic-review-evidence: {from: schematic-review, type: review-evidence}
+  layout-review-evidence: {from: layout-review, type: review-evidence}
+nodes:
+  - {id: issue, action: ensure-or-file-scoped-issue, description: Accept a typed PCB issue or file one with checkable acceptance criteria., actor: resident, environment: resident, skill: scoped-issues, uses: [github]}
+  - {id: schematic, action: design-and-verify-schematic, description: Build the named-pin typed schematic and standard netlist on a semantic branch in a bounded job., actor: resident, environment: design, needs: [issue], skill: pcb-schematic, uses: [git]}
+  - {id: schematic-review, action: independently-review-schematic, description: Have a distinct reviewer return recorded review evidence from a fresh read-only context., actor: schematic-reviewer, environment: review, needs: [schematic], skill: pcb-review}
+  - {id: layout, action: build-route-and-verify-layout, description: Build and route the board only after the recorded schematic verdict is release-ready., actor: resident, environment: design, needs: [schematic-review], skill: pcb-layout, uses: [git]}
+  - {id: layout-review, action: independently-review-layout, description: Have a distinct reviewer return recorded layout evidence from a fresh read-only context., actor: layout-reviewer, environment: review, needs: [layout], skill: pcb-review}
+  - {id: release, action: generate-fabrication-package, description: Verify both recorded review verdicts, rebuild the exact branch commit, and generate the checksummed release candidate., actor: resident, environment: design, needs: [schematic-review, layout-review], skill: pcb-release, uses: [git]}
+  - {id: draft, action: open-draft-pr, description: Publish the verified design and fabrication package as a draft pull request., actor: resident, environment: resident, needs: [release], uses: [github, git]}
+  - {id: ci, action: wait-for-required-ci, description: Wait for required repository and artifact checks to pass., actor: resident, environment: actions, needs: [draft], uses: [github, actions-runner]}
+  - {id: ready, action: mark-pr-ready, description: Mark the pull request ready only after required CI passes., actor: resident, environment: resident, needs: [ci], uses: [github]}
+  - {id: review, workflow: adversarial-review, description: Request an independent adversarial pull-request review., needs: [ready]}
+  - {id: auto-merge, action: verify-protections-and-enable-auto-merge, description: Verify required protections and enable auto-merge without bypassing them., actor: resident, environment: resident, needs: [ready], uses: [github]}
+  - {id: merge, action: platform-merge-after-all-gates, description: Let the platform merge only after adversarial review and protected auto-merge gates., actor: platform, environment: actions, needs: [review, auto-merge]}
