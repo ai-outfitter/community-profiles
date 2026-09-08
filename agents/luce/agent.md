@@ -9,19 +9,28 @@ skills:
 # channel_read throws for a GitHub wake. An agent allowed only the channel
 # tools receives every wake and can act on none of them; the file and shell
 # tools below are what make an assignment wake actionable.
-tools: {allow: [channel_read, channel_respond, read, grep, glob, edit, write, bash, mcp]}
+tools:
+  allow:
+    - channel_read
+    - channel_respond
+    - a2a_read_task
+    - a2a_complete_task
+    - a2a_record_output
+    - a2a_require_input
+    - read
+    - grep
+    - glob
+    - edit
+    - write
+    - bash
+    - mcp
 mcp:
   - github-hosted
-# The native openai provider reads $OPENAI_API_KEY — one key per resident
-# agent (its own OpenAI project), so the usage dashboard attributes spend per
-# agent. Without a selected model the runtime has no credential and every
-# wake dies with "No API key found for the selected model".
-model: openai/gpt-5.6-sol
 extensions:
-  # channels v1.10.0 (isolated per-Task Pi sessions). The relay wire protocol
+  # channels v1.11.1 (isolated per-Task Pi sessions). The relay wire protocol
   # is unversioned, so every profile in a deployment MUST carry the same
   # version.
-  - npm:@ai-outfitter/channels@1.10.0
+  - npm:@ai-outfitter/channels@1.11.1
 ---
 
 # Luce
