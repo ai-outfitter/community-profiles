@@ -86,37 +86,16 @@ source settings are intentionally not imported.
 
 ## Workflows
 
-`workflows/<id>/workflow.yaml` contains the ten canonical, declarative workflow
-graphs. All ten are explicitly enabled in `settings.yml`. Outfitter resolves
-and validates their complete agent, skill, prompt, MCP, nested-workflow, and
-pinned-artifact closure; it never executes workflow nodes. Publication is
-blocked unless strict validation and two byte-identical exports of every root
-succeed against Outfitter v1.16.0.
+`workflows/<id>/workflow.yaml` contains the declarative workflow graphs enabled
+in `settings.yml`. Outfitter resolves and validates the resources each workflow
+references, but it does not execute workflow nodes.
 
 ### Workflow outputs
 
-A workflow may declare named `outputs`, each bound to the node that produces
-it. `type` is an optional plain label; Outfitter checks only that it is a slug.
-This catalog uses four labels so that workflows name the same kind of forge
-object the same way:
-
-| Label | Object |
-| --- | --- |
-| `pull-request` | a pull or merge request |
-| `git-commit` | a commit, typically the merge commit |
-| `git-branch` | a branch |
-| `issue` | a forge issue |
-
-A recorded value is a JSON object describing the forge object as observed. For a forge object it SHOULD include at least the repository full name, the number or sha, and the `html_url`, so a consumer can locate it and read its state from the forge. Outfitter and Channels validate no more than that (ai-outfitter/outfitter#380).
-
-`engineer` declares `issue` (from `issue`), `pull-request` (from `draft`), and
-`merge-commit` (from `merge`, label `git-commit`); `software-factory` declares
-`pull-request` (from `draft`) and `merge-commit` (from `merge`, label
-`git-commit`); `issue-triage` maps `pull-request` up through its nested
-`feature` node. An execution engine records the values and evaluates cross-task
-dependencies; the object's state (draft, reviewed, merged) is read from the
-forge, never asserted by the agent. Outfitter does not validate recorded values
-(ai-outfitter/outfitter#380).
+Workflows may declare named outputs bound to the nodes that produce them.
+Outfitter includes those declarations in the composed workflow manifest but
+does not record or validate their values. Runtimes and consumers are responsible
+for recording outputs and checking current object state with the forge.
 
 To validate against a local Outfitter build:
 
