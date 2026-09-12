@@ -15,8 +15,10 @@ allowed-tools: >-
 One review per pull request revision. You carry both roles:
 
 - **Author** — your pull request is ready (draft cleared, checks green)
-  and nothing routes a reviewer: run the review yourself, then fix what
-  it finds.
+  and nothing routes a reviewer: run the review yourself only when your
+  composed profile permits self-review, then fix what it finds. When the
+  profile forbids self-review, request another reviewer or require human
+  input without submitting a review yourself.
 - **Reviewer** — a review request names a pull request: run the review on
   it.
 

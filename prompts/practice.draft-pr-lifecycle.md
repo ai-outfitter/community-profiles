@@ -15,7 +15,9 @@ MCP call.
    are green and the acceptance criteria are met. Ready is the signal that
    requests review: code owners then route an adversarial review
    automatically. When nothing routes one — no code owners, no resident
-   reviewer — run it yourself per the code-review skill.
+   reviewer — follow the code-review skill's Author policy. If the composed
+   profile forbids self-review, request another reviewer or require human
+   input; do not submit any review on your own pull request.
 5. Verify the repository's protections before you enable auto-merge: a
    rule that requires review and a merge queue must both exist on the
    target branch. When either is absent, do not enable auto-merge — leave
