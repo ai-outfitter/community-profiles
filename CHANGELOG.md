@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.10.0](https://github.com/ai-outfitter/community-profiles/compare/v1.9.2...v1.10.0) (2026-09-12)
+
+
+### Features
+
+* **engineer:** declare issue, pull-request, and merge-commit outputs ([#86](https://github.com/ai-outfitter/community-profiles/issues/86)) ([f3ddb90](https://github.com/ai-outfitter/community-profiles/commit/f3ddb90a3ddf8d8675f1633de59c18daee42d416))
+
+
+### Bug Fixes
+
+* **vega:** prohibit every self-review path ([#98](https://github.com/ai-outfitter/community-profiles/issues/98)) ([b66797c](https://github.com/ai-outfitter/community-profiles/commit/b66797c85ad364ee02a233a2e683a30d98999bc9))
+
 ## [1.9.2](https://github.com/ai-outfitter/community-profiles/compare/v1.9.1...v1.9.2) (2026-09-08)
 
 
