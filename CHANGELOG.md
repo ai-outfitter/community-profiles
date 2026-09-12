@@ -6,7 +6,6 @@
 ### Bug Fixes
 
 * **luce:** fail closed on stale review requests ([3a5f1b0](https://github.com/ai-outfitter/community-profiles/commit/3a5f1b0da6e5a442651d15e3d46ca42aa3d04ac1))
-* **luce:** verify ready review handoff ([a1ddb52](https://github.com/ai-outfitter/community-profiles/commit/a1ddb5292da99bbc47e935aae4b332a9a35a51f9))
 * **luce:** verify ready review handoff ([a739d03](https://github.com/ai-outfitter/community-profiles/commit/a739d036ed614b33c54136ff7593f09b34bbab8a))
 
 ## [1.10.0](https://github.com/ai-outfitter/community-profiles/compare/v1.9.2...v1.10.0) (2026-09-12)
