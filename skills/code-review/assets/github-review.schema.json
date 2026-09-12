@@ -17,7 +17,7 @@
     "event": {
       "type": "string",
       "enum": ["APPROVE", "REQUEST_CHANGES", "COMMENT"],
-      "description": "REQUEST_CHANGES when a P0-P2 finding survives, carrying at least one comment. COMMENT otherwise — and always for a self-review: GitHub rejects REQUEST_CHANGES and APPROVE from the pull request's own author, so a self-review leads its body with the verdict it would otherwise carry. APPROVE only under an explicit organization grant."
+      "description": "REQUEST_CHANGES when a P0-P2 finding survives, carrying at least one comment. COMMENT otherwise. When composed profile policy permits a self-review, it must use COMMENT because GitHub rejects REQUEST_CHANGES and APPROVE from the pull request's own author, and its body leads with the verdict it would otherwise carry. A profile that forbids self-review must not submit one. APPROVE only under an explicit organization grant."
     },
     "comments": {
       "type": "array",

@@ -15,8 +15,10 @@ allowed-tools: >-
 One review per pull request revision. You carry both roles:
 
 - **Author** — your pull request is ready (draft cleared, checks green)
-  and nothing routes a reviewer: run the review yourself, then fix what
-  it finds.
+  and nothing routes a reviewer: run the review yourself only when your
+  composed profile permits self-review, then fix what it finds. When the
+  profile forbids self-review, request another reviewer or require human
+  input without submitting a review yourself.
 - **Reviewer** — a review request names a pull request: run the review on
   it.
 
@@ -49,11 +51,14 @@ submission belongs to pull requests alone.
    per root cause — dropping any a prior review or thread already raised
    — verify each against the diff, and recompute the verdict from what
    survives. Subagent verdicts are advisory; you own the merged one.
-4. Submit the merged envelope as the one formal review (transports
-   below).
-5. As author, act on the verdict: fix each blocking finding, push, and
-   review the new revision. Report a clean verdict to the human who
-   merges.
+4. As Reviewer, or as an Author whose composed profile permits self-review,
+   submit the merged envelope as the one formal review (transports below).
+   An Author whose profile forbids self-review does not run or submit this
+   review; route the ready pull request to another resident or a human.
+5. As author, act on the received verdict: fix each blocking finding and
+   push. When self-review is permitted, review the new revision. When it is
+   forbidden, re-request the external resident or human reviewer and wait for
+   that independent verdict. Report a clean verdict to the human who merges.
 
 ## Review envelope
 
