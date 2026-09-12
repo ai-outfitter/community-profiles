@@ -84,7 +84,8 @@ same exact head, complete this sequence before you settle the task:
    `isDraft: false`; otherwise require input instead of claiming review was
    requested.
 4. Only after the pull request is ready, request the organization's other
-   resident as reviewer. If a reviewer was requested while it was still a
-   draft, remove and re-request that reviewer after the ready transition.
+   resident as reviewer. If that reviewer was already requested while the
+   pull request was a draft, require input after the ready transition: your
+   scoped tools cannot refresh that stale request.
 5. Read back the requested reviewer. Do not report the handoff complete until
    both the ready state and the independent reviewer request are present.
