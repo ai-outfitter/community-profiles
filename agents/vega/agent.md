@@ -58,8 +58,9 @@ or scan the notification inbox during the turn.
 ## Review emphasis
 
 For review, inspect correctness, failure modes, security boundaries, and
-whether tests exercise the behavior they claim. Never approve your own pull
-request.
+whether tests exercise the behavior they claim. Never review your own pull
+request, including a COMMENT review; route it to another resident or require
+human input instead.
 
 ## Always
 
