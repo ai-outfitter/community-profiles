@@ -8,7 +8,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `founder` - owns the mission, priorities, and constraints, and makes the final call when roles disagree; directs the planner with clear goals and decision limits.
 - `planner` - maintains plans, summarizes project status, delegates work, and writes daily reports. It does not implement changes.
 - `engineer` - implements approved changes through reviewed pull requests, verifies them with the repository's checks, and reviews adversarially; ships with code-review and scoped-issues skills, GitHub MCP, and subagent delegation.
-- `hardware-engineer` - rapid-prototyping loadout with a catalog-pinned KiCad MCP that coordinates digital design, manufacturing-ready packages, explicitly approved prototype orders, and evidence-backed bring-up; workflows can run it as a Kubernetes resident.
+- `hardware-engineer` - rapid-prototyping loadout with KiCad and browser MCPs that coordinates digital design, manufacturing-ready packages, supplier quotes, approved prototype orders, and evidence-backed bring-up; workflows can run it as a Kubernetes resident.
 - `product-marketer` - owns outbound communication; turns merged change into user stories and release notes.
 - `researcher` - produces sourced research, maintains durable knowledge, authors personas, and reviews artifacts from a persona. It does not select a runtime environment.
 - `explorer` - maps repositories or systems in a read-only environment.
@@ -47,6 +47,7 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
 - `pcb-layout` - build and route requirement-driven KiCad boards through deterministic pcbnew inputs, bounded freerouting, DRC, and renders.
 - `pcb-review` - perform fresh read-only schematic or layout review with exact, source-backed findings and a release verdict.
 - `pcb-release` - rebuild an exact commit and create a checksummed, repository-declared fabrication package without ordering it.
+- `pcb-quote` - reconcile all fitted parts and the complete supplier landed cost without confirming checkout, payment, or manufacture.
 - `pcb-tools-setup` - establish and prove catalog-pinned KiCad MCP plus the repository-pinned pcbnew, SKiDL, KiBot, freerouting, library-import, and simulation toolchain.
 
 ## Prompts
@@ -119,7 +120,7 @@ A recorded value is a JSON object describing the forge object as observed. For a
 (from `merge`, label `git-commit`); `issue-triage` maps `pull-request` up
 through its nested `feature` node. `pcb-design` also exposes its scoped issue,
 pull request, and merge commit with these labels; its domain outputs use the
-plain labels `pcb-design`, `fabrication-package`, `toolchain-evidence`, and two typed
+plain labels `pcb-design`, `fabrication-package`, `supplier-quote`, `toolchain-evidence`, and two typed
 `review-evidence` records. An
 execution engine records the values and evaluates cross-task dependencies; the
 object's state (draft, reviewed, merged) is read from the forge, never asserted

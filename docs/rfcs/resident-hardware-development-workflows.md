@@ -107,6 +107,7 @@ The initial skill set is:
 - `pcb-layout`
 - `pcb-review`
 - `pcb-release`
+- `pcb-quote`
 - the existing `replicad` CAD skill
 - `visualization-validation`
 - `hardware-acceptance`
