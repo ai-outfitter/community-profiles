@@ -6,6 +6,7 @@ skills:
 extensions:
   - git:github.com/ai-outfitter/deepwork
   - npm:pi-mcp-adapter
+mcp: [playwright]
 ---
 
 # Platform Engineer

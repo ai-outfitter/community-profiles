@@ -8,6 +8,11 @@
         "X-MCP-Toolsets": "all"
       },
       "requestTimeoutMs": 30000
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@0.0.55", "--isolated", "--browser", "chromium"]
     }
   }
 }

@@ -15,6 +15,7 @@ environments:
 integrations:
   github: {kind: mcp, server: github-hosted}
   kicad: {kind: mcp, server: kicad}
+  browser: {kind: mcp, server: playwright}
   git: {kind: transport}
   actions-runner:
     kind: artifact
@@ -29,6 +30,7 @@ outputs:
   merge-commit: {from: merge, type: git-commit}
   pcb-design: {from: release, type: pcb-design}
   fabrication-package: {from: release, type: fabrication-package}
+  supplier-quote: {from: quote, type: supplier-quote}
   schematic-review-evidence: {from: schematic-review, type: review-evidence}
   layout-review-evidence: {from: layout-review, type: review-evidence}
 nodes:
@@ -39,7 +41,8 @@ nodes:
   - {id: layout, action: build-route-and-verify-layout, description: Build and route the board only after the recorded schematic verdict is release-ready., actor: resident, environment: design, needs: [schematic-review], skill: pcb-layout, uses: [git, kicad]}
   - {id: layout-review, action: independently-review-layout, description: Have a distinct reviewer return recorded layout evidence from a fresh read-only context., actor: layout-reviewer, environment: review, needs: [layout], skill: pcb-review}
   - {id: release, action: generate-fabrication-package, description: Verify both recorded review verdicts, rebuild the exact branch commit, and generate the checksummed release candidate., actor: resident, environment: design, needs: [schematic-review, layout-review], skill: pcb-release, uses: [git, kicad]}
-  - {id: draft, action: open-draft-pr, description: Publish the verified design and fabrication package as a draft pull request., actor: resident, environment: resident, needs: [release], uses: [github, git]}
+  - {id: quote, action: reconcile-supplier-landed-cost, description: Upload the exact package, reconcile every fitted part, and record the complete landed-cost quote without purchasing., actor: resident, environment: resident, needs: [release], skill: pcb-quote, uses: [browser, git]}
+  - {id: draft, action: open-draft-pr, description: Publish the verified design, fabrication package, and supplier quote as a draft pull request., actor: resident, environment: resident, needs: [quote], uses: [github, git]}
   - {id: ci, action: wait-for-required-ci, description: Wait for required repository and artifact checks to pass., actor: resident, environment: actions, needs: [draft], uses: [github, actions-runner]}
   - {id: ready, action: mark-pr-ready, description: Mark the pull request ready only after required CI passes., actor: resident, environment: resident, needs: [ci], uses: [github]}
   - {id: review, workflow: adversarial-review, description: Request an independent adversarial pull-request review., needs: [ready]}
