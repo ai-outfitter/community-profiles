@@ -24,6 +24,9 @@ Community-contributed Dotagents catalog for [Outfitter](https://github.com/ai-ou
   persona Markdown appended at launch.
 - `grafana-agent` - platform agent for Grafana on Kubernetes: provisions the Grafana MCP securely and declaratively, and investigates firing alerts with read-only, comment-only diagnosis. Ships agent-local skills (`grafana-mcp-setup`, `grafana-alert-investigate`, `alert-issue-triage`) and a per-agent `mcp.json` merged into the composition. See [docs/grafana-agent.md](docs/grafana-agent.md).
 
+See [Hosted resident pair](docs/resident-triage.md) for the named project manager
+and engineer profiles and the triage-only workflow.
+
 ## Skills
 
 - `browser-mcp` - use Playwright or Chrome DevTools MCP for browser automation, UI debugging, screenshots, console/network inspection, and isolated browser sessions.
