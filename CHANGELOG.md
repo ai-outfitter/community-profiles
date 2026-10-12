@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.2](https://github.com/ai-outfitter/community-profiles/compare/v1.10.1...v1.10.2) (2026-10-12)
+
+
+### Bug Fixes
+
+* **residents:** load Channels task tools in both profiles ([#104](https://github.com/ai-outfitter/community-profiles/issues/104)) ([d30e152](https://github.com/ai-outfitter/community-profiles/commit/d30e152541b36d73d461e179a64b45dd4a173463))
+
 ## [1.10.1](https://github.com/ai-outfitter/community-profiles/compare/v1.10.0...v1.10.1) (2026-09-12)
 
 
