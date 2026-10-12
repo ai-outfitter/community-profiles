@@ -27,10 +27,10 @@ tools:
 mcp:
   - github-hosted
 extensions:
-  # channels v1.11.1 (isolated per-Task Pi sessions). The relay wire protocol
+  # channels v1.12.2 (isolated per-Task Pi sessions). The relay wire protocol
   # is unversioned, so every profile in a deployment MUST carry the same
   # version.
-  - npm:@ai-outfitter/channels@1.11.1
+  - npm:@ai-outfitter/channels@1.12.2
 ---
 
 # Luce

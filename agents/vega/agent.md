@@ -25,7 +25,7 @@ mcp:
 extensions:
   # The relay wire protocol is unversioned, so every profile in a deployment
   # MUST carry the same Channels version.
-  - npm:@ai-outfitter/channels@1.11.1
+  - npm:@ai-outfitter/channels@1.12.2
 ---
 
 # Vega
