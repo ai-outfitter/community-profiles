@@ -1,0 +1,16 @@
+version: 1
+id: resident-issue-triage
+title: Resident issue triage
+description: Classify one issue and suggest a plan without starting implementation.
+actors:
+  triager: {kind: agent, profile: resident-project-manager}
+environments: {resident: kubernetes}
+integrations: {gh: {kind: cli}}
+nodes:
+  - id: triage
+    action: classify-and-propose
+    description: Post one classification and suggested plan, then stop.
+    actor: triager
+    environment: resident
+    skill: resident-issue-triage
+    uses: [gh]

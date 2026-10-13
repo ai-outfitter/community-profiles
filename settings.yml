@@ -9,5 +9,6 @@ workflows:
   - issue-triage
   - organization-delegation
   - persona-review
+  - resident-issue-triage
   - research-triage
   - software-factory
